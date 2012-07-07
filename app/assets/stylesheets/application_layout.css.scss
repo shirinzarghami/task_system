@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font: normal 12px ubuntu, helvetica;
+  color: #4E4E4E;
+}
+
+h1 {
+  border-bottom: 1px solid $grey2;
+  font-weight: normal;
+}
+
+div#header-container {
+  height: 130px;
+  width: 100%;
+  margin-bottom: 5px;
+
+  div#header  {
+    position: absolute;
+    height: 130px;
+    width: 100%;  
+    background-color: $grey1;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.36);
+  }
+}
+
+div#main-container {
+  width: 960;
+  margin: 25px auto 0 auto;
+}
+
+ul.main-menu {
+  list-style-type: none;
+  position: absolute;
+  bottom: 0;
+  padding: 0 0;
+  margin: 0 0 0 30%;
+  color: white;
+  font-weight: bold;
+
+  border: 1px solid $purple2;
+
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  background: $purple0; /* Old browsers */
+  background: -moz-linear-gradient(top,  $purple0 0%, $purple2 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$purple0), color-stop(100%,$purple2)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $purple0 0%,$purple2 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $purple0 0%,$purple2 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $purple0 0%,$purple2 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $purple0 0%,$purple2 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$purple0', endColorstr='$purple2',GradientType=0 ); /* IE6-9 */
+
+  li { 
+    float: left; 
+    font-size: 11pt;  
+    padding: 10px 15px;
+    border-right: 1px solid $purple1;
+    border-left: 1px solid$purple2;
+    margin: 0 0;
+  }
+}
+
+div#contents {
+  float: left;
+  padding-right: 10px;
+  width: 690px;
+}
+
+div#sub-menu {
+  float: right;
+  width: 249px;
+  min-height: 750px;
+  border-left: 1px solid $grey2;
+  padding-left: 10px;
+
+  h1 {
+    font-weight: bold;
+    font-size: 10pt;
+  }
+}
