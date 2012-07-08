@@ -6,7 +6,12 @@
     = csrf_meta_tags
   %body
     %div.container
-      %div.header
+      %div.header-container
+        %div.header
+          %ul.main-menu
+            %li Dashboard
+            %li Tasks
+
       %div.contents= yield
       %div.menu
         %h1 Menu

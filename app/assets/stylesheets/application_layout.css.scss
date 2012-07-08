@@ -9,12 +9,18 @@ div.container {
   background-color: $grey1;
   border: 1px solid $grey2;
 
-  div.header {
+  div.header-container {
     float: left;
     height: $header_height;
     width: $page_width;
     background-color: $grey1;
     border-bottom: 1px solid $grey2;
+
+    div.header {
+      position: absolute;
+      height: $header_height;
+      width: $page_width;
+    }
   }
 
   div.contents {
