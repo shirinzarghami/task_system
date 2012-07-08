@@ -1,58 +1,45 @@
 body {
-  margin: 0;
   font: normal 12px helvetica;
   color: $grey4;
 }
 
 div.container {
   width: $page_width;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid $grey2;
-  overflow: hidden;
-}
-
-div.header-container {
-  border-bottom: 1px solid $grey2;
+  margin: auto;
   background-color: $grey1;
-  width: $page_width;
-  height: $header_height;
+  border: 1px solid $grey2;
 
   div.header {
-    position: absolute;
-    width: $page_width;
+    float: left;
     height: $header_height;
+    width: $page_width;
+    background-color: $grey1;
+    border-bottom: 1px solid $grey2;
   }
-}
-
-div.contents-container {
-  float: left;
-  width: $page_width - 1;
-  background-color: $grey0;
-  min-height: $page_height;
 
   div.contents {
     float: left;
-    padding: 0 10px;
-    width: $page_width - $submenu_width - 23;
+    width: $page_width - $menu_width - 1;
+    background-color: $grey0;
+    border-right: 1px solid $grey2;
+  }
+
+  div.menu {
+    width: $menu_width;
+    float: left;
+    background-color: $grey1;
+  }
+
+  div.footer {
+    height: $footer_height;
+    width: $page_width;
+    background-color: $grey1;
+    border-top: 1px solid $grey2;
+    clear: both;
   }
 }
 
-div.sub-menu {
-  float: right;
-  width: $submenu_width;
-  background-color: $grey1;
-  border-left: 1px solid $grey2;
-  min-height: $page_height;
-}
 
-div.footer {
-  bottom: 0;
-  width: $page_width - $submenu_width - 1;
-  height: $footer_height;
-  background-color: $grey1;
-  border-top: 1px solid $grey2;
-}
 
 ul.main-menu {
   list-style-type: none;
