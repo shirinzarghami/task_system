@@ -5,18 +5,20 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %div#header-container
-      %div#header
-        %ul.main-menu
-          %li Dashboard
-          %li Tasks
-          %li Notices
-          %li Payments
-    
-    %div#main-container
-      %div#contents
-        %p= yield
+    %div.container
+      %div.header-container
+        %div.header
+          %ul.main-menu
+            %li Dashboard
+            %li Tasks
 
-      %div#sub-menu
-        %h1 Opties
+      %div.contents-container
+        %div.contents
+          = yield
+        %div.sub-menu
+          %p Menu
+        
+        %div.footer
+
+
 
