@@ -8,11 +8,24 @@
     %div.container
       %div.header-container
         %div.header
+          =image_tag 'calendar.png', class: 'logo'
+          %h1 Task Systeem
+
+          %ul.tabs
+            %li= link_to 'Dashboard', 'www.google.com'
+            %li.active= link_to 'Tasks', 'www.google.com'
+            %li= link_to 'Payments', 'www.google.com'
+            %li= link_to 'Cooking', 'www.google.com'
+            %li= link_to 'Settings', 'www.google.com'
+
 
       %div.contents= yield
       %div.menu
-        %h3 Menu
-        %div.line
+        %h2 Acties        
+        %p
+          =link_to 'Create a new task', 'www.google.com', class: 'button'
+          =link_to 'New Task', 'www.google.com', class: 'button'
+
       %div.footer
      
 

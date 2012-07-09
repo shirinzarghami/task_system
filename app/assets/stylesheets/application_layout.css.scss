@@ -1,13 +1,37 @@
 body {
   font-size: 12px;
-  font-family: 'Open Sans',arial,sans-serif;  
+  font-family: 'Open Sans',arial,sans-serif;
+  font-weight: normal;  
   color: $grey4;
 }
 
 p, h1, h2, h3 {
   margin: 10px 15px;
+  font-weight: normal;
 }
 
+a, a:visited {
+  color: $grey4;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $blue0;
+}
+
+a.button {
+  display: block;
+  line-height: 20px;
+//  margin: 5px 5px;
+  border-radius: 2px;
+  padding-left: 5px;
+
+}
+
+a.button:hover {
+  background-color: $blue0;
+  color: white;
+}
 h3 {
   font-weight: normal;
   font-size: 13px;
@@ -39,6 +63,49 @@ div.container {
       position: absolute;
       height: $header_height;
       width: $page_width;
+
+      img.logo {
+        margin: 5px 15px;
+        float: left;
+      }
+
+      h1 {
+        font-weight: normal;
+        display: inline;
+        line-height: 50px;
+      }
+
+      ul.tabs {
+        list-style-type: none;
+        position: absolute;
+        bottom: -1px;
+        padding: 0 0;
+        margin: 0 0 0 30%;
+        background-color: $grey6;
+        /*border: 1px solid $grey3;*/
+
+        border-left: 1px solid $grey2;
+        border-top: 1px solid $grey2;
+
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+
+
+        li { 
+          float: left; 
+          padding: 5px 15px;
+          border-right: 1px solid $grey2;
+          border-bottom: 1px solid $grey2;
+          margin: 0 0;
+          font-size: 13px;
+        }
+
+        li.active {
+          border-bottom: solid 1px $grey0;
+          background-color: $grey0;
+        }
+
+      }
     }
   }
 
@@ -66,39 +133,4 @@ div.container {
 
 
 
-ul.main-menu {
-  list-style-type: none;
-  position: absolute;
-  bottom: 0;
-  padding: 0 0;
-  margin: 0 0 0 30%;
-  color: white;
-  font-weight: bold;
 
-  border: 1px solid $purple2;
-
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -moz-border-radius-topleft: 3px;
-  -moz-border-radius-topright: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-
-  background: $purple0; /* Old browsers */
-  background: -moz-linear-gradient(top,  $purple0 0%, $purple2 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$purple0), color-stop(100%,$purple2)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  $purple0 0%,$purple2 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  $purple0 0%,$purple2 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  $purple0 0%,$purple2 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  $purple0 0%,$purple2 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$purple0', endColorstr='$purple2',GradientType=0 ); /* IE6-9 */
-
-  li { 
-    float: left; 
-    font-size: 11pt;  
-    padding: 10px 15px;
-    border-right: 1px solid $purple1;
-    border-left: 1px solid$purple2;
-    margin: 0 0;
-  }
-}
