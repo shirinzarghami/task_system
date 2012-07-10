@@ -14,14 +14,33 @@ table {
   border-collapse: collapse;
   min-width: 800px;
   text-align: left;
+  margin-top: 40px;
   th {
     font-weight: normal;
     border-bottom: 1px solid $grey2
   }
 
+  th.blue {
+    background-color: $blue0;
+    color: white;
+    font-size: 12px;
+  }
+
+  th.first {
+    border-top-left-radius: 3px;
+  }
+
+  th.last {
+    border-top-right-radius: 3px;
+  }
+
   td {
     font-size: 12px;
     line-height: 20px;
+  }
+
+  tr {
+    margin: 15px 0;
   }
 }
 
