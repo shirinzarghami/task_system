@@ -19,12 +19,27 @@
             %li= link_to 'Settings', 'www.google.com'
 
 
-      %div.contents= yield
+      %div.contents
+        %h1 Title
+        %div.flash.warning 
+          Created a new task
+        =yield
       %div.menu
-        %h2 Acties        
+        %h2 Tasks
         %p
           =link_to 'Create a new task', 'www.google.com', class: 'button'
-          =link_to 'New Task', 'www.google.com', class: 'button'
+          =link_to "My todo's", 'www.google.com', class: 'button'
+
+        %h2 Other        
+        %p
+          =link_to 'Account', 'www.google.com', class: 'button'
+          =link_to 'Settings', 'www.google.com', class: 'button'
+          =link_to 'Log out', 'www.google.com', class: 'button'
+
+        %h2 Community
+        %p
+          =select_tag 'Community', options_for_select([['Deepshit', 'Deepshit'], ['Globehouse', 'Globehouse']])
+
 
       %div.footer
      

@@ -6,8 +6,23 @@ body {
 }
 
 p, h1, h2, h3 {
-  margin: 10px 15px;
+  margin: 10px 20px;
   font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 800px;
+  text-align: left;
+  th {
+    font-weight: normal;
+    border-bottom: 1px solid $grey2
+  }
+
+  td {
+    font-size: 12px;
+    line-height: 20px;
+  }
 }
 
 a, a:visited {
@@ -22,9 +37,27 @@ a:hover {
 a.button {
   display: block;
   line-height: 20px;
-//  margin: 5px 5px;
+  margin: 5px 0;
   border-radius: 2px;
   padding-left: 5px;
+}
+
+div.flash {
+  margin: 20px 20px;
+  border-radius: 3px;
+  padding: 10px 60px;
+  background-position: 5px center;
+  background-repeat: no-repeat;
+}
+
+div.flash.info {
+  background-color: $blue1;
+  background-image: url('info.png');
+}
+
+div.flash.warning {
+  background-color: $red0;
+  background-image: url('error.png');
 
 }
 
@@ -103,6 +136,9 @@ div.container {
         li.active {
           border-bottom: solid 1px $grey0;
           background-color: $grey0;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+
         }
 
       }
@@ -114,12 +150,16 @@ div.container {
     width: $page_width - $menu_width - 1;
     background-color: $grey0;
     border-right: 1px solid $grey2;
+    min-height: 600px;
   }
 
   div.menu {
     width: $menu_width;
     float: left;
     background-color: $grey1;
+    h2 {
+      padding-top: 10px;
+    }
   }
 
   div.footer {
