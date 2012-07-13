@@ -19,7 +19,7 @@ select.error, fieldset.error, input.error
   display: inline
 
 select:focus, input:focus, select:hover, input:hover
-  border: 1px solid $blue0
+  border: 1px solid $orange1
 
 select.error:focus, input.error:focus, select.error:hover, input.error:hover
   border: 1px solid red
@@ -45,13 +45,27 @@ span.form_error
 
 div.button
   width: 60px
-  padding: 5px 25px
+  padding: 5px 20px
   border-radius: 2px
-  background-color: $blue0
   color: white
   text-align: center
   font-weight: 500
-  border: 1px solid $blue2
+  border: 1px solid $orange2
+
+  background: #f9c667 /* Old browsers */
+  background: -moz-linear-gradient(top,  #f9c667 0%, #f79621 100%) /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9c667), color-stop(100%,#f79621)) /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f9c667 0%,#f79621 100%) /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f9c667 0%,#f79621 100%) /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f9c667 0%,#f79621 100%) /* IE10+ */
+  background: linear-gradient(to bottom,  #f9c667 0%,#f79621 100%) /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c667', endColorstr='#f79621',GradientType=0 ) /* IE6-9 */
+
+  a
+    color: white
+  a:hover
+    text-decoration: underline
+
 
 div.right
   float: right

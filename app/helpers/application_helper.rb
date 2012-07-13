@@ -5,6 +5,6 @@ module ApplicationHelper
   end
 
   def button text="Submit", type=nil
-    "<div class='button #{type.map {|s| s.to_s}.compact.join(" ") unless type.nil?}'>#{text}</div>".html_safe
+    "<div class='button #{type.map {|s| s.to_s}.compact.join(" ") unless type.nil?}'><a href='#'>#{text}</a></div>".html_safe
   end
 end
