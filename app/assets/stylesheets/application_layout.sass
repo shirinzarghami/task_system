@@ -3,6 +3,7 @@ body
   font-family: 'Open Sans',arial,sans-serif
   font-weight: normal  
   color: $grey4
+  margin: 0
 
 
 p, h1, h2, h3 
@@ -72,7 +73,9 @@ div.flash.warning
   background-color: $red0
   background-image: url('error.png')
 
-
+div.flash.success
+  background-color: $green0
+  background-image: url('success.png')
 
 a.button:hover 
   background-color: $orange1
@@ -133,28 +136,18 @@ div.container
 
       ul.tabs 
         list-style-type: none
+        width: $page_width
         position: absolute
         bottom: -1px
         padding: 0 0
-        margin: 0 0 0 30%
+        margin: 0 0
         background-color: $grey6
-        /*border: 1px solid $grey3*/
 
         border-left: 1px solid $grey2
         border-top: 1px solid $grey2
 
         border-top-left-radius: 3px
         border-top-right-radius: 3px
-
-        background: #fceabb /* Old browsers */
-        background: -moz-linear-gradient(top,  #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%) /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fceabb), color-stop(50%,#fccd4d), color-stop(51%,#f8b500), color-stop(100%,#fbdf93)) /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%) /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%) /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%) /* IE10+ */
-        background: linear-gradient(to bottom,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%) /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=0 ) /* IE6-9 */
-
 
 
         li  
