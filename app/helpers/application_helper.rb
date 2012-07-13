@@ -1,2 +1,10 @@
 module ApplicationHelper
+
+  def submit_button text="Submit"
+    button(text, [:right])
+  end
+
+  def button text="Submit", type=nil
+    "<div class='button #{type.map {|s| s.to_s}.compact.join(" ") unless type.nil?}'>#{text}</div>".html_safe
+  end
 end

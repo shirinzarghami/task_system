@@ -1,0 +1,199 @@
+body 
+  font-size: 12px
+  font-family: 'Open Sans',arial,sans-serif
+  font-weight: normal  
+  color: $grey4
+
+
+p, h1, h2, h3 
+  margin: 10px 20px
+  font-weight: normal
+
+
+table 
+  border-collapse: collapse
+  min-width: 800px
+  text-align: left
+  margin-top: 40px
+  th 
+    font-weight: normal
+    border-bottom: 1px solid $grey2
+
+  th.blue 
+    background-color: $blue0
+    color: white
+    font-size: 12px
+
+  th.first 
+    border-top-left-radius: 3px
+  
+  th.last 
+    border-top-right-radius: 3px
+
+  td 
+    font-size: 12px
+    line-height: 20px
+  tr 
+    margin: 15px 0
+  
+
+
+a, a:visited 
+  color: $grey4
+  text-decoration: none
+
+
+a:hover 
+  color: $blue0
+
+
+a.button 
+  display: block
+  line-height: 20px
+  margin: 5px 0
+  border-radius: 2px
+  padding-left: 5px
+
+
+div.flash 
+  margin: 20px 20px
+  border-radius: 3px
+  padding: 10px 60px
+  background-position: 5px center
+  background-repeat: no-repeat
+
+
+div.flash.info 
+  background-color: $blue1
+  background-image: url('info.png')
+
+
+div.flash.warning 
+  background-color: $red0
+  background-image: url('error.png')
+
+
+
+a.button:hover 
+  background-color: $blue0
+  color: white
+
+h3 
+  font-weight: normal
+  font-size: 13px
+  font-shadow: 0px 1px rgba(255, 255, 255, 0.5)
+  color: black
+
+
+div.line 
+  width: 90%
+  border-top: solid 1px white
+  border-bottom: solid 1px $grey5
+  margin: auto
+
+
+div.container 
+  width: $page_width
+  margin: auto
+  background-color: $grey1
+  border: 1px solid $grey2
+  border-radius: 3px
+
+  div.header-container 
+    float: left
+    height: $header_height
+    width: $page_width
+    background-color: $grey1
+    border-bottom: 1px solid $grey2
+
+    div.header 
+      position: absolute
+      height: $header_height
+      width: $page_width
+
+      img.logo 
+        margin: 5px 15px
+        float: left
+      
+
+      h1 
+        font-weight: normal
+        display: inline
+        line-height: 50px
+      
+      ul.flags
+        list-style-type: none
+        position: absolute
+        right: 10px
+        top: 3px
+        margin: 0
+
+        li
+          display: inline
+
+      ul.tabs 
+        list-style-type: none
+        position: absolute
+        bottom: -1px
+        padding: 0 0
+        margin: 0 0 0 30%
+        background-color: $grey6
+        /*border: 1px solid $grey3*/
+
+        border-left: 1px solid $grey2
+        border-top: 1px solid $grey2
+
+        border-top-left-radius: 3px
+        border-top-right-radius: 3px
+
+
+        li  
+          float: left 
+          padding: 5px 15px
+          border-right: 1px solid $grey2
+          border-bottom: 1px solid $grey2
+          margin: 0 0
+          font-size: 13px
+        
+
+        li.active 
+          border-bottom: solid 1px $grey0
+          background-color: $grey0
+          border-top-left-radius: 3px
+          border-top-right-radius: 3px
+
+        
+  
+
+  div.contents 
+    float: left
+    width: $page_width - $menu_width - 1
+    background-color: $grey0
+    border-right: 1px solid $grey2
+    min-height: 600px
+  
+
+  div.menu 
+    width: $menu_width
+    float: left
+    background-color: $grey1
+    h2 
+      padding-top: 10px
+    
+  
+
+  div.footer 
+    height: $footer_height
+    width: $page_width
+    background-color: $grey1
+    border-top: 1px solid $grey2
+    clear: both
+    text-align: center
+    line-height: 30px
+
+  
+
+
+
+
+

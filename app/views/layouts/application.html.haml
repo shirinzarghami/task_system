@@ -18,6 +18,10 @@
             %li= link_to 'Cooking', 'www.google.com'
             %li= link_to 'Settings', 'www.google.com'
 
+          %ul.flags
+            %li=link_to(image_tag('nl.png'), 'bla')
+            %li=link_to(image_tag('us.png'), 'bla')
+
 
       %div.contents
         %h1 Title
@@ -38,10 +42,11 @@
 
         %h2 Community
         %p
-          =select_tag 'Community', options_for_select([['Deepshit', 'Deepshit'], ['Globehouse', 'Globehouse']])
-
+          =link_to 'Deepshit', 'www.google.com', class: 'button'
+          =link_to 'Globehouse', 'www.google.com', class: 'button'
 
       %div.footer
+        Created by Martijn Bolhuis
      
 
 

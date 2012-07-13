@@ -1,28 +1,10 @@
 %p
-  %table
-    %tr
-      %th.first.blue Name
-      %th.blue Type
-      %th.blue Date
-      %th.blue Type
-      %th.last.blue Date
-    %tr
-      %td bla
-      %td bla
-      %td bla
-      %td bla
-      %td bla
-
-    %tr
-      %td bla
-      %td bla
-      %td bla
-      %td bla
-      %td bla
-
-    %tr
-      %td bla
-      %td bla
-      %td bla
-      %td bla
-      %td bla
+  %fieldset
+    =form_tag 'http://www.google.com'
+    =label_tag 'Naam'
+    =text_field_tag 'Naam', ''
+    =label_tag 'Password'
+    =password_field_tag 'Password'
+    =check_box_tag 'accept'
+    = label_tag "Accept that you are a dick", nil, class: 'checkbox'
+    =submit_button

@@ -1,0 +1,58 @@
+select, fieldset, input
+  background-color: $grey7
+  border: 1px solid $grey5
+  font-size: 12px
+  font-family: 'Open Sans',arial,sans-serif
+  border-radius: 2px
+  display: block
+
+input[type=checkbox] 
+  display: inline 
+label
+  display: block
+
+label.checkbox
+  display: inline
+
+select.error, fieldset.error, input.error
+  background-color: $red0
+  display: inline
+
+select:focus, input:focus, select:hover, input:hover
+  border: 1px solid $blue0
+
+select.error:focus, input.error:focus, select.error:hover, input.error:hover
+  border: 1px solid red
+select
+  width: 211px
+
+fieldset
+  margin: 50px 50px
+  padding: 20px 
+
+input[type=text], input[type=password]
+  min-width: 300px
+  height: 25px
+  // background-color: white
+  margin-bottom: 10px
+
+label
+  margin-right: 15px
+
+span.form_error
+  color: red
+  margin-left: 10px
+
+div.button
+  width: 60px
+  padding: 5px 25px
+  border-radius: 2px
+  background-color: $blue0
+  color: white
+  text-align: center
+  font-weight: 500
+  border: 1px solid $blue2
+
+div.right
+  float: right
+  margin-top: 20px
