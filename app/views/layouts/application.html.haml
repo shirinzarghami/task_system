@@ -25,8 +25,10 @@
 
       %div.contents
         %h1 Title
-        %div.flash.success 
-          Created a new task
+        -if flash[:notice]
+          %div.flash.success= flash[:notice]
+        -if flash[:error]
+          %div.flash.error= flash[:error]
         =yield
       %div.menu
         %h2 Tasks

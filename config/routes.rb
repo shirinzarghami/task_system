@@ -4,9 +4,12 @@ TaskSystem::Application.routes.draw do
   get "dashboard/index"
 
   namespace :admin do
+    root to: 'Communities#index'
     resources :communities
     resources :users
   end
+
+  root :to => 'Dashboard#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -56,7 +59,6 @@ TaskSystem::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'Dashboard#index'
 
   # See how all your routes lay out with "rake routes"
 
