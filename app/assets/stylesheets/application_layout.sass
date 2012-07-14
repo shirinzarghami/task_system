@@ -45,7 +45,7 @@ a, a:visited
 
 
 a:hover 
-  color: $orange1
+  color: $yellow4
 
 
 a.button 
@@ -78,7 +78,7 @@ div.flash.success
   background-image: url('success.png')
 
 a.button:hover 
-  background-color: $orange1
+  background-color: $yellow2
   color: white
 
 h3 
@@ -143,15 +143,18 @@ div.container
         margin: 0 0
         background-color: $grey6
 
-        border-left: 1px solid $grey2
+        // border-left: 1px solid $grey2
         border-top: 1px solid $grey2
+        border-bottom: 1px solid $grey2
 
-        border-top-left-radius: 3px
-        border-top-right-radius: 3px
+        // border-top-left-radius: 3px
+        // border-top-right-radius: 3px
 
 
         li  
-          float: left 
+          float: left
+          position: relative
+          bottom: -1px
           padding: 5px 15px
           border-right: 1px solid $grey2
           border-bottom: 1px solid $grey2
@@ -193,6 +196,7 @@ div.container
     clear: both
     text-align: center
     line-height: 30px
+    color: $grey5
 
   
 
