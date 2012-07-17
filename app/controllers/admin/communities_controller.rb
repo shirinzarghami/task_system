@@ -10,7 +10,14 @@ class Admin::CommunitiesController < AdminController
   end
 
   def create
-    
+    @community = Community.new params[:community]
+
+    if @community.save 
+      flash[:notice] = "Successfully created"
+      redirect_to admin_communities_path
+    else
+      render action: 'edit'
+    end
   end
 
   def destroy
