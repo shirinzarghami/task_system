@@ -12,9 +12,9 @@
           %h1 Task Systeem
 
           %ul.tabs
-            %li= link_to 'Communities', 'www.google.com'
-            %li= link_to 'Users', 'www.google.com'
-            %li= link_to 'Settings', 'www.google.com'
+            =tab_link 'Communities', admin_communities_path
+            =tab_link 'Users', '#'
+            =tab_link 'Settings', '#'
 
           %ul.flags
             %li=link_to(image_tag('nl.png'), 'bla')

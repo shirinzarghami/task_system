@@ -1,0 +1,7 @@
+%tr
+  %td= community.name
+  %td= community.subdomain
+  %td TODO
+  %td
+    =link_to 'Edit', edit_admin_community_path(community)
+    =link_to 'Delete', admin_community_path(community), method: :delete, confirm: "Are you sure?"

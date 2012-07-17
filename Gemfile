@@ -40,3 +40,4 @@ gem 'debugger'
 # haml gem
 gem 'haml'
 gem 'devise'
+gem 'will_paginate'

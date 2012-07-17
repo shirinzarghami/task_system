@@ -4,4 +4,9 @@
   Manage communities
 
 %p
-  test
+  %table
+    %th Name
+    %th Subdomain
+    %th Users
+    %th
+    = render partial: 'community', collection: @communities
