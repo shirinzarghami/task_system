@@ -3,11 +3,12 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('#community_user_tokens').tokenInput '../users.json'
+  $('#community_user_tokens').tokenInput document.location.origin + '/admin/users.json'
     theme: 'facebook'
     propertyToSearch: 'email'
+    preventDuplicates: true
 
-  $('#community_admin_user_tokens').tokenInput '../users.json'
+  $('#community_admin_user_tokens').tokenInput document.location.origin + '/admin/users.json'
     theme: 'facebook'
     propertyToSearch: 'email'
 
