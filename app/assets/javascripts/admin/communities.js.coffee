@@ -6,3 +6,13 @@ jQuery ->
   $('#community_user_tokens').tokenInput '../users.json'
     theme: 'facebook'
     propertyToSearch: 'email'
+
+  $('#community_admin_user_tokens').tokenInput '../users.json'
+    theme: 'facebook'
+    propertyToSearch: 'email'
+
+  $('#community_name').keyup ->
+    text = makeValidSubdomain($('#community_name').val())
+    $('#community_subdomain').val(text)
+
+makeValidSubdomain = (text) -> text.toLowerCase().replace /[^a-zA-Z0-9-_]/g, "-"

@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
-  has_and_belongs_to_many :communities
-
+  # has_and_belongs_to_many :communities
+  has_many :community_users
+  has_many :communities, through: :community_users
 
 end

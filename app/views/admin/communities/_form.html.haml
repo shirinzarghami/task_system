@@ -1,12 +1,8 @@
 %fieldset
   %legend Community details
-  = form_for ['admin', @community] do |f|
-    =f.label :name
-    =f.text_field :name
-    =f.label :subdomain
-    =f.text_field :subdomain
-
-    =f.label :user_tokens, 'Members'
-    =f.text_field :user_tokens
-    =submit_button
-
+  = simple_form_for ['admin', @community] do |f|
+    = f.input :name
+    = f.input :subdomain
+    = f.input :user_tokens
+    = f.input :admin_user_tokens
+    = submit_button
