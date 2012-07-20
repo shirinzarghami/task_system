@@ -4,5 +4,5 @@ class CommunityUser < ActiveRecord::Base
   belongs_to :user
   belongs_to :community
 
-  validates :community_id, presence: true, uniqueness: {scope: :user_id}
+  validates :community_id, uniqueness: {scope: :user_id}
 end

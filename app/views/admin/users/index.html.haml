@@ -1,0 +1,15 @@
+- content_for :menu do
+  =render partial: '/admin/shared/admin_menu'
+- content_for :title do
+  Manage users
+
+%p
+  %table
+    %th E-mail
+    %th Name
+    %th Role
+    %th Communities
+    %th Confirmed
+    %th Last login
+    %th
+    = render partial: 'user', collection: @users

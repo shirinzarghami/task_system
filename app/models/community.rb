@@ -1,5 +1,5 @@
 class Community < ActiveRecord::Base
-  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens
+  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :max_users
   attr_reader :user_tokens, :admin_user_tokens
 
   has_many :community_users, dependent: :destroy

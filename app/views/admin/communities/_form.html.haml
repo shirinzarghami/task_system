@@ -3,6 +3,7 @@
   = simple_form_for ['admin', @community] do |f|
     = f.input :name
     = f.input :subdomain
+    = f.input :max_users
     = f.input :user_tokens, input_html: {data: {pre: @community.users.to_json(only: [:email, :id])}}, hint: "Type a user email address"
     = f.input :admin_user_tokens, input_html: {data: {pre: @community.admin_users.to_json(only: [:email, :id])}}, hint: "Type a user email address"
     = submit_button

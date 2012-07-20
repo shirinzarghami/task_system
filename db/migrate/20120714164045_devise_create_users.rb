@@ -34,8 +34,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.string :authentication_token
 
       #Non devise user properties
-      t.string :locale
-      t.string :global_role
+      t.string :locale, default: 'en', null: 'en'
+      t.string :global_role, default: "normal", null: "normal"
       t.string :name
 
 
