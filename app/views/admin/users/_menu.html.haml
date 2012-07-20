@@ -1,0 +1,7 @@
+%h2= t('menu.filters')
+%p
+  =filter_button t('menu.filter_admin'), 'admin_only'
+  =filter_button t('menu.filter_unconfirmed'), 'unconfirmed_only'
+  =filter_button t('menu.filter_none'), ''
+
+=render partial: '/admin/shared/admin_menu'

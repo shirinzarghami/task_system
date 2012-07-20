@@ -5,9 +5,20 @@ en:
   activerecord:
       models:
         community: Community
+        user: User
       attributes:
         community:
           user_tokens: Normal members
           admin_user_tokens: Administrators
           name: Name
           subdomain: Subdomain
+          max_users: Max users
+        user:
+          name: Name
+          password: Password
+          password_confirmation: Password confirmation
+          global_role: Role
+          locale: Locale
+          communities: Communities
+          confirmed: Confirmed
+          last_login: Last login

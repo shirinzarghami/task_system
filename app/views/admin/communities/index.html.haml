@@ -1,12 +1,12 @@
 - content_for :menu do
   =render partial: '/admin/shared/admin_menu'
 - content_for :title do
-  Manage communities
+  =t('communities.index.title')
 
 %p
   %table
-    %th Name
-    %th Subdomain
-    %th Users
+    %th= t('activerecord.attributes.community.name')
+    %th= t('activerecord.attributes.community.subdomain')
+    %th= t('activerecord.attributes.community.members')
     %th
     = render partial: 'community', collection: @communities

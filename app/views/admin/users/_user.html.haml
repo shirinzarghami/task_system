@@ -3,8 +3,8 @@
   %td= user.name
   %td= user.global_role
   %td= user.communities.count
-  %td= user.confirmed? ? "Yes" : "No"
-  %td= l(user.last_sign_in_at.localtime, format: '%d %B %Y, %I:%M') unless user.last_sign_in_at.nil?
+  %td= user.confirmed? ? t('yes') : t('no')
+  %td= l(user.last_sign_in_at.localtime, format: :short) unless user.last_sign_in_at.nil?
   %td
-    = link_to 'Edit', edit_admin_user_path(user)
-    = link_to 'Delete', admin_user_path(user), method: :delete, confirm: "Are you sure?"
+    = link_to t('actions.edit'), edit_admin_user_path(user)
+    = link_to t('actions.delete'), admin_user_path(user), method: :delete, confirm: t('messages.confirm')

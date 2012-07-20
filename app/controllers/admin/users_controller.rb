@@ -1,8 +1,16 @@
 class Admin::UsersController < AdminController
+
+  FILTERS = {
+    admin_only: ["global_role = 'admin'"],
+    unconfirmed_only: ["confirmed_at IS NULL"]
+  }
+
   def index
-    @users = User.paginate page: params[:page], per_page: 25
+    @filter = filter_name
+    @users = User.paginate page: params[:page], per_page: 25, conditions: apply_filter
     respond_to do |format|
       format.html
+      format.js
       format.json {render json: User.where('email like ?', "%#{params[:q]}%")}
     end
   end
@@ -20,10 +28,10 @@ class Admin::UsersController < AdminController
    end
 
    if @user.save
-    flash[:notice] = "User has been saved"
+    flash[:notice] = t('messages.save_success')
     redirect_to admin_users_path
    else
-    flash[:error] = "Could not save the user"
+    flash[:error] = t('messages.save_fail')
     render action: 'new'
    end
   end
@@ -41,10 +49,10 @@ class Admin::UsersController < AdminController
     end
 
     if @user.update_attributes params[:user]
-     flash[:notice] = "User has been saved"
+     flash[:notice] = t('messages.save_success')
      redirect_to admin_users_path
     else
-     flash[:error] = "Could not save the user"
+     flash[:error] = t('messages.save_fail')
      render action: 'edit'
     end
 
@@ -52,7 +60,18 @@ class Admin::UsersController < AdminController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:notice] = "User has been deleted"
+    flash[:notice] = t('messages.delete')
     redirect_to admin_users_path
   end
+
+
+  def apply_filter
+    params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? FILTERS[params[:filter].to_sym] : []
+  end
+
+  def filter_name
+    params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? params[:filter] : ''
+  end
+
+
 end

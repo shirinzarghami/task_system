@@ -3,5 +3,5 @@
   %td= community.subdomain
   %td= community.members.count
   %td
-    =link_to 'Edit', edit_admin_community_path(community)
-    =link_to 'Delete', admin_community_path(community), method: :delete, confirm: "Are you sure?"
+    =link_to t('actions.edit'), edit_admin_community_path(community)
+    =link_to t('actions.delete'), admin_community_path(community), method: :delete, confirm: t('messages.confirm')

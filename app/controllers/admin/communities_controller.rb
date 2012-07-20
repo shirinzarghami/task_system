@@ -1,6 +1,7 @@
 class Admin::CommunitiesController < AdminController
   layout 'admin'
 
+  
   def index
     @communities = Community.paginate page: params[:page], per_page: 25
   end
@@ -13,7 +14,7 @@ class Admin::CommunitiesController < AdminController
     @community = Community.new params[:community]
 
     if @community.save 
-      flash[:notice] = "Successfully created"
+      flash[:notice] = t('messages.save_success')
       redirect_to admin_communities_path
     else
       render action: 'edit'
@@ -27,7 +28,7 @@ class Admin::CommunitiesController < AdminController
   def update
     @community = Community.find params[:id]
     if @community.update_attributes params[:community]
-      flash[:notice] = "Successfully updated community"
+      flash[:notice] = t('messages.save_success')
       redirect_to admin_communities_path
     else
       render action: 'edit'
@@ -37,7 +38,10 @@ class Admin::CommunitiesController < AdminController
   def destroy
     @community = Community.find params[:id]
     @community.destroy
-    flash[:notice] = "Community has been deleted"
+    flash[:error] = t('messages.delete')
     redirect_to admin_communities_path
   end
+
+
+
 end

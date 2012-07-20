@@ -1,0 +1,40 @@
+en:
+  yes: Yes
+  no: No
+  actions:
+    new: New
+    edit: Edit
+    delete: Delete
+    submit: Save
+  messages:
+    save_success: Item was successfully saved
+    save_fail: Item could not be saved
+    delete: "Item has been deleted"
+    confirm: Are you sure?
+
+
+  communities:
+    index:
+      title: Manage communities
+    edit:
+      title: Edit community
+    new:
+      title: New community
+
+  users:
+    index:
+      title: Manage users
+    edit:
+      title: Edit users
+    new:
+      title: New users
+
+  form:
+    details: "%{model} details"
+    token_hint: Type an user e-mail to search and add users
+
+  menu:
+    filters: Filters
+    filter_admin: Only administrators
+    filter_unconfirmed: Unconfirmed users
+    filter_none: Show all results    
