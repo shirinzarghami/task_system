@@ -7,7 +7,7 @@ class Admin::UsersController < AdminController
 
   def index
     @filter = filter_name
-    @users = User.paginate page: params[:page], per_page: 25, conditions: apply_filter
+    @users = User.paginate page: params[:page], per_page: 25, conditions: apply_filter + find_user
     respond_to do |format|
       format.html
       format.js
@@ -66,11 +66,15 @@ class Admin::UsersController < AdminController
 
 
   def apply_filter
-    params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? FILTERS[params[:filter].to_sym] : []
+    (params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym)) ? FILTERS[params[:filter].to_sym] : []
   end
 
   def filter_name
     params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? params[:filter] : ''
+  end
+
+  def find_user
+    (params.has_key? :query) ? ['email LIKE ?', "%#{params[:query]}%"] : []
   end
 
 

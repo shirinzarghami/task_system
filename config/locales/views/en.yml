@@ -32,6 +32,7 @@ en:
   form:
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users
+    user_search_hint: Find a user
 
   menu:
     filters: Filters
