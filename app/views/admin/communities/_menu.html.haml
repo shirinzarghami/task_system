@@ -1,0 +1,10 @@
+%h2= t('menu.filters')
+%fieldset.menu
+  = form_tag({},{method: :get, remote: true}) do
+    = text_field_tag :query,'', class: 'search'
+%p
+  =filter_button t('menu.filter_empty'), 'empty_only'
+  =filter_button t('menu.filter_unconfirmed'), 'unconfirmed_only'
+  =filter_button t('menu.filter_none'), ''
+
+=render partial: '/admin/shared/admin_menu'

@@ -39,3 +39,5 @@ en:
     filter_admin: Only administrators
     filter_unconfirmed: Unconfirmed users
     filter_none: Show all results    
+    filter_empty: Empty communities
+
