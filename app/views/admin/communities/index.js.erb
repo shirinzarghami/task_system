@@ -3,9 +3,9 @@ $(".filter").each(function(){
 });
 $('#<%= @filter %>').addClass('active');
 $('#<%= @filter %>').animate({'background-color':'red'}, 2000);
-  $('#users').fadeOut('slow', function() {
-    $('#users').html("<%= j render partial: 'users' %>");
-    $('#users').fadeIn('slow');
+  $('#communities').fadeOut('slow', function() {
+    $('#communities').html("<%= j render partial: 'communities' %>");
+    $('#communities').fadeIn('slow');
   });
 
 <% if params.has_key?(:filter) and params[:filter].present? %>

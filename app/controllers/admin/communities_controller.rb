@@ -1,9 +1,14 @@
 class Admin::CommunitiesController < AdminController
   layout 'admin'
-
   
   def index
-    @communities = Community.paginate page: params[:page], per_page: 25
+    @filter = filter_name
+    @communities = Community.paginate page: params[:page], per_page: 25, conditions: apply_filter + find_community
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

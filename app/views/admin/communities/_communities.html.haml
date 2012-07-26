@@ -1,0 +1,6 @@
+%table#communities
+  %th= t('activerecord.attributes.community.name')
+  %th= t('activerecord.attributes.community.subdomain')
+  %th= t('activerecord.attributes.community.members')
+  %th
+  = render partial: 'community', collection: @communities

@@ -1,13 +1,9 @@
 class Admin::UsersController < AdminController
 
-  FILTERS = {
-    admin_only: ["global_role = 'admin'"],
-    unconfirmed_only: ["confirmed_at IS NULL"]
-  }
 
   def index
     @filter = filter_name
-    @users = User.paginate page: params[:page], per_page: 25, conditions: apply_filter + find_user
+    @users = User.paginate page: params[:page], per_page: 25, conditions: apply_filter + find_community
     respond_to do |format|
       format.html
       format.js
@@ -65,17 +61,17 @@ class Admin::UsersController < AdminController
   end
 
 
-  def apply_filter
-    (params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym)) ? FILTERS[params[:filter].to_sym] : []
-  end
+  # def apply_filter
+  #   (params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym)) ? FILTERS[params[:filter].to_sym] : []
+  # end
 
-  def filter_name
-    params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? params[:filter] : ''
-  end
+  # def filter_name
+  #   params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? params[:filter] : ''
+  # end
 
-  def find_user
-    (params.has_key? :query) ? ['email LIKE ?', "%#{params[:query]}%"] : []
-  end
+  # def find_user
+  #   (params.has_key? :query) ? ['email LIKE ?', "%#{params[:query]}%"] : []
+  # end
 
 
 end

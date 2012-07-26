@@ -3,3 +3,5 @@
 - content_for :title do
   = t('communities.new.title')
 =render partial: 'form'
+:javascript
+  users_url = "#{admin_users_url}"
