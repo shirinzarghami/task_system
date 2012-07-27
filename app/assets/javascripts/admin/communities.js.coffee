@@ -3,15 +3,15 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  # $('#community_user_tokens').tokenInput document.location.origin + '/admin/users.json' $(location).attr('href')
-  $('#community_user_tokens').tokenInput users_url,
-    theme: 'facebook'
-    propertyToSearch: 'email'
-    preventDuplicates: true
+  if (window.users_url)
+    $('#community_user_tokens').tokenInput users_url,
+      theme: 'facebook'
+      propertyToSearch: 'email'
+      preventDuplicates: true
 
-  $('#community_admin_user_tokens').tokenInput users_url,
-    theme: 'facebook'
-    propertyToSearch: 'email'
+    $('#community_admin_user_tokens').tokenInput users_url,
+      theme: 'facebook'
+      propertyToSearch: 'email'
 
   $('#community_name').keyup ->
     text = makeValidSubdomain($('#community_name').val())
