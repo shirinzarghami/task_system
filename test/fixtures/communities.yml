@@ -3,7 +3,3 @@
 one:
   name: MyString
   subdomain: MyString
-
-two:
-  name: MyString
-  subdomain: MyString
