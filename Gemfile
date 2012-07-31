@@ -42,3 +42,4 @@ gem 'haml'
 gem 'devise'
 gem 'will_paginate'
 gem 'simple_form'
+# gem "factory_girl_rails", "~> 3.0"

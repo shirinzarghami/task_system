@@ -4,9 +4,20 @@ class CommunityTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  test "Community should be valid with valid attributes" do
+    c = Community.new name: 'Test', max_users: 20, subdomain: 'test'
+    assert c.save
+  end
 
   test "Community should not be valid without a subdomain" do
-    c = Community.new name: 'test community', max_users: 20
+    c = Community.new name: 'Test', max_users: 20
+    assert !c.save
+  end
+
+  test "A user can only have one role within one community" do
+    c = Community.new name: 'Test', max_users: 20, subdomain: 'test'
+    c.users << users(:one)
+    c.admin_users << users(:one)
     assert !c.save
   end
 end

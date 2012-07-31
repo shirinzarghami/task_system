@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class Admin::UsersControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+  def setup 
+    @user = users(:one)
+    @user_params = {user: {email: 'jan@example.com', name: 'Jan', password: 'test1234', password_confirmation: 'test1234'}}
+    sign_in @user
+  end
+
   test "should get index" do
     get :index
     assert_response :success
@@ -12,23 +19,26 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    get :create
-    assert_response :success
+  post :create, @user_params
+    assert_response :redirect
+    assert_redirected_to admin_users_path
   end
 
   test "should get edit" do
-    get :edit
+    get :edit, id: @user.id
     assert_response :success
   end
 
   test "should get update" do
-    get :update
-    assert_response :success
+    put :update, @user_params.merge(id: @user) 
+    assert_response :redirect
+    assert_redirected_to admin_users_path
   end
 
   test "should get destroy" do
-    get :destroy
-    assert_response :success
+    delete :destroy, id: @user
+    assert_response :redirect
+    assert_redirected_to admin_users_path
   end
 
 end
