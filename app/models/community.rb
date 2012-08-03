@@ -4,10 +4,10 @@ class Community < ActiveRecord::Base
 
   has_many :community_users, dependent: :destroy
 
-  has_many :members, through: :community_users, class_name: 'User', source: :user
+  has_many :members, through: :community_users, class_name: 'User', source: :user, dependent: :destroy
   # Only normal user
-  has_many :users, through: :community_users, conditions: ['role = ?', 'normal']
-  has_many :admin_users, through: :community_users, class_name: 'User', source: :user, conditions: ['role = ?', 'admin']
+  has_many :users, through: :community_users, conditions: ['role = ?', 'normal'], dependent: :destroy
+  has_many :admin_users, through: :community_users, class_name: 'User', source: :user, conditions: ['role = ?', 'admin'], dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_]+$/}
   validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_]+$/}
