@@ -13,22 +13,32 @@ en:
     confirm: Are you sure?
 
 
+  layout:
+    communities: Communities
+    users: Users
+  admin:
+    communities:
+      index:
+        title: Manage communities
+      edit:
+        title: Edit community
+      new:
+        title: New community
+
+    users:
+      index:
+        title: Manage users
+      edit:
+        title: Edit users
+      new:
+        title: New users
+
   communities:
     index:
-      title: Manage communities
-    edit:
-      title: Edit community
-    new:
-      title: New community
-
-  users:
-    index:
-      title: Manage users
-    edit:
-      title: Edit users
-    new:
-      title: New users
-
+      title: Communities
+      subtitle: You are a member of the following communities
+      name: Name
+      role: Role
   form:
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users
@@ -40,4 +50,6 @@ en:
     filter_unconfirmed: Unconfirmed users
     filter_none: Show all results    
     filter_empty: Empty communities
-
+    create_community: Create a community
+    create_user: Create a user
+    logout: Logout

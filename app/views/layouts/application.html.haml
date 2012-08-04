@@ -12,11 +12,7 @@
           %h1 Task Systeem
 
           %ul.tabs
-            %li= link_to 'Dashboard', 'www.google.com'
-            %li.active= link_to 'Tasks', 'www.google.com'
-            %li= link_to 'Payments', 'www.google.com'
-            %li= link_to 'Cooking', 'www.google.com'
-            %li= link_to 'Settings', 'www.google.com'
+            =tab_link t('layout.communities'), communities_path
 
           %ul.flags
             %li=link_to(image_tag('nl.png'), 'bla')
@@ -30,22 +26,8 @@
         -if flash[:error]
           %div.flash.error= flash[:error]
         =yield
-      %div.menu
-        %h2 Tasks
-        %p
-          =link_to 'Create a new task', 'www.google.com', class: 'button'
-          =link_to "My todo's", 'www.google.com', class: 'button'
-
-        %h2 Other        
-        %p
-          =link_to 'Account', 'www.google.com', class: 'button'
-          =link_to 'Settings', 'www.google.com', class: 'button'
-          =link_to 'Log out', 'www.google.com', class: 'button'
-
-        %h2 Community
-        %p
-          =link_to 'Deepshit', 'www.google.com', class: 'button'
-          =link_to 'Globehouse', 'www.google.com', class: 'button'
+      %div.menu= yield :menu
+        
 
       %div.footer
         Created by Martijn Bolhuis

@@ -1,0 +1,14 @@
+- content_for :title do
+  =t('communities.index.title')
+- content_for :menu  do
+  = render partial: 'menu.html.haml'
+
+%h3= t('communities.index.subtitle')
+
+%p
+  %table
+    %th= t('communities.index.name')
+    %th= t('communities.index.role')
+    %th
+
+    =render partial: 'community.html.haml', collection: @community_users
