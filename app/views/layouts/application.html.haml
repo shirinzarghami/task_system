@@ -20,7 +20,7 @@
 
 
       %div.contents
-        %h1 Title
+        %h1= yield :title
         -if flash[:notice]
           %div.flash.success= flash[:notice]
         -if flash[:error]

@@ -1,9 +1,11 @@
-select, fieldset, input
+select, fieldset, input, textarea
   background-color: $grey7
   border: 1px solid $grey5
   font-size: 12px
   font-family: 'Open Sans',arial,sans-serif
   border-radius: 2px
+
+select, fieldset, input
   display: block
 
 input[type=checkbox] 
@@ -14,14 +16,14 @@ label
 label.checkbox
   display: inline
 
-select.error, fieldset.error, input.error
+select.error, fieldset.error, input.error, textarea.error
   background-color: $red0
   display: inline
 
-select:focus, input:focus, select:hover, input:hover
+select:focus, input:focus, select:hover, input:hover, textarea:hover, textarea:focus
   border: 1px solid $yellow2
 
-select.error:focus, input.error:focus, select.error:hover, input.error:hover
+select.error:focus, input.error:focus, select.error:hover, input.error:hover, textarea.error:focus
   border: 1px solid red
 select
   width: 211px
@@ -48,6 +50,11 @@ input[type=text].search
   background-image: url('search.png')
   background-position: 180px center
   background-repeat: no-repeat
+
+textarea
+  width: 600px
+  height: 100px
+  background-color: white
 label
   margin-right: 15px
 

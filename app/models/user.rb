@@ -15,6 +15,11 @@ class User < ActiveRecord::Base
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
 
+  has_many :admin_communities, through: :community_users, source: :community, class_name: 'Community', conditions: ['role = ?', 'admin']
+  has_many :normal_communities, through: :community_users, source: :community,class_name: 'Community', conditions: ['role = ?', 'normal']
+
+  has_many :invites, class_name: 'Invite', foreign_key: 'invitor_id', dependent: :destroy
+  has_many :invitations, class_name: 'Invite', foreign_key: 'invitee_id', dependent: :destroy
   USER_ROLES = [:normal, :admin]
 
 end

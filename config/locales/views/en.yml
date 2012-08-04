@@ -39,10 +39,15 @@ en:
       subtitle: You are a member of the following communities
       name: Name
       role: Role
+    new:
+      title: Create a new community
+      created: The community has been created successfully. The invited members will receive an email.
+      not_created: Could not create the community
   form:
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users
     user_search_hint: Find a user
+    email_hint: Type some email addresses that you wish to invite for this community separated by a comma
 
   menu:
     filters: Filters

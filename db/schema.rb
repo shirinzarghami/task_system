@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719091042) do
+ActiveRecord::Schema.define(:version => 20120804154942) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "subdomain"
-    t.string   "max_users",  :default => "20"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.integer  "max_users",  :default => 20
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "community_users", :force => true do |t|
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(:version => 20120719091042) do
     t.string   "role",         :default => "normal"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+  end
+
+  create_table "invites", :force => true do |t|
+    t.integer  "invitor_id"
+    t.integer  "invitee_id"
+    t.integer  "community_id"
+    t.string   "invitee_email"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|
