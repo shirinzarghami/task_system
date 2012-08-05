@@ -5,12 +5,9 @@ class CommunitiesController < ApplicationController
 
   def create
     @community = Community.new params[:community]
-    @community.deduce_subdomain
     @community.community_users.build role: 'admin', user: @user
     @community.invite @user
-
     if @community.save
-      # create_invitations
       flash[:notice] = t('communities.new.created')
       redirect_to communities_path
     else

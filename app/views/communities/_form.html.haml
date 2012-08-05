@@ -2,5 +2,5 @@
   = simple_form_for @community do |f|
     = f.input :name
     = f.input :subdomain, disabled: true
-    = f.input :user_emails, as: :text, hint: t('form.email_hint')
+    = f.input :invitation_emails, as: :text, hint: t('form.email_hint')
     = submit_button

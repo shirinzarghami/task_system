@@ -1,5 +1,5 @@
 class Community < ActiveRecord::Base
-  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :max_users, :user_emails
+  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :max_users, :invitation_emails
   attr_reader :user_tokens, :admin_user_tokens
 
   has_many :community_users, dependent: :destroy
@@ -15,7 +15,8 @@ class Community < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_]+$/}
   validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_]+$/}
 
-  before_create :deduce_subdomain
+  before_validation :deduce_subdomain
+  after_validation :set_invitation_errors
 
   # Token input railscast 258
   def user_tokens= ids
@@ -30,12 +31,12 @@ class Community < ActiveRecord::Base
   end
 
   # Creates invites for these emails
-  def user_emails= emails
-    @user_emails = emails
+  def invitation_emails= emails, invitor = nil
+    @invitation_emails = emails
   end
 
-  def user_emails
-    @user_emails
+  def invitation_emails
+    @invitation_emails
   end
 
   def deduce_subdomain
@@ -43,13 +44,18 @@ class Community < ActiveRecord::Base
   end
 
   def invite invitor, email_list = []
-    @user_emails = email_list if email_list.any?
-    @user_emails.split(',').first(max_users).map(&:strip).each do |email|
+    @invitation_emails = email_list if email_list.any?
+    @invitation_emails.split(',').first(max_users).map(&:strip).each do |email|
       invitee = User.find_by_email email
       params = invitee.present? ? {invitee: invitee} : {invitee_email: email}
       self.invites.build params.merge(invitor: invitor)
     end
   end
+
+  protected
+    def set_invitation_errors
+      self.errors.select {|e| e.first == :invites}.each {|e| self.errors.add(:invitation_emails, e.last)}
+    end
 
 
 end

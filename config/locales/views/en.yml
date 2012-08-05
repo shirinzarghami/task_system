@@ -12,6 +12,18 @@ en:
     delete: "Item has been deleted"
     confirm: Are you sure?
 
+  activerecord:
+      errors:
+        attributes:
+          invitation_emails:
+            in_valid: This are unvalid emails
+        messages:
+          taken: "has already been taken"
+          record_invalid: "Validation failed: %{errors}"
+          restrict_dependent_destroy:
+            one: "Cannot delete record because a dependent %{record} exists"
+            many: "Cannot delete record because dependent %{record} exist"
+
 
   layout:
     communities: Communities
