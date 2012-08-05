@@ -1,4 +1,4 @@
-class Invite < ActiveRecord::Base
+class Invitation < ActiveRecord::Base
   attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community
 
   belongs_to :community

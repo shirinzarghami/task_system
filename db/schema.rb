@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20120804154942) do
     t.datetime "updated_at",                         :null => false
   end
 
-  create_table "invites", :force => true do |t|
+  create_table "invitations", :force => true do |t|
     t.integer  "invitor_id"
     t.integer  "invitee_id"
     t.integer  "community_id"

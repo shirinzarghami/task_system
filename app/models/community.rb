@@ -3,7 +3,7 @@ class Community < ActiveRecord::Base
   attr_reader :user_tokens, :admin_user_tokens
 
   has_many :community_users, dependent: :destroy
-  has_many :invites, dependent: :destroy
+  has_many :invitations, dependent: :destroy
 
   # All users
   has_many :members, through: :community_users, class_name: 'User', source: :user
@@ -30,7 +30,7 @@ class Community < ActiveRecord::Base
      id_list.each { |id| self.community_users.build user_id: id, role: 'admin'} 
   end
 
-  # Creates invites for these emails
+  # Creates invitations for these emails
   def invitation_emails= emails, invitor = nil
     @invitation_emails = emails
   end
@@ -48,13 +48,13 @@ class Community < ActiveRecord::Base
     @invitation_emails.split(',').first(max_users).map(&:strip).each do |email|
       invitee = User.find_by_email email
       params = invitee.present? ? {invitee: invitee} : {invitee_email: email}
-      self.invites.build params.merge(invitor: invitor)
+      self.invitations.build params.merge(invitor: invitor)
     end
   end
 
   protected
     def set_invitation_errors
-      self.errors.select {|e| e.first == :invites}.each {|e| self.errors.add(:invitation_emails, e.last)}
+      self.errors.select {|e| e.first == :invitations}.each {|e| self.errors.add(:invitation_emails, e.last)}
     end
 
 
