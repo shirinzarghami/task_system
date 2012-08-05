@@ -43,7 +43,7 @@ class Admin::CommunitiesController < AdminController
   def destroy
     @community = Community.find params[:id]
     @community.destroy
-    flash[:error] = t('messages.delete')
+    flash[:notice] = t('messages.delete')
     redirect_to admin_communities_path
   end
 
