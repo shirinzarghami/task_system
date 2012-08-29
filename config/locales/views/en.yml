@@ -51,6 +51,8 @@ en:
       subtitle: You are a member of the following communities
       name: Name
       role: Role
+    show:
+      overview: Overview of 
     new:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.

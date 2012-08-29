@@ -1,28 +1,4 @@
 TaskSystem::Application.routes.draw do
-  # get "communities/index"
-
-  # get "communities/create"
-
-  # get "communities/edit"
-
-  # get "communities/destroy"
-
-  # get "communities/new"
-
-  # get "communities/update"
-
-  # get "users/index"
-
-  # get "users/new"
-
-  # get "users/create"
-
-  # get "users/edit"
-
-  # get "users/update"
-
-  # get "users/destroy"
-
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
 
   get "dashboard/index"
@@ -32,6 +8,9 @@ TaskSystem::Application.routes.draw do
     resources :communities
     resources :users
   end
+
+  match '/' => 'communities#show', :constraints => { :subdomain => /.+/ }
+
 
   root :to => 'Communities#index'
   # The priority is based upon order of creation:
