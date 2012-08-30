@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(:version => 20120804154942) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "subdomain"
-    t.integer  "max_users",  :default => 20
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.string   "max_users",  :default => "20"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "community_users", :force => true do |t|

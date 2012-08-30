@@ -18,6 +18,7 @@ class CommunitiesController < ApplicationController
 
   def show
     @community = @user.communities.find_by_subdomain request.subdomain
+    @invitations = @community.invitations
   end
 
   def edit

@@ -6,6 +6,7 @@ en:
       models:
         community: Community
         user: User
+        invitation: Invitation
       attributes:
         community:
           user_tokens: Normal members
@@ -22,3 +23,8 @@ en:
           communities: Communities
           confirmed: Confirmed
           last_login: Last login
+        invitation:
+          invitor: Invitor
+          invitee: Invitee
+          email: E-mail
+          created_at: Sent at

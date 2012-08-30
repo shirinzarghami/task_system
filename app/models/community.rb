@@ -45,7 +45,7 @@ class Community < ActiveRecord::Base
 
   def invite invitor, email_list = []
     @invitation_emails = email_list if email_list.any?
-    @invitation_emails.split(',').first(max_users).map(&:strip).each do |email|
+    @invitation_emails.split(',').first(20).map(&:strip).each do |email|
       invitee = User.find_by_email email
       params = invitee.present? ? {invitee: invitee} : {invitee_email: email}
       self.invitations.build params.merge(invitor: invitor)

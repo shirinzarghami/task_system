@@ -1,0 +1,9 @@
+%h2= t('activerecord.models.invitations')
+%p
+  %table
+    %tr
+      %th= t('activerecord.attributes.invitation.invitor')
+      %th= t('activerecord.attributes.invitation.email')
+      %th= t('activerecord.attributes.invitation.created_at')
+
+    = render partial: 'invitation', collection: @invitations
