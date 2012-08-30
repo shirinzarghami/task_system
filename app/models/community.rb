@@ -1,4 +1,7 @@
 class Community < ActiveRecord::Base
+  extend FriendlyId
+    friendly_id :subdomain
+
   attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :max_users, :invitation_emails
   attr_reader :user_tokens, :admin_user_tokens
 
@@ -17,6 +20,7 @@ class Community < ActiveRecord::Base
 
   before_validation :deduce_subdomain
   after_validation :set_invitation_errors
+
 
   # Token input railscast 258
   def user_tokens= ids

@@ -26,5 +26,5 @@ en:
         invitation:
           invitor: Invitor
           invitee: Invitee
-          email: E-mail
+          invitee_email: E-mail
           created_at: Sent at

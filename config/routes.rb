@@ -1,16 +1,25 @@
 TaskSystem::Application.routes.draw do
+  get "invitations/new"
+
+  get "invitations/create"
+
+  get "invitations/destroy"
+
+  get "invitations/accept"
+
+  get "invitations/index"
+
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
 
   get "dashboard/index"
-  resources :communities
+  resources :communities, path: '' do
+    resources :invitations
+  end
   namespace :admin do
     root to: 'Communities#index'
     resources :communities
     resources :users
   end
-
-  match '/' => 'communities#show', :constraints => { :subdomain => /.+/ }
-
 
   root :to => 'Communities#index'
   # The priority is based upon order of creation:

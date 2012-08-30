@@ -1,4 +1,5 @@
 %tr
-  %td= @invitation.invitor.name
-  %td= @invitation.email
-  %td= @invitation.created_at
+  %td= invitation.invitor.name
+  %td= invitation.invitee_email
+  %td= I18n.l invitation.created_at, format: :long
+  %td= link_to image_tag('fail-small.png'), community_invitation_path(@community, invitation), method: :delete, confirm: t('messages.confirm')

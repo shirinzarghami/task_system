@@ -3,4 +3,4 @@
 - content_for :menu  do
   = render partial: 'menu.html.haml'
 
-= render partial: 'invitations'
+= render partial: 'invitations' unless @invitations.empty?

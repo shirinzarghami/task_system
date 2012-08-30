@@ -10,6 +10,7 @@ en:
     save_success: Item was successfully saved
     save_fail: Item could not be saved
     delete: "Item has been deleted"
+    delete_fail: "Item could not be deleted"
     confirm: Are you sure?
 
   activerecord:
@@ -57,6 +58,8 @@ en:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
+
+
   form:
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users
