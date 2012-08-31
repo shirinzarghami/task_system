@@ -52,6 +52,7 @@ en:
       subtitle: You are a member of the following communities
       name: Name
       role: Role
+      members: Members
     show:
       overview: Overview of 
     new:
