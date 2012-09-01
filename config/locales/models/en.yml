@@ -30,3 +30,6 @@ en:
           invitee: Invitee
           invitee_email: E-mail
           created_at: Sent at
+      values:
+        admin: Administrator
+        normal: Normal user

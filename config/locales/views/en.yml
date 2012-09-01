@@ -6,12 +6,14 @@ en:
     edit: Edit
     delete: Delete
     submit: Save
+    unsubscribe: Unsubscribe
   messages:
     save_success: Item was successfully saved
     save_fail: Item could not be saved
     delete: "Item has been deleted"
     delete_fail: "Item could not be deleted"
     confirm: Are you sure?
+    error: An error occured
 
   activerecord:
       errors:
@@ -59,6 +61,9 @@ en:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
+    destroy:
+      unsubscribed: Your are successfully unsubscribed
+
 
 
   form:

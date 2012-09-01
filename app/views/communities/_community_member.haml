@@ -1,0 +1,5 @@
+%tr
+  %td= community_member.user.name
+  %td= community_member.user.email
+  %td= role_name community_member.role
+  %td= (link_to t('actions.delete'), community_user_path(community_member), method: :delete, confirm: t('messages.confirm')) if community_admin?

@@ -11,7 +11,7 @@ class CommunitiesController < ApplicationController
       flash[:notice] = t('communities.new.created')
       redirect_to communities_path
     else
-      flash[:warning] = t('communities.new.not_created')
+      flash[:error] = t('communities.new.not_created')
       render action: 'new'
     end
   end
@@ -25,6 +25,7 @@ class CommunitiesController < ApplicationController
   end
 
   def destroy
+
   end
 
   def new

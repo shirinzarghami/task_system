@@ -1,0 +1,9 @@
+%h2= t('activerecord.attributes.community.members')
+%p
+  %table
+    %tr
+      %th= t('activerecord.attributes.user.name')
+      %th= t('activerecord.attributes.user.email')
+      %th= t('activerecord.attributes.user.role')
+      %th
+    = render partial: 'community_member', collection: @community.community_users

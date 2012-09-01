@@ -1,25 +1,33 @@
 TaskSystem::Application.routes.draw do
-  get "invitations/new"
+  # get "community_users/destroy"
 
-  get "invitations/create"
+  # get "community_users/create"
 
-  get "invitations/destroy"
+  # get "community_users/update"
 
-  get "invitations/accept"
+  # get "invitations/new"
 
-  get "invitations/index"
+  # get "invitations/create"
+
+  # get "invitations/destroy"
+
+  # get "invitations/accept"
+
+  # get "invitations/index"
 
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
 
-  get "dashboard/index"
-  resources :communities, path: '' do
-    resources :invitations
-  end
   namespace :admin do
     root to: 'Communities#index'
     resources :communities
     resources :users
   end
+
+  get "dashboard/index"
+  resources :communities, path: '' do
+    resources :invitations
+  end
+  resources :community_users
 
   root :to => 'Communities#index'
   # The priority is based upon order of creation:

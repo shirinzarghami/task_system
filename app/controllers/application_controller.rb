@@ -9,5 +9,6 @@ class ApplicationController < ActionController::Base
 
   def find_community
     @community = @user.communities.find_by_subdomain params.has_key?(:community_id) ? params[:community_id] : params[:id] if @user
+    @community_user = CommunityUser.find_by_community_id_and_user_id(@community, @user)
   end
 end
