@@ -23,5 +23,9 @@ module ButtonHelper
     link_to text, params.merge(filter: filter_name), class: "button filter", id: filter_name, remote: true
   end
 
+  def image_button image, link, link_options={}, image_options={}
+    link_to image_tag(image, image_options), link, link_options
+  end
+
 
 end
