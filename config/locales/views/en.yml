@@ -14,6 +14,7 @@ en:
     delete_fail: "Item could not be deleted"
     confirm: Are you sure?
     error: An error occured
+    not_allowed: You are not allowed to perform this action
 
   activerecord:
       errors:
@@ -61,8 +62,12 @@ en:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
-    destroy:
-      unsubscribed: Your are successfully unsubscribed
+
+    community_users:
+      destroy:
+        unsubscribed: Your are successfully unsubscribed
+      not_found: Couldn't find a user membership for this community
+
 
 
 

@@ -1,10 +1,10 @@
-%h2= t('activerecord.models.invitations')
+
 %p
+  =table_title t('activerecord.models.invitations'), 4, 'mail.png'
   %table
     %tr
       %th= t('activerecord.attributes.invitation.invitor')
-      %th= t('activerecord.attributes.invitation.email')
+      %th= t('activerecord.attributes.invitation.invitee_email')
       %th= t('activerecord.attributes.invitation.created_at')
       %th
-
     = render partial: 'invitation', collection: @invitations
