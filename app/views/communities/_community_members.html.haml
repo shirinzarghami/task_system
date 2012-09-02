@@ -1,6 +1,10 @@
 %p
-  =table_title t('activerecord.attributes.community.members'), 4, 'iconic/user_12x16.png'
-  %table.topline
+  %table
+    %tr.line
+      %th= image_tag('iconic/user_12x16.png') + t('activerecord.attributes.community.members')
+      %th
+      %th
+      %th
     %tr
       %th= t('activerecord.attributes.user.name')
       %th= t('activerecord.attributes.user.email')
