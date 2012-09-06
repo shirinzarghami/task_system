@@ -1,5 +1,5 @@
 %fieldset
-  = simple_form_for @user, url: accept_new_account_community_invitation_path(@community, @invitation.token) do |f|
+  = simple_form_for @user, url: accept_new_account_invitation_path(@invitation.token) do |f|
     = f.input :name
     = f.input :email
     = f.input :password

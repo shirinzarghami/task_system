@@ -1,5 +1,5 @@
 class CommunityUser < ActiveRecord::Base
-  attr_accessible :community_id, :role, :user_id, :user
+  attr_accessible :community_id, :role, :user_id, :user, :community
 
   belongs_to :user
   belongs_to :community

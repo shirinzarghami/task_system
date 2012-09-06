@@ -17,6 +17,9 @@ en:
     confirm: Are you sure?
     error: An error occured
     not_allowed: You are not allowed to perform this action
+    accept_success: You are now a member of %{community}
+    accept_fail: Creating subscription for %{community} failed.
+    deny_success: You've successfully denied the membership for %{community}
 
   activerecord:
       errors:

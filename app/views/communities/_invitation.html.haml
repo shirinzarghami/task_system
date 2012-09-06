@@ -2,4 +2,4 @@
   %td= invitation.invitor.name
   %td= invitation.invitee_email
   %td= I18n.l invitation.created_at, format: :long
-  %td= image_button 'iconic/trash_fill_12x12.png', community_invitation_path(@community, invitation), method: :delete, confirm: t('messages.confirm')
+  %td= image_button 'iconic/trash_fill_12x12.png', invitation_path(invitation), method: :delete, confirm: t('messages.confirm')

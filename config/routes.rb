@@ -24,13 +24,13 @@ TaskSystem::Application.routes.draw do
   end
 
   get "dashboard/index"
+  resources :invitations do 
+    member do
+      post 'accept'
+      post 'accept_new_account'
+    end
+  end 
   resources :communities, path: '' do
-    resources :invitations do 
-      member do
-        post 'accept'
-        post 'accept_new_account'
-      end
-    end 
   end
   resources :community_users
 

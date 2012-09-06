@@ -1,6 +1,6 @@
 %fieldset
   %h2= t('invitations.show.question')
-  = form_tag(accept_community_invitation_path(@community, @invitation.token)) do
+  = form_tag(accept_invitation_path(@invitation.token)) do
     %div.input
       = radio_button_tag 'invitation', 'accept'
       = label_tag t('invitations.show.accept'), nil, class: 'checkbox'
