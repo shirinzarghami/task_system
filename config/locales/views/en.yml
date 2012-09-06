@@ -7,6 +7,8 @@ en:
     delete: Delete
     submit: Save
     unsubscribe: Unsubscribe
+    login: Log in
+    logout: Log out
   messages:
     save_success: Item was successfully saved
     save_fail: Item could not be saved
@@ -67,6 +69,15 @@ en:
       destroy:
         unsubscribed: Your are successfully unsubscribed
       not_found: Couldn't find a user membership for this community
+
+  invitations:
+    show:
+      title: Invitation for %{community}
+      accept: I accept the invitation
+      deny: I do NOT accept the invitation
+      question: Do you wish to accept the invitation?
+      login: Please login as %{email} in order accept this invitation
+      change_user: This invitation is for %{email}. You need to login as this user before you can accept the invitation.
 
 
 

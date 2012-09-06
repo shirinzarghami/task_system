@@ -1,0 +1,7 @@
+%fieldset
+  = simple_form_for @user, url: accept_new_account_community_invitation_path(@community, @invitation.token) do |f|
+    = f.input :name
+    = f.input :email
+    = f.input :password
+    = f.input :password_confirmation
+    = submit_button

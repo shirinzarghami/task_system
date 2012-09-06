@@ -9,6 +9,16 @@ class Invitation < ActiveRecord::Base
   validates :invitor, presence: true
   validates :invitee_email, format:  {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, allow_blank: true
 
+  after_create :send_invitation_email
+  before_create :generate_token
+
+  def send_invitation_email
+    InvitationMailer.invitation(self).deliver
+  end
+
+  def generate_token
+    self.token = SecureRandom.hex(15)
+  end
 
 
 end

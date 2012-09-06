@@ -1,0 +1,7 @@
+<%= t('invitation_mailer.invitation.salutation', invitee: @invitee_name) %>
+
+<%= t('invitation_mailer.invitation.body', invitor: @invitation.invitor.name, invitee: @invitee_name) %>
+
+<%= community_invitation_path(@invitation.community, @invitation.token) %>
+
+<%= t('invitation_mailer.invitation.greet') %>

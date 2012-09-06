@@ -2,4 +2,11 @@ en:
   invitation_mailer:
     invitation:
       subject: Invitation for task system
-      body: 
+      salutation: Dear %{invitee},
+      body: |
+        %{invitor} has sent you an invitation to join a group on www.task-system.com
+        This website allows groups to manage household tasks, finance, shoppin lists and more. 
+        If you wish to accept the invitation, please follow the link and sign up
+      greet: |
+        Best regards,
+        The task system
