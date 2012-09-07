@@ -1,5 +1,5 @@
 class Invitation < ActiveRecord::Base
-  attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community
+  attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community, :invitation_emails
 
   belongs_to :community
   belongs_to :invitor, class_name: 'User'
@@ -20,5 +20,13 @@ class Invitation < ActiveRecord::Base
     self.token = SecureRandom.hex(15)
   end
 
+  # Dummy variable for form
+  def invitation_emails
+    @invitation_emails
+  end
+
+  def invitation_emails= emails
+    @invitation_emails = emails
+  end
 
 end

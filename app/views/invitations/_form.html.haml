@@ -1,5 +1,5 @@
 %fieldset
-  = simple_form_for @invitation do |f|
-    = f.association :community, collection: @communities
-    = f.input :invitee_email, as: :text, hint: t('form.email_hint')
+  = simple_form_for @invitation_dummy do |f|
+    = f.association :community, collection: @communities, include_blank: false
+    = f.input :invitation_emails, as: :text, hint: t('form.email_hint')
     = submit_button

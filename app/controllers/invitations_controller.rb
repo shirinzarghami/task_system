@@ -1,16 +1,27 @@
 class InvitationsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:show, :accept_new_account, :accept]
-  skip_before_filter :find_community
+  skip_before_filter :find_community, except: [:create]
+
   before_filter :find_invitation_by_token, only: [:accept, :accept_new_account, :show]
   before_filter :accept_allowed?, only: [:accept]
   before_filter :accept_new_account_allowed?, only: [:accept_new_account]
 
   def new
     @communities = current_user.communities
-    @invitation = Invitation.new
+    @invitation_dummy = Invitation.new
   end
 
   def create
+    @invitation_dummy = Invitation.new params[:invitation]
+    @community.invite current_user, params[:invitation][:invitation_emails]
+
+    if @community.save
+      flash[:notice] = t('messages.invite_success')
+      redirect_to community_path(@community)
+    else
+      flash[:notice] = t('messages.error')
+      redirect_to community_path(@community)
+    end
   end
 
   def destroy
@@ -37,7 +48,7 @@ class InvitationsController < ApplicationController
       redirect_to community_path(@community)
     rescue ActiveRecord::RecordInvalid => invalid
       flash[:notice] = t('messages.accept_fail', community: @community.name)
-      redirect_to community_path(@community)
+      redirect_to (params[:invitation] == 'accept' ? community_path(@community) : communities_path)
     end
 
   end
@@ -85,6 +96,13 @@ class InvitationsController < ApplicationController
     def accept_new_account_allowed?
       if @invitation.invitee
         redirect_to new_user_session_path
+      end
+    end
+
+    def find_community
+      @community = Community.find params[:invitation][:community_id]
+      unless @community
+        redirect_to (current_user ? communities_path : new_user_session_path)
       end
     end
 end

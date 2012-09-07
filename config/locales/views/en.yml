@@ -20,6 +20,7 @@ en:
     accept_success: You are now a member of %{community}
     accept_fail: Creating subscription for %{community} failed.
     deny_success: You've successfully denied the membership for %{community}
+    invite_success: You have successfully created invitations
 
   activerecord:
       errors:
