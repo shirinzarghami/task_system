@@ -57,7 +57,7 @@ en:
   communities:
     index:
       title: Communities
-      subtitle: You are a member of the following communities
+      memberships: Memberships
       name: Name
       role: Role
       members: Members
@@ -81,6 +81,8 @@ en:
       question: Do you wish to accept the invitation?
       login: Please login as %{email} in order accept this invitation
       change_user: This invitation is for %{email}. You need to login as this user before you can accept the invitation.
+    new:
+      title: Create an invitation for community
 
 
 
@@ -98,5 +100,6 @@ en:
     filter_none: Show all results    
     filter_empty: Empty communities
     create_community: Create a community
+    create_invitation: Invite someone
     create_user: Create a user
     logout: Logout

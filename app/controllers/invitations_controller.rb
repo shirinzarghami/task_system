@@ -6,6 +6,8 @@ class InvitationsController < ApplicationController
   before_filter :accept_new_account_allowed?, only: [:accept_new_account]
 
   def new
+    @communities = current_user.communities
+    @invitation = Invitation.new
   end
 
   def create
@@ -52,8 +54,7 @@ class InvitationsController < ApplicationController
         @invitation.destroy
       end
       sign_in(@user)
-      flash[:notice] = (params[:invitation] == 'accept' ? t('messages.accept_success', community: @community.name) : t('messages.deny_succes', community: @community.name)) 
-      redirect_to community_path(@community)
+      flash[:notice] = t('messages.accept_success', community: @community.name) 
     rescue ActiveRecord::RecordInvalid => invalid
       render action: 'show'
     end

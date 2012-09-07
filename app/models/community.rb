@@ -15,8 +15,8 @@ class Community < ActiveRecord::Base
   # Administrators
   has_many :admin_users, through: :community_users, class_name: 'User', source: :user, conditions: ['role = ?', 'admin']
 
-  validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_]+$/}
-  validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_]+$/}
+  validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_\s]+$/}
+  validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_\-]+$/}
 
   before_validation :deduce_subdomain
   after_validation :set_invitation_errors
@@ -44,7 +44,7 @@ class Community < ActiveRecord::Base
   end
 
   def deduce_subdomain
-    self.subdomain = name.gsub(/[^a-zA-Z0-9-_]/, '-').truncate(20, omission: '') if self.subdomain.nil?
+    self.subdomain = name.downcase.gsub(/[^a-z0-9\-_]/, '-').truncate(20, omission: '') if self.subdomain.nil?
   end
 
   def invite invitor, email_list = []

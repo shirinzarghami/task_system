@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(:version => 20120906082525) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "subdomain"
-    t.string   "max_users",  :default => "20"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.integer  "max_users",  :default => 20
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "community_users", :force => true do |t|
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20120906082525) do
     t.datetime "updated_at",    :null => false
     t.string   "token"
   end
+
+  add_index "invitations", ["token"], :name => "index_invitations_on_token"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",       :null => false
