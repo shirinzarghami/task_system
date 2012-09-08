@@ -1,15 +1,16 @@
-
+- show_accept ||= false
 %p
-  -# table_title t('activerecord.models.invitations'), 4, 'iconic/mail_16x12.png'
   %table
     %tr.line
-      %th= image_tag('iconic/mail_16x12.png') + t('activerecord.models.invitations')
+      %th= image_tag('iconic/mail_16x12.png') + (show_accept ? t('communities.index.invitations') : t('activerecord.models.invitations'))
       %th
       %th
       %th
     %tr
       %th= t('activerecord.attributes.invitation.invitor')
-      %th= t('activerecord.attributes.invitation.invitee_email')
+      %th
+        = show_accept ? t('activerecord.attributes.invitation.community') : t('activerecord.attributes.invitation.invitee_email')
       %th= t('activerecord.attributes.invitation.created_at')
       %th
-    = render partial: 'invitation', collection: @invitations
+
+    = render partial: 'invitation', collection: @invitations, locals: {show_accept: show_accept}

@@ -20,11 +20,16 @@
 
 
       %div.contents
-        %h1= yield :title
+        %div.title
+          = yield :logo
+          %h1= yield :title
         -if flash[:notice]
           %div.flash.success= flash[:notice]
         -if flash[:error]
           %div.flash.error= flash[:error]
+        -if flash[:info]
+          %div.flash.info= flash[:info]
+
         =yield
       %div.menu= yield :menu
         

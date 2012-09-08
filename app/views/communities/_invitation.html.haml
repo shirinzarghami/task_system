@@ -1,5 +1,8 @@
 %tr
   %td= invitation.invitor.name
-  %td= invitation.invitee_email
+  %td
+    = show_accept ? invitation.community.name : invitation.invitee_email
   %td= I18n.l invitation.created_at, format: :long
-  %td= image_button 'iconic/trash_fill_12x12.png', invitation_path(invitation), method: :delete, confirm: t('messages.confirm')
+  %td.actions
+    =image_button 'iconic/trash_fill_12x12.png', invitation_path(invitation), method: :delete, confirm: t('messages.confirm') unless show_accept
+    =image_button 'iconic/check_16x13.png', invitation_path(invitation.token) if show_accept

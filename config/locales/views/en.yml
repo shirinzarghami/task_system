@@ -1,6 +1,7 @@
 en:
   yes: Yes
   no: No
+  here: here
   actions:
     new: New
     edit: Edit
@@ -21,6 +22,7 @@ en:
     accept_fail: Creating subscription for %{community} failed.
     deny_success: You've successfully denied the membership for %{community}
     invite_success: You have successfully created invitations
+    new_invitation: There is a new invitation for you!
 
   activerecord:
       errors:
@@ -57,13 +59,14 @@ en:
 
   communities:
     index:
-      title: Communities
-      memberships: Memberships
+      title: Your communities
+      memberships: Your memberships
+      invitations: Invitations for you
       name: Name
       role: Role
       members: Members
     show:
-      overview: Overview of 
+      overview: Overview of community
     new:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.

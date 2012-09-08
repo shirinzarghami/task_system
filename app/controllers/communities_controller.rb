@@ -1,6 +1,8 @@
 class CommunitiesController < ApplicationController
+  before_filter :new_invitations_flash
   def index
     @community_users = @user.community_users
+    @invitations = current_user.invitations
   end
 
   def create
@@ -17,23 +19,18 @@ class CommunitiesController < ApplicationController
   end
 
   def show
-    # @community = @user.communities.find_by_subdomain params[:id]
     @invitations = @community.invitations
   end
 
-  def edit
-  end
-
-  def destroy
-
-  end
 
   def new
     @community = Community.new
   end
 
-  def update
-  end
+  protected
+    def new_invitations_flash
+      flash[:info] = t('messages.new_invitation') if current_user.invitations.any?
+    end
 
 
 end

@@ -1,0 +1,11 @@
+%fieldset
+  %span.title
+    =image_tag 'iconic/info_12x24.png'
+    = t('activerecord.models.community')
+  %table.fieldset
+    %tr
+      %th= t('activerecord.attributes.community.name')
+      %td= @invitation.community.name
+    %tr
+      %th= t('activerecord.attributes.community.members')
+      %td= @invitation.community.members.map(&:name).join(', ')

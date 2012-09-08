@@ -1,5 +1,7 @@
 %fieldset
-  %h2= t('invitations.show.question')
+  %span.title
+    = image_tag 'iconic/question_mark_12x24.png'
+    = t('invitations.show.question')
   = form_tag(accept_invitation_path(@invitation.token)) do
     %div.input
       = radio_button_tag 'invitation', 'accept'
