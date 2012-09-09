@@ -1,5 +1,13 @@
 %tr
   %td= community_member.user.name
   %td= community_member.user.email
-  %td= role_name community_member.role
-  %td= (image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm')) if community_admin?
+  %td
+    - if community_admin?
+      =simple_form_for(community_member) do |f|
+        = f.input :role, collection: ['admin', 'normal'], include_blank: false, label: ''
+    - else
+      role_name community_member.role
+
+  %td
+    = (image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm')) if community_admin?
+    = (image_tag'iconic/check_16x13.png', class: 'submit_community_user') if community_admin?
