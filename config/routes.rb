@@ -1,19 +1,4 @@
 TaskSystem::Application.routes.draw do
-  # get "community_users/destroy"
-
-  # get "community_users/create"
-
-  # get "community_users/update"
-
-  # get "invitations/new"
-
-  # get "invitations/create"
-
-  # get "invitations/destroy"
-
-  # get "invitations/accept"
-
-  # get "invitations/index"
 
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
 
@@ -30,7 +15,8 @@ TaskSystem::Application.routes.draw do
       post 'accept_new_account'
     end
   end 
-  resources :communities, path: '' do
+  resources :communities do
+    resources :tasks
   end
   resources :community_users
 

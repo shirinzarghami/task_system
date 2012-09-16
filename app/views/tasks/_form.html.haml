@@ -1,0 +1,30 @@
+= simple_form_for([@community, @task]) do |f|
+  %fieldset
+    %legend= t('form.categories.general')
+    = f.input :name
+    = f.input :description
+    = f.input :time, as: :time, hint: t('form.task_time_hint')
+    = f.input :should_be_checked, label: t('form.should_be_checked_hint')
+
+  %fieldset
+    %legend= t('form.categories.instantiation')
+    %div.radio
+      = radio_button_tag 'auto_instantiation', 'no'
+      = label_tag t('tasks.new.man_instantiate')
+    %div.radio
+      = radio_button_tag 'auto_instantiation', 'yes', true
+      = label_tag t('tasks.new.auto_instantiate')
+    %div#instantiation_options
+      = f.input :start_on, as: :string, input_html: {class: 'datepicker'}
+      %div.inline
+        = f.input :interval_number, as: :integer
+        %span.label_hide
+          = f.input :interval_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false
+      = f.input :repeat
+      %div.inline
+        = f.input :deadline_number, as: :integer
+        %span.label_hide
+          = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false
+
+  %fieldset
+    %legend= t('form.categories.allocation')

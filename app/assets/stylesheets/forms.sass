@@ -44,6 +44,9 @@ select.error:focus, input.error:focus, select.error:hover, input.error:hover, te
 select
   width: 211px
 
+select.time
+  display: inline
+  width: 50px
 fieldset
   margin: 50px 20px
   padding: 20px 
@@ -103,9 +106,32 @@ div.right
   float: right
   margin-top: 20px
 
+div.inline
+  margin-bottom: 10px
+  div.input
+    display: inline
+    input, select
+      display: inline
+      width: 150px
+
+span.label_hide
+  label
+    display: none
 
 td
   label
     display: none
   select
     width: 75px
+
+div.radio
+  margin-bottom: 10px
+  label
+    width: 300px
+    float: none
+    text-align: left
+    padding-left: 110px
+  input[type=radio]
+    float: left
+    width: 100px
+    display: block

@@ -13,6 +13,8 @@
 
           %ul.tabs
             =tab_link t('layout.communities'), communities_path
+            - if (@community.present? and !@community.new_record?)
+              =tab_link t('layout.tasks'), community_tasks_path(@community)
 
           %ul.flags
             %li=link_to(image_tag('nl.png'), 'bla')

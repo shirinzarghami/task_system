@@ -30,6 +30,9 @@ en:
           invitee: Invitee
           invitee_email: E-mail
           created_at: Sent at
+
+        task:
+          interval_number: Repeat every
       values:
         admin: Administrator
         normal: Normal user

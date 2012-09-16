@@ -40,6 +40,7 @@ en:
   layout:
     communities: Communities
     users: Users
+    tasks: Tasks
   admin:
     communities:
       index:
@@ -88,14 +89,28 @@ en:
     new:
       title: Create an invitation for community
 
+  tasks:
+    new:
+      title: Create a new task
+      man_instantiate: This task will be instantiated manually
+      auto_instantiate: This task will be instantiated automatically
+
 
 
 
   form:
+    categories:
+      general: General
+      instantiation: Instantiation
+      allocation: Allocation
+
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users
     user_search_hint: Find a user
     email_hint: Type some email addresses that you wish to invite for this community separated by a comma
+    task_time_hint: How much time does it take to complete this task? (hours / minutes)
+    should_be_checked_hint: The executor of this task has to report when the task is completed
+
 
   menu:
     filters: Filters
@@ -107,3 +122,5 @@ en:
     create_invitation: Invite someone
     create_user: Create a user
     logout: Logout
+    tasks: Tasks
+    actions: Actions

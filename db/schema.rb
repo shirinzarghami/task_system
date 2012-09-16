@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906082525) do
+ActiveRecord::Schema.define(:version => 20120915124716) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,25 @@ ActiveRecord::Schema.define(:version => 20120906082525) do
   end
 
   add_index "invitations", ["token"], :name => "index_invitations_on_token"
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "time"
+    t.integer  "deadline"
+    t.boolean  "should_be_checked"
+    t.integer  "user_order_id"
+    t.integer  "interval"
+    t.datetime "last_occurrence"
+    t.integer  "user_id"
+    t.integer  "community_id"
+    t.integer  "repeat"
+    t.date     "start_on"
+    t.string   "allocation_mode"
+    t.integer  "allocated_user_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",       :null => false
