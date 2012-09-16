@@ -4,7 +4,10 @@ class Task < ActiveRecord::Base
   belongs_to :user # Creator of the task
   belongs_to :allocated_user, class_name: 'User'
 
-  
+  ALLOCATION_MODES = [:in_turns, :time, :time_all, :voluntary, :user]
+  ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]} 
+
+
   def interval_number
     
   end
@@ -18,6 +21,10 @@ class Task < ActiveRecord::Base
   end
 
   def deadline_unit
+    
+  end
+
+  def repeat_infinite
     
   end
 end

@@ -94,6 +94,7 @@ en:
       title: Create a new task
       man_instantiate: This task will be instantiated manually
       auto_instantiate: This task will be instantiated automatically
+      repeat_infinite: Repeat infinite times
 
 
 

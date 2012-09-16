@@ -60,7 +60,7 @@ fieldset.menu
   background-color: $grey1
   border: none
 
-input[type=text], input[type=password], input[type=email]
+input[type=text], input[type=password], input[type=email], input[type=number], select
   width: 300px
   height: 25px
   background-color: white
@@ -108,11 +108,19 @@ div.right
 
 div.inline
   margin-bottom: 10px
+  label.right
+    width: 300px
+    float: none
+    display: inline
   div.input
     display: inline
+    margin-left: 0
     input, select
       display: inline
       width: 150px
+    input[type=checkbox]
+      width: 30px
+
 
 span.label_hide
   label

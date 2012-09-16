@@ -33,6 +33,12 @@ en:
 
         task:
           interval_number: Repeat every
+          allocation_modes:
+            in_turns: Allocate in turns
+            time: Assign to the user who spend the least amount of time for this task
+            time_all: Assign to the user who spend the least amount of time for all task
+            voluntary: This task is voluntary
+            user: Assign this task to one specific user
       values:
         admin: Administrator
         normal: Normal user

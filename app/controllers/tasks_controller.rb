@@ -8,6 +8,7 @@ class TasksController < ApplicationController
 
   def new
     @task = @community.tasks.build
+    @members = @community.members
   end
 
   def create
