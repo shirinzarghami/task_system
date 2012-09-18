@@ -31,5 +31,8 @@
   %fieldset
     %legend= t('form.categories.allocation')
     = f.input :allocation_mode, as: :select, collection: Task::ALLOCATION_MODES_FORM, label: '', include_blank: false
-    %div#allocation_user
+    %div#allocation_user.allocation_tab
       = f.association :allocated_user, collection: @members, include_blank: false
+    %div#allocation_order.allocation_tab
+      %h1 test
+

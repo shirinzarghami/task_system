@@ -20,10 +20,10 @@ jQuery ->
       $('#task_repeat').removeAttr("disabled")
 
   $('#task_allocation_mode').click ->
-    update_allocation_mode()
-    
+    show_allocation_tag('allocation_user') if $('#task_allocation_mode').val() == 'user'
+    show_allocation_tag('allocation_order') if $('#task_allocation_mode').val() == 'in_turns'
 
-
-update_allocation_mode ->
-  if $('#task_allocation_mode').val() == 'user'
-    $('#allocation_user').show("fold", {}, 500) unless $('#allocation_user').is(":visible")
+show_allocation_tag name ->
+  $('.allocation_tab').each -> 
+    $(this).show("fold", {}, 500) if ($(this).attr('id') == name && $(this).is(':visible'))
+    $(this).hide("fold", {}, 500) if ($(this).attr('id') != name && $(this).is(':hidden'))
