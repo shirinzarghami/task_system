@@ -27,4 +27,8 @@ class Task < ActiveRecord::Base
   def repeat_infinite
     
   end
+
+  def user_order
+    
+  end
 end

@@ -95,6 +95,7 @@ en:
       man_instantiate: This task will be instantiated manually
       auto_instantiate: This task will be instantiated automatically
       repeat_infinite: Repeat infinite times
+      drag_hint: Click and drag the user to change the order
 
 
 

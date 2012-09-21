@@ -1,7 +1,13 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+show_allocation_tag = (name) ->
+  $('.allocation_tab').each -> 
+    $(this).show() if $(this).attr('id') == name
+    $(this).hide() if $(this).attr('id') != name
+
 jQuery ->
+  show_allocation_tag($('#task_allocation_mode').val() + '_tab')
   $('input.datepicker').each ->
     $(this).datepicker()
 
@@ -20,10 +26,11 @@ jQuery ->
       $('#task_repeat').removeAttr("disabled")
 
   $('#task_allocation_mode').click ->
-    show_allocation_tag('allocation_user') if $('#task_allocation_mode').val() == 'user'
-    show_allocation_tag('allocation_order') if $('#task_allocation_mode').val() == 'in_turns'
+    show_allocation_tag($('#task_allocation_mode').val() + '_tab')
 
-show_allocation_tag name ->
-  $('.allocation_tab').each -> 
-    $(this).show("fold", {}, 500) if ($(this).attr('id') == name && $(this).is(':visible'))
-    $(this).hide("fold", {}, 500) if ($(this).attr('id') != name && $(this).is(':hidden'))
+  $('#user-sorter').sortable
+    update: ->
+      text_box = $('#task_user_order')
+      text_box.val('')
+      $('.sort-item').each ->
+        text_box.val(text_box.val() + $(this).attr('user_id') + ',')
