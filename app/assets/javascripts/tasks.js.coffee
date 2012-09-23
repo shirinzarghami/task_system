@@ -6,18 +6,32 @@ show_allocation_tag = (name) ->
     $(this).show() if $(this).attr('id') == name
     $(this).hide() if $(this).attr('id') != name
 
+show = (obj) ->
+  obj.show('fold', {}, 500) unless obj.is(':visible')
+
+hide = (obj) ->
+  obj.hide('fold', {}, 500) unless obj.is(':hidden')
+
+
 jQuery ->
   show_allocation_tag($('#task_allocation_mode').val() + '_tab')
   $('input.datepicker').each ->
     $(this).datepicker()
 
-  $('#auto_instantiation_no').click ->
-    if $('#instantiation_options').is(":visible")
-      $('#instantiation_options').hide("fold", {}, 500)
+  $('#task_instantiate_automatically').click ->
+    if $(this).attr('checked')
+      show($('#instantiation_options'))
+    else
+      hide($('#instantiation_options'))
+    
+    
+  # $('#auto_instantiation_no').click ->
+  #   if $('#instantiation_options').is(":visible")
+  #     $('#instantiation_options').hide("fold", {}, 500)
 
-  $('#auto_instantiation_yes').click ->
-    if $('#instantiation_options').is(":hidden")
-      $('#instantiation_options').show("fold", {}, 500)
+  # $('#auto_instantiation_yes').click ->
+  #   if $('#instantiation_options').is(":hidden")
+  #     $('#instantiation_options').show("fold", {}, 500)
 
   $('#task_repeat_infinite').click ->    
     if $(this).attr('checked')

@@ -1,5 +1,5 @@
 %span.hint= t('tasks.new.drag_hint')
-= f.text_field :user_order
+= f.text_field :user_order, class: 'hide'
 %ul#user-sorter.sortable
   - @members.each do |member|
     %li.sort-item{:user_id => member.id}= member.name

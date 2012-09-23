@@ -8,12 +8,8 @@
 
   %fieldset
     %legend= t('form.categories.instantiation')
-    %div.radio
-      = radio_button_tag 'auto_instantiation', 'no'
-      = label_tag t('tasks.new.man_instantiate')
-    %div.radio
-      = radio_button_tag 'auto_instantiation', 'yes', true
-      = label_tag t('tasks.new.auto_instantiate')
+    = f.input :instantiate_automatically
+
     %div#instantiation_options
       = f.input :start_on, as: :string, input_html: {class: 'datepicker'}
       %div.inline
@@ -24,7 +20,7 @@
         = f.input :repeat
         = f.input :repeat_infinite, as: :boolean, label: t('tasks.new.repeat_infinite')
       %div.inline
-        = f.input :deadline_number, as: :integer
+        = f.input :deadline_number, as: :integer, label: t('tasks.new.deadline')
         %span.label_hide
           = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false
 
@@ -35,4 +31,5 @@
       = f.association :allocated_user, collection: @members, include_blank: false
     %div#in_turns_tab.allocation_tab
       =render partial: 'user_sort', locals: {f: f}
+    = submit_button
 

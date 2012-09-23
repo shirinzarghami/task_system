@@ -3,7 +3,7 @@ class CreateTasks < ActiveRecord::Migration
     create_table :tasks do |t|
       t.string :name
       t.text :description
-      t.integer :time
+      t.time :time
       t.integer :deadline
       t.boolean :should_be_checked
       t.integer :user_order_id
@@ -15,7 +15,8 @@ class CreateTasks < ActiveRecord::Migration
       t.date :start_on
       t.string :allocation_mode
       t.integer :allocated_user_id
-
+      t.boolean :instantiate_automatically
+      t.boolean :repeat_infinite
       t.timestamps
     end
   end

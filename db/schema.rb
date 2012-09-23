@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120915124716) do
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "time"
+    t.time     "time"
     t.integer  "deadline"
     t.boolean  "should_be_checked"
     t.integer  "user_order_id"
@@ -56,8 +56,10 @@ ActiveRecord::Schema.define(:version => 20120915124716) do
     t.date     "start_on"
     t.string   "allocation_mode"
     t.integer  "allocated_user_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.boolean  "instantiate_automatically"
+    t.boolean  "repeat_infinite"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "users", :force => true do |t|

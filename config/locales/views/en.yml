@@ -96,7 +96,7 @@ en:
       auto_instantiate: This task will be instantiated automatically
       repeat_infinite: Repeat infinite times
       drag_hint: Click and drag the user to change the order
-
+      deadline: Deadline for completion
 
 
 
