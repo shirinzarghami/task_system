@@ -1,3 +1,4 @@
+
 class CommunitiesController < ApplicationController
   before_filter :new_invitations_flash
   def index

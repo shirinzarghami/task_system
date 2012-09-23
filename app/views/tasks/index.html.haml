@@ -1,0 +1,18 @@
+- content_for :title do
+  = t('tasks.index.title')
+- content_for :menu do
+  =render partial: 'menu.html.haml'
+  
+%p
+  %table
+    %tr.line
+      %th= image_tag('iconic/cloud_24x15.png') + t('tasks.index.tasks')
+      %th
+      %th
+      %th
+    %tr
+      %th= t('tasks.index.name')
+      %th= t('tasks.index.instantiate')
+
+      %th
+    = render partial: 'task', collection: @tasks

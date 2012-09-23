@@ -6,7 +6,6 @@ class CreateTasks < ActiveRecord::Migration
       t.time :time
       t.integer :deadline
       t.boolean :should_be_checked
-      t.integer :user_order_id
       t.integer :interval
       t.datetime :last_occurrence
       t.integer :user_id
@@ -17,6 +16,7 @@ class CreateTasks < ActiveRecord::Migration
       t.integer :allocated_user_id
       t.boolean :instantiate_automatically
       t.boolean :repeat_infinite
+      t.string :user_order
       t.timestamps
     end
   end

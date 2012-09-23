@@ -40,6 +40,13 @@ en:
             time_all: Assign to the user who spend the least amount of time for all task
             voluntary: This task is voluntary
             user: Assign this task to one specific user
+
+          instantiate:
+            manual: Manual
+            every: Every %{number} %{unit}
+            weeks: weeks
+            days: days
+            months: months
       values:
         admin: Administrator
         normal: Normal user

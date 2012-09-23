@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(:version => 20120915124716) do
     t.time     "time"
     t.integer  "deadline"
     t.boolean  "should_be_checked"
-    t.integer  "user_order_id"
     t.integer  "interval"
     t.datetime "last_occurrence"
     t.integer  "user_id"
@@ -58,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20120915124716) do
     t.integer  "allocated_user_id"
     t.boolean  "instantiate_automatically"
     t.boolean  "repeat_infinite"
+    t.string   "user_order"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end

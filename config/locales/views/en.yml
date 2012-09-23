@@ -97,6 +97,11 @@ en:
       repeat_infinite: Repeat infinite times
       drag_hint: Click and drag the user to change the order
       deadline: Deadline for completion
+    index:
+      title: Overview of tasks
+      tasks: Tasks
+      instantiate: Instantiate
+
 
 
 
