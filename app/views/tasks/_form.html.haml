@@ -13,14 +13,14 @@
     %div#instantiation_options
       = f.input :start_on, as: :string, input_html: {class: 'datepicker'}
       %div.inline
-        = f.input :interval_number, as: :integer
+        = f.input :interval, as: :integer
         %span.label_hide
           = f.input :interval_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false
       %div.inline
         = f.input :repeat
         = f.input :repeat_infinite, as: :boolean, label: t('tasks.new.repeat_infinite')
       %div.inline
-        = f.input :deadline_number, as: :integer, label: t('tasks.new.deadline')
+        = f.input :deadline, as: :integer, label: t('tasks.new.deadline')
         %span.label_hide
           = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false
 

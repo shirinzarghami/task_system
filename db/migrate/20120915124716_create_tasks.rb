@@ -5,8 +5,10 @@ class CreateTasks < ActiveRecord::Migration
       t.text :description
       t.time :time
       t.integer :deadline
+      t.string :deadline_unit
       t.boolean :should_be_checked
       t.integer :interval
+      t.string :interval_unit
       t.datetime :last_occurrence
       t.integer :user_id
       t.integer :community_id
