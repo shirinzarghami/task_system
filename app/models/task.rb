@@ -22,6 +22,7 @@ class Task < ActiveRecord::Base
   validates :deadline_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
 
+  after_initialize :set_default_values
 
   def interval_value
     interval * TIME_UNITS[interval_unit]
@@ -31,7 +32,6 @@ class Task < ActiveRecord::Base
     deadline * TIME_UNITS[deadline_unit]
   end
 
-
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'
     if instantiate_automatically 
@@ -40,5 +40,16 @@ class Task < ActiveRecord::Base
       I18n.t("#{t_root}.manual")
     end
   end
+
+  def ordered_members
+    ordered_member_ids = self.user_order.split(',').map(&:to_i)
+    self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
+  end
+  
+  private
+    def set_default_values
+      self.instantiate_automatically ||= true
+      self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',')
+    end
 
 end

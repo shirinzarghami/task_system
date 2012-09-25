@@ -19,11 +19,11 @@ update_instantiation = (chkbox) ->
     hide($('#instantiation_options'))
 
 jQuery ->
-  update_instantiation $('#task_allocation_mode')
+  update_instantiation $('#task_instantiate_automatically')
   show_allocation_tag($('#task_allocation_mode').val() + '_tab')
   $('input.datepicker').each ->
-    $(this).datepicker()
-
+    $(this).datepicker
+      dateFormat: 'yy-mm-dd'
   $('#task_instantiate_automatically').click ->
     update_instantiation $(this)
     

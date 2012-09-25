@@ -16,7 +16,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    @members = @community.members
     @task = @community.tasks.build params[:task]
     if @task.save
       flash[:notice] = t('messages.save_success')
@@ -28,10 +27,16 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @members = @community.members
   end
 
   def update
+    if @task.update_attributes params[:task]
+      flash[:notice] = t('messages.save_success')
+      redirect_to community_tasks_path @community
+    else
+      flash[:error] = t('messages.save_fail')
+      render action: 'edit'
+    end
   end
 
   def destroy
@@ -39,7 +44,7 @@ class TasksController < ApplicationController
 
   protected
     def find_task
-      @task = @community.tasks.find(params.has_key?(:task) ? params[:task][:id] : params[:id]) 
+      @task = @community.tasks.find(params.has_key?(:task_id) ? params[:task_id] : params[:id]) 
     end
     def check_task
       check((@community_user.role == 'admin' or @task.user == @user), community_tasks_path(@community))

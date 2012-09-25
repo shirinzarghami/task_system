@@ -101,7 +101,8 @@ en:
       title: Overview of tasks
       tasks: Tasks
       instantiate: Instantiate
-
+    edit:
+      title: Edit task
 
 
 
@@ -128,6 +129,7 @@ en:
     create_community: Create a community
     create_invitation: Invite someone
     create_user: Create a user
+    create_task: Create a task
     logout: Logout
     tasks: Tasks
     actions: Actions

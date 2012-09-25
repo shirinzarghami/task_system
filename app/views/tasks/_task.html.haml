@@ -1,3 +1,7 @@
 %tr
   %td= task.name
   %td= task.instantiate_in_words
+  %td
+    - if can_edit_task? task
+      = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task))
+      = (image_button 'iconic/trash_fill_12x12.png', community_task_path(@community, task), method: :delete, confirm: t('messages.confirm')) 
