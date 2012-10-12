@@ -5,40 +5,14 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
+    %div.navbar
+      %div.navbar-inner
+        %ul.nav
+          = tab_link t('layout.communities'), communities_path
+          - if (@community.present? and !@community.new_record?)
+            =tab_link t('layout.tasks'), community_tasks_path(@community)
+
     %div.container
-      %div.header-container
-        %div.header
-          =image_tag 'calendar2.png', class: 'logo'
-          %h1 Task Systeem
-
-          %ul.tabs
-            =tab_link t('layout.communities'), communities_path
-            - if (@community.present? and !@community.new_record?)
-              =tab_link t('layout.tasks'), community_tasks_path(@community)
-
-          %ul.flags
-            %li=link_to(image_tag('nl.png'), 'bla')
-            %li=link_to(image_tag('us.png'), 'bla')
-
-
-      %div.contents
-        %div.title
-          = yield :logo
-          %h1= yield :title
-        -if flash[:notice]
-          %div.flash.success= flash[:notice]
-        -if flash[:error]
-          %div.flash.error= flash[:error]
-        -if flash[:info]
-          %div.flash.info= flash[:info]
-
-        =yield
-      %div.menu= yield :menu
-        
-
-      %div.footer
-        Created by Martijn Bolhuis
-     
-
-
-
+      %div.row
+        %div.span9= yield
+        %div.span3= yield :menu
