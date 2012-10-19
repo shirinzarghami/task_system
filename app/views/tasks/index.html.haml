@@ -4,15 +4,10 @@
   =render partial: 'menu.html.haml'
   
 %p
-  %table
-    %tr.line
-      %th= image_tag('iconic/list_24x21.png') + t('tasks.index.tasks')
-      %th
-      %th
-      %th
+  %h2= image_tag('iconic/list_24x21.png') + t('tasks.index.tasks')
+  %table.table.table-striped
     %tr
       %th= t('tasks.index.name')
       %th= t('tasks.index.instantiate')
-
       %th
     = render partial: 'task', collection: @tasks

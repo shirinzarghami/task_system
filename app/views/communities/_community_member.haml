@@ -4,9 +4,9 @@
   %td
     - if community_admin?
       =simple_form_for(community_member) do |f|
-        = f.input :role, collection: ['admin', 'normal'], include_blank: false, label: ''
+        = f.input :role, collection: ['admin', 'normal'], include_blank: false, label: " "
     - else
-      role_name community_member.role
+      =role_name community_member.role
 
   %td
     = (image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm')) if community_admin?

@@ -5,8 +5,8 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %div.navbar
-      %div.navbar-inner
+    %div.navbar.navbar-inverse  
+      %div.navbar-inner 
         %ul.nav
           = tab_link t('layout.communities'), communities_path
           - if (@community.present? and !@community.new_record?)
