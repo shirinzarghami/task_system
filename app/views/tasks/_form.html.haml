@@ -1,13 +1,14 @@
 - content_for :logo do
   = image_tag 'iconic/list_32x28.png'
-= simple_form_for([@community, @task]) do |f|
+= simple_form_for([@community, @task], html: {class: 'form-horizontal'}) do |f|
   %fieldset
     %legend= t('form.categories.general')
     = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
-    = f.input :name
-    = f.input :description
-    = f.input :time, as: :time, hint: t('form.task_time_hint')
-    = f.input :should_be_checked, label: t('form.should_be_checked_hint')
+    %div.control-group
+      = f.input :name
+      = f.input :description, input_html: {rows: 5}
+      = f.input :time, as: :time, hint: t('form.task_time_hint')
+      = f.input :should_be_checked, label: t('form.should_be_checked_hint'), label_html: {class: :checkbox}
 
   %fieldset
     %legend= t('form.categories.instantiation')
