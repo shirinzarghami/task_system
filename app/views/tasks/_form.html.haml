@@ -17,11 +17,10 @@
 
     %div#instantiation_options
       = f.input :start_on, as: :string, input_html: {class: 'datepicker'}
- 
-      %div.inline
-        = f.input :interval, as: :integer, input_html: {class: 'input-mini'}
-        %span.label_hide
-          = f.input :interval_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, input_html: {class: 'input-small'}
+
+      = f.input :interval, as: :integer, input_html: {class: 'input-mini'}, wrapper_html: {class: 'inline'}
+      = f.input :interval_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, input_html: {class: 'input-small'}, wrapper_html: {class: 'inline'}, label: false
+
       %div.inline
         = f.input :repeat
         = f.input :repeat_infinite, as: :boolean, label: t('tasks.new.repeat_infinite')
