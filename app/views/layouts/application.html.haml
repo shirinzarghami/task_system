@@ -15,5 +15,12 @@
 
     %div.container
       %div.row
-        %div.span9= yield
+        %div.span9
+          - if flash[:notice]
+            %div.alert.alert-success= flash[:notice]
+          - if flash[:error]
+            %div.alert.alert-error= flash[:error]
+          - if flash[:info]
+            %div.alert.alert-block= flash[:info]
+          =yield
         %div.span3= yield :menu

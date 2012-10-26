@@ -15,7 +15,7 @@ TaskSystem::Application.routes.draw do
       post 'accept_new_account'
     end
   end 
-  resources :communities do
+  resources :communities, path: '' do
     resources :tasks
   end
   resources :community_users
