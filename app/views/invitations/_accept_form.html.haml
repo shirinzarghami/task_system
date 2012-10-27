@@ -1,12 +1,10 @@
 %fieldset
-  %span.title
-    = image_tag 'iconic/question_mark_12x24.png'
-    = t('invitations.show.question')
+  %legend= image_tag('iconic/question_mark_12x24.png') + t('invitations.show.question')
   = form_tag(accept_invitation_path(@invitation.token)) do
-    %div.input
-      = radio_button_tag 'invitation', 'accept'
-      = label_tag t('invitations.show.accept'), nil, class: 'checkbox'
-    %div.input
-      = radio_button_tag 'invitation', 'deny'
-      = label_tag t('invitations.show.deny'), nil, class: 'checkbox'
-    = submit_button
+    = label_tag nil, class: 'radio' do
+      = radio_button_tag 'invitation', 'accept', class: 'radio'
+      = t('invitations.show.accept')
+    = label_tag nil, class: 'radio' do
+      = radio_button_tag 'invitation', 'deny', class: 'radio'
+      = t('invitations.show.deny')
+    = submit_tag t('actions.submit'), class: 'btn btn-primary'

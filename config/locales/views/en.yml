@@ -88,6 +88,9 @@ en:
       change_user: This invitation is for %{email}. You need to login as this user before you can accept the invitation.
     new:
       title: Create an invitation for community
+    accept:
+      user: Create a user account
+      community: You will be subscribed to following community
 
   tasks:
     new:

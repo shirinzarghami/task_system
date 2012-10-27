@@ -16,8 +16,8 @@ class Task < ActiveRecord::Base
 
   validates :name, presence: true, length: {maximum: 50, minimum: 3}
   validates :time, presence: true, :numericality => {:greater_than => 0}
-  validates :interval, :numericality => {:greater_than => 0}
-  validates :deadline, :numericality => {:greater_than => 0}
+  validates :interval, :numericality => {:greater_than_or_equal_to => 0}
+  validates :deadline, :numericality => {:greater_than_or_equal_to => 0}
 
   validates :deadline_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
@@ -50,6 +50,9 @@ class Task < ActiveRecord::Base
     def set_default_values
       self.instantiate_automatically ||= true
       self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',')
+      self.interval ||= 0
+      self.deadline ||= 0
+      self.time ||= Time.at(0) + 30.minutes
     end
 
 end

@@ -1,8 +1,6 @@
 %fieldset
-  %span.title
-    =image_tag 'iconic/info_12x24.png'
-    = t('activerecord.models.community')
-  %table.fieldset
+  %legend=image_tag('iconic/info_12x24.png') + t('invitations.accept.community')
+  %table.table
     %tr
       %th= t('activerecord.attributes.community.name')
       %td= @invitation.community.name
