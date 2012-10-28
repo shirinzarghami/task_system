@@ -1,8 +1,8 @@
 %fieldset
-  = simple_form_for ['admin', @user] do |f|
+  = simple_form_for ['admin', @user], html: {class: 'form-horizontal'} do |f|
     = f.input :email
     = f.input :name
     = f.input :password
     = f.input :password_confirmation
     = f.input :global_role, as: :select, include_blank: false, collection: User::USER_ROLES.map {|role| role.to_s}
-    = submit_button 
+    = f.button :submit, class: 'btn-primary'

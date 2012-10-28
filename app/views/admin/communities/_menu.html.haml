@@ -1,7 +1,5 @@
 = form_tag({},{method: :get, remote: true, class: 'form-search'}) do
-  %div.input-append
-    = text_field_tag :query,'', class: 'search-query search'
-    = submit_tag t('menu.search'), class: 'btn'
+  = text_field_tag :query,'', class: 'search-query search input-medium'
 %ul.nav.nav-list
   %li.nav-header= t('menu.filters')
   = filter_button t('menu.filter_none'), 'no_filter'
