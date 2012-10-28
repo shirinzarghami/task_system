@@ -1,38 +1,30 @@
+<!DOCTYPE HTML>
 %html
   %head
-    %title TaskSystem
+    %title Task System
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
+    %div.navbar.navbar-inverse  
+      %div.navbar-inner 
+        %ul.nav
+          =tab_link t('layout.communities'), admin_communities_path
+          =tab_link t('layout.users'), admin_users_path
+
     %div.container
-      %div.header-container
-        %div.header
-          =image_tag 'calendar2.png', class: 'logo'
-          %h1 Task Systeem
+      %div.row
+        %div.span9
+          - if flash[:notice]
+            %div.alert.alert-success= flash[:notice]
+          - if flash[:error]
+            %div.alert.alert-error= flash[:error]
+          - if flash[:info]
+            %div.alert.alert-block= flash[:info]
+          %h1= yield :title
+          =yield
+        %div.span3= yield :menu
 
-          %ul.tabs
-            =tab_link t('layout.communities'), admin_communities_path
-            =tab_link t('layout.users'), admin_users_path
-
-          %ul.flags
-            %li=link_to(image_tag('nl.png'), 'bla')
-            %li=link_to(image_tag('us.png'), 'bla')
-
-
-      %div.contents
-        %h1= yield :title
-        -if flash[:notice]
-          %div.flash.success= flash[:notice]
-        -if flash[:error]
-          %div.flash.error= flash[:error]
-        =yield
-      %div.menu
-        =yield :menu
-
-
-      %div.footer
-        Created by Martijn Bolhuis
      
 
 

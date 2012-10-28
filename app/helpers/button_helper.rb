@@ -20,7 +20,9 @@ module ButtonHelper
   end
 
   def filter_button text, filter_name
-    link_to text, params.merge(filter: filter_name), class: "button filter", id: filter_name, remote: true
+    content_tag :li, id: filter_name, class: 'filter' do
+      link_to text, params.merge(filter: filter_name), class: "button", remote: true
+    end
   end
 
   def image_button image, link, link_options={}, image_options={}

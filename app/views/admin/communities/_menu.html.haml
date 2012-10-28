@@ -1,8 +1,10 @@
-%h2= t('menu.filters')
-%fieldset.menu
-  = form_tag({},{method: :get, remote: true}) do
-    = text_field_tag :query,'', class: 'search'
-%p
-  =filter_button t('menu.filter_none'), 'no_filter'
+= form_tag({},{method: :get, remote: true, class: 'form-search'}) do
+  %div.input-append
+    = text_field_tag :query,'', class: 'search-query search'
+    = submit_tag t('menu.search'), class: 'btn'
+%ul.nav.nav-list
+  %li.nav-header= t('menu.filters')
+  = filter_button t('menu.filter_none'), 'no_filter'
+
 
 =render partial: '/shared/admin_menu'
