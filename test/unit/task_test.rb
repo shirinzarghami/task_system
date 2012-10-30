@@ -7,4 +7,15 @@ class TaskTest < ActiveSupport::TestCase
       assert_equal task.instantiate_in_words, "Every 3 #{unit}"
     end
   end
+
+  test "allocation mode string" do
+    Task::ALLOCATION_MODES.each do |mode|
+      task = FactoryGirl.build(:task, allocation_mode: mode.to_s)
+      assert task.save
+    end
+
+    task = FactoryGirl.build(:task, allocation_mode: 'onzin')
+    assert !task.save
+  end
+
 end

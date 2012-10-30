@@ -21,6 +21,7 @@ class Task < ActiveRecord::Base
 
   validates :deadline_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
+  validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
 
   after_initialize :set_default_values
 

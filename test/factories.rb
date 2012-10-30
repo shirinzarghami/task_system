@@ -10,6 +10,7 @@ FactoryGirl.define do
     name 'Do something'
     description 'Do something'
     deadline 100
+    deadline_unit 'weeks'
     user_order '1,2,3'
     interval 3
     interval_unit 'weeks'
@@ -20,7 +21,6 @@ FactoryGirl.define do
     start_on Date.today
     allocation_mode 'in_turns'
     allocated_user_id 1
-
     # association :community, factory: :community
   end
 
