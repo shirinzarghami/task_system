@@ -24,13 +24,13 @@ class Task < ActiveRecord::Base
 
   after_initialize :set_default_values
 
-  def interval_value
-    interval * TIME_UNITS[interval_unit]
-  end
+  # def interval_value
+  #   interval * TIME_UNITS[interval_unit]
+  # end
 
-  def deadline_value
-    deadline * TIME_UNITS[deadline_unit]
-  end
+  # def deadline_value
+  #   deadline * TIME_UNITS[deadline_unit]
+  # end
 
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'
@@ -49,7 +49,7 @@ class Task < ActiveRecord::Base
   private
     def set_default_values
       self.instantiate_automatically ||= true
-      self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',')
+      self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 0
       self.deadline ||= 0
       self.time ||= Time.at(0) + 30.minutes
