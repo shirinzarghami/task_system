@@ -38,13 +38,13 @@ class CommunityUsersController < ApplicationController
     end
 
     def edit_allowed?
-      unless @community_user.user == @user or user_is_admin?
+      unless @community_user.user == @user or user_is_community_admin?
         flash[:error] = t('messages.not_allowed')
         redirect_to communities_path
       end
     end
 
-    def user_is_admin?
+    def user_is_community_admin?
       current_community_user = @community_user.community.community_users.find_by_user_id(@user)
       current_community_user.present? and current_community_user.role == 'admin'
     end
