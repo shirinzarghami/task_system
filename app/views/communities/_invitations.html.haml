@@ -1,11 +1,7 @@
 - show_accept ||= false
 %p
+  %h2= image_tag('iconic/mail_16x12.png') + (show_accept ? t('communities.index.invitations') : t('activerecord.models.invitations'))
   %table.table.table-striped
-    %tr.line
-      %th= image_tag('iconic/mail_16x12.png') + (show_accept ? t('communities.index.invitations') : t('activerecord.models.invitations'))
-      %th
-      %th
-      %th
     %tr
       %th= t('activerecord.attributes.invitation.invitor')
       %th

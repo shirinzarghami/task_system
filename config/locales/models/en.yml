@@ -44,9 +44,15 @@ en:
           instantiate:
             manual: Manual
             every: Every %{number} %{unit}
-            weeks: weeks
-            days: days
-            months: months
+            weeks:
+              one: Every week
+              other: Every %{count} weeks
+            days:
+              one: Every day
+              other: Every %{count} days
+            months:
+              one: Every month
+              other: Every %{count} month
       values:
         admin: Administrator
         normal: Normal user

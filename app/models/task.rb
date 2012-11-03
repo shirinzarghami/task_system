@@ -36,7 +36,7 @@ class Task < ActiveRecord::Base
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'
     if instantiate_automatically 
-      I18n.t("#{t_root}.every", number: interval, unit: I18n.t("#{t_root}.#{self.interval_unit}"))
+      I18n.t("#{t_root}.#{interval_unit}", count: interval)
     else
       I18n.t("#{t_root}.manual")
     end
@@ -49,7 +49,7 @@ class Task < ActiveRecord::Base
   
   private
     def set_default_values
-      self.instantiate_automatically ||= true
+      self.instantiate_automatically = true if self.instantiate_automatically.nil?
       self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 0
       self.deadline ||= 0
