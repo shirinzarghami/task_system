@@ -13,7 +13,8 @@ class Task < ActiveRecord::Base
   belongs_to :community
   belongs_to :user # Creator of the task
   belongs_to :allocated_user, class_name: 'User'
-
+  has_many :task_occurrences
+  
   validates :name, presence: true, length: {maximum: 50, minimum: 3}
   validates :time, presence: true, :numericality => {:greater_than => 0}
   validates :interval, :numericality => {:greater_than_or_equal_to => 0}

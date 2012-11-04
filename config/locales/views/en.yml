@@ -103,7 +103,9 @@ en:
     index:
       title: Overview of tasks
       tasks: Tasks
-      instantiate: Instantiate
+      schedule: Schedule
+      overview: Overview
+      occurrences: Occurrences
     edit:
       title: Edit task
 
@@ -112,7 +114,7 @@ en:
   form:
     categories:
       general: General
-      instantiation: Instantiation
+      instantiation: Occurrences
       allocation: Allocation
 
     details: "%{model} details"

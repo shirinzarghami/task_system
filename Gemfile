@@ -49,4 +49,5 @@ gem 'will_paginate'
 gem 'simple_form'
 gem 'friendly_id'
 gem "letter_opener", :group => :development
+gem 'whenever', :require => false
 # gem "factory_girl_rails", "~> 3.0"
