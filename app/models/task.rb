@@ -26,13 +26,16 @@ class Task < ActiveRecord::Base
 
   after_initialize :set_default_values
 
-  # def interval_value
-  #   interval * TIME_UNITS[interval_unit]
-  # end
+  scope :instantiate_automatically, where(instantiate_automatically: true)
 
-  # def deadline_value
-  #   deadline * TIME_UNITS[deadline_unit]
-  # end
+  class << self
+    def schedule_upcoming_occurrences
+      instantiate_automatically.each do |task| 
+        task_occurrences.latest
+
+      end
+    end
+  end
 
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'

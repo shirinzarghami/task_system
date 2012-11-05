@@ -28,4 +28,15 @@ FactoryGirl.define do
     name 'Test'
     subdomain 'test'
   end
+
+  factory :task_occurrence do
+    checked false
+    deadline 2.week.since
+    remarks ""
+    association :user, factory: :user
+    completed_a
+    created_at Time.now
+    updated_at Time.now
+
+  end
 end
