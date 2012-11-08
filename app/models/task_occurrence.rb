@@ -16,6 +16,6 @@ class TaskOccurrence < ActiveRecord::Base
   private
     def set_initial_values
       checked = false if checked.nil?
-      deadline ||= task
+      # deadline ||= task.interval_time
     end
 end

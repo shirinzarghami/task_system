@@ -19,11 +19,12 @@ class TaskTest < ActiveSupport::TestCase
   end
 
   test "schedule upcoming daily tasks" do
-    (2..4).to_a.each do |number|
-      task = FactoryGirl.create(:task, interval_unit: 'days', interval: 3, last_occurence: number.days.ago)
-      Task.schedule_upcoming_occurrences
-      assert tas.task_occurrences.count == (number < 3 ? 0 : 1)
+    (1..5).to_a.each do |number|
+      task = FactoryGirl.create(:task, interval_unit: 'days', interval: 3, last_occurrence: number.days.ago)
+      # Task.schedule_upcoming_occurrences
+      # assert task.task_occurrences.count == (number < 3 ? 0 : 1)
     end
+      debugger
   end
 
 end

@@ -27,15 +27,17 @@ class Task < ActiveRecord::Base
   after_initialize :set_default_values
 
   # Task.where('last_occurrence + INTERVAL tasks.interval DAY >= NOW()')
-  scope :to_schedule, from('tasks t').where(instantiate_automatically: true).where("
+  scope :to_schedule, where(instantiate_automatically: true).where("
     (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY >= NOW()) 
     OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK >= NOW()) 
     OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH >= NOW())")
 
   class << self
     def schedule_upcoming_occurrences
-      to_schedule.each do |task| 
-        task_occurrence = task.task_occurrences.create 
+      Task.to_schedule.each do |task| 
+        task_occurrence = task.task_occurrences.build 
+        task_occurrence.deadline = Time.now + task.deadline_time
+        task.save
       end
     end
   end
@@ -49,10 +51,19 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def interval_time
+    Task::TIME_UNITS[interval_unit.to_sym] * 3    
+  end
+
+  def deadline_time
+    Task::TIME_UNITS[deadline_unit.to_sym] * 3    
+  end
+
   def ordered_members
     ordered_member_ids = self.user_order.split(',').map(&:to_i)
     self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
   end
+
   
   private
     def set_default_values
