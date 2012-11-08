@@ -26,13 +26,16 @@ class Task < ActiveRecord::Base
 
   after_initialize :set_default_values
 
-  scope :instantiate_automatically, where(instantiate_automatically: true)
+  # Task.where('last_occurrence + INTERVAL tasks.interval DAY >= NOW()')
+  scope :to_schedule, from('tasks t').where(instantiate_automatically: true).where("
+    (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY >= NOW()) 
+    OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK >= NOW()) 
+    OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH >= NOW())")
 
   class << self
     def schedule_upcoming_occurrences
-      instantiate_automatically.each do |task| 
-        task_occurrences.latest
-
+      to_schedule.each do |task| 
+        task_occurrence = task.task_occurrences.create 
       end
     end
   end

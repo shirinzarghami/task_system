@@ -4,6 +4,8 @@ FactoryGirl.define do
     global_role 'normal'
     name 'Martijn'
     locale 'nl'
+    password '123456'
+    password_confirmation '123456'
   end
 
   factory :task do

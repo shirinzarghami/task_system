@@ -7,4 +7,15 @@ class TaskOccurrence < ActiveRecord::Base
 
   scope :latest, order('created_at').limit(1)
 
+  after_initialize :set_initial_values
+
+  def allocate
+    
+  end
+
+  private
+    def set_initial_values
+      checked = false if checked.nil?
+      deadline ||= task
+    end
 end
