@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :invitations, class_name: 'Invitation', foreign_key: 'invitee_id', dependent: :destroy
 
   has_many :tasks
+  has_many :task_occurrences
   has_many :allocated_tasks, class_name: 'Task', foreign_key: 'allocated_user_id'
   USER_ROLES = [:normal, :admin]
 

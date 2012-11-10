@@ -19,12 +19,37 @@ class TaskTest < ActiveSupport::TestCase
   end
 
   test "schedule upcoming daily tasks" do
-    (1..5).to_a.each do |number|
+    (2..4).to_a.each do |number|
       task = FactoryGirl.create(:task, interval_unit: 'days', interval: 3, last_occurrence: number.days.ago)
-      # Task.schedule_upcoming_occurrences
-      # assert task.task_occurrences.count == (number < 3 ? 0 : 1)
+      Task.schedule_upcoming_occurrences
+      assert task.task_occurrences.count == (number < 3 ? 0 : 1)
     end
-      debugger
+  end
+
+  test "schedule upcoming weekly tasks" do
+    (2..4).to_a.each do |number|
+      task = FactoryGirl.create(:task, interval_unit: 'weeks', interval: 3, last_occurrence: number.weeks.ago)
+      Task.schedule_upcoming_occurrences
+      assert task.task_occurrences.count == (number < 3 ? 0 : 1)
+    end
+  end
+
+  test "schedule upcoming monthly tasks" do
+    (2..4).to_a.each do |number|
+      task = FactoryGirl.create(:task, interval_unit: 'months', interval: 3, last_occurrence: number.months.ago)
+      Task.schedule_upcoming_occurrences
+      assert task.task_occurrences.count == (number < 3 ? 0 : 1)
+    end
+  end
+
+  test "set the correct deadline" do
+    Timecop.freeze(Time.now) do
+      task = FactoryGirl.create(:task, deadline_unit: 'months', deadline: 3, last_occurrence: 4.weeks.ago)
+      Task.schedule_upcoming_occurrences
+      assert task.task_occurrences.count == 1
+      # For some reason comparing time objects doesn't work
+      assert task.task_occurrences.last.deadline.localtime.to_s == (Time.now + 3.months).to_s
+    end
   end
 
 end

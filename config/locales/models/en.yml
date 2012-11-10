@@ -52,7 +52,7 @@ en:
               other: Every %{count} days
             months:
               one: Every month
-              other: Every %{count} month
+              other: Every %{count} months
       values:
         admin: Administrator
         normal: Normal user
