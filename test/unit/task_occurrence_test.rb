@@ -26,10 +26,13 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     community = FactoryGirl.create(:community_with_users)
   
     user_order = community.members.map(&:id).join(',')
-    task = FactoryGirl.create(:task_with_occurrences, allocation_mode: 'in_turns', user_order: user_order, community: community, occurrences_user: community.members.second)
+    task = FactoryGirl.create(:task_with_occurrences, 
+      allocation_mode: 'in_turns', 
+      user_order: user_order,
+      community: community,
+      occurrences_user: community.members.second
+    )
     
-    # task_occurrence = FactoryGirl.create(:task_occurrence, task: task, user: user_list.second)
-
     task_occurrence = task.task_occurrences.first
     task_occurrence.allocate
     task_occurrence.save
