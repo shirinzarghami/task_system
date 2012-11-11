@@ -32,8 +32,8 @@ class TaskOccurrence < ActiveRecord::Base
       ordered_id_list = task.user_order.split(',')
       previous_occurrence = task.task_occurrences.latest.first
 
-      previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.first)
-      next_user_id = ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s)).second
+      previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
+      next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
 
       # allocate to creater of task when next user is not found
       task.community.members.find_by_id(next_user_id) || task.user
