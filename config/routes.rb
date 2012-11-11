@@ -17,6 +17,7 @@ TaskSystem::Application.routes.draw do
   end 
   resources :communities, path: '' do
     resources :tasks
+    resources :task_occurrences, path: 'schedule'
   end
   resources :community_users
 

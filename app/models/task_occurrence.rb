@@ -7,6 +7,8 @@ class TaskOccurrence < ActiveRecord::Base
   validates :task_id, presence: true
 
   scope :latest, order('created_at').limit(1)
+  scope :for_user, lambda {|user| where(user_id: user.id)}
+  scope :for_community, lambda {|community| joins(:task).where(['tasks.community_id = ?', community.id])}
 
   after_initialize :set_initial_values
 

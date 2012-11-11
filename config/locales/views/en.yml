@@ -108,6 +108,16 @@ en:
       occurrences: Occurrences
     edit:
       title: Edit task
+  task_occurrences:
+    index:
+      title: Schedule
+      mytodos: My todos
+      allopen: All open
+      history: History
+      task: Task
+      duration: Duration
+      deadline: Deadline
+      
 
 
 
@@ -140,3 +150,6 @@ en:
     actions: Actions
     other: Other
     search: Search
+    overview: Overview
+    schedule: Schedule
+
