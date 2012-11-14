@@ -24,7 +24,7 @@ FactoryGirl.define do
     user_order '1,2,3'
     interval 3
     interval_unit 'weeks'
-    last_occurrence Time.now
+    # last_occurrence Time.now
     user_id 1
     community_id 1
     repeat 1

@@ -18,6 +18,20 @@ class TaskTest < ActiveSupport::TestCase
     assert !task.save
   end
 
+  test "schedule first task event" do
+    task = Timecop.freeze(2.weeks.ago) do
+      task = FactoryGirl.create(:task, interval: 2, interval_unit: 'weeks')
+      assert task.task_occurrences.count == 0
+      task
+    end
+    Timecop.freeze(1.week.ago) do
+      Task.schedule_upcoming_occurrences
+      assert task.task_occurrences.count == 0
+    end
+    Task.schedule_upcoming_occurrences
+    assert task.task_occurrences.count == 1
+  end
+
   test "schedule upcoming daily tasks" do
     (2..4).to_a.each do |number|
       task = FactoryGirl.create(:task, interval_unit: 'days', interval: 3, last_occurrence: number.days.ago)

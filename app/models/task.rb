@@ -76,6 +76,7 @@ class Task < ActiveRecord::Base
       self.interval ||= 1
       self.deadline ||= 0
       self.time ||= Time.at(0) + 30.minutes
+      self.last_occurrence ||= Time.now
     end
 
 end
