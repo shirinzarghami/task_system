@@ -1,0 +1,10 @@
+%div#schedule-modal.modal.hide.fade{:tabindex =>"-1", :role => "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
+  %div.modal-header
+    %button.close{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}
+      ×
+    %h3#myModalLabel= t('.modal_header')
+  %div.modal-body
+    %p= t('.modal_body')
+  %div.modal-footer
+    %button.btn{'data-dismiss '=> "modal", 'aria-hidden' => "true"}= t('yes')
+    %button.btn.btn-primary= t('no')

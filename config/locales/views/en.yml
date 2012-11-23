@@ -108,6 +108,9 @@ en:
       occurrences: Occurrences
     edit:
       title: Edit task
+    schedule:
+      modal_header: Schedule task
+      modal_body: Do you wish to schedule this task?
   task_occurrences:
     index:
       title: Schedule

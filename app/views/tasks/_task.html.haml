@@ -1,6 +1,10 @@
 %tr
   %td= task.name
-  %td= task.instantiate_in_words
+  - if task.instantiate_automatically
+    %td= task.instantiate_in_words
+  - else
+    %td= link_to task.instantiate_in_words, '#schedule-modal', :class => 'btn', 'data-toggle' => 'modal'
+
   %td
     - if can_edit_task? task
       = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task))
