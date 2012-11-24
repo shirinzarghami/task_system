@@ -16,8 +16,10 @@ TaskSystem::Application.routes.draw do
     end
   end 
   resources :communities, path: '' do
-    resources :tasks
-    resources :task_occurrences, path: 'schedule'
+    resources :tasks do
+      resources :task_occurrences, except: [:index]
+    end
+    resources :task_occurrences, path: 'schedule', only: [:index]
   end
   resources :community_users
 

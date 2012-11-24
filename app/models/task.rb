@@ -18,10 +18,10 @@ class Task < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 50, minimum: 3}
   validates :time, presence: true, :numericality => {:greater_than => 0}
   validates :interval, :numericality => {:greater_than => 0}
-  validates :deadline, :numericality => {:greater_than_or_equal_to => 0}
+  validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :user_order, format: {with: /(\d+)(,\d+)*/} 
 
-  validates :deadline_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
+  validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
 

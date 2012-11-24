@@ -2,20 +2,12 @@
   = t('tasks.index.title')
 - content_for :menu do
   =render partial: 'menu.html.haml'
-= render partial: 'schedule' 
 %p
   %h2= image_tag('broom32.png') + t('tasks.index.tasks')
-  %ul.nav.nav-tabs#tasks-tab
-    %li.active= link_to t('.overview'), '#overview'
-    %li= link_to t('.occurrences'), '#occurrences'
+  %table.table.table-striped
+    %tr
+      %th= t('tasks.index.name')
+      %th= t('tasks.index.schedule')
+      %th
+    = render partial: 'task', collection: @tasks
 
-  %div.tab-content
-    %div.tab-pane#overview.active
-      %table.table.table-striped
-        %tr
-          %th= t('tasks.index.name')
-          %th= t('tasks.index.schedule')
-          %th
-        = render partial: 'task', collection: @tasks
-    %div.tab-pane#occurrences
-      %h1 Test

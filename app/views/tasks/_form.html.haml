@@ -8,6 +8,8 @@
       = f.input :name
       = f.input :description, input_html: {rows: 5, class: 'span7'}
       = f.input :time, as: :time, hint: t('form.task_time_hint'), input_html: {class: 'input-small'}
+      = f.input :deadline, as: :integer, label: t('tasks.new.deadline'), wrapper_html: {class: 'inline'}, input_html: {class: 'input-mini'}
+      = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, wrapper_html: {class: 'inline neighbour'}, label: false, input_html: {class: 'input-small'}
       = f.input :should_be_checked, label: t('form.should_be_checked_hint'), wrapper_tag: false
 
   %fieldset
@@ -24,8 +26,6 @@
       = f.input :repeat, input_html: {class: 'input-mini'}
       = f.input :repeat_infinite, as: :boolean, label: t('tasks.new.repeat_infinite')
   
-      = f.input :deadline, as: :integer, label: t('tasks.new.deadline'), wrapper_html: {class: 'inline'}, input_html: {class: 'input-mini'}
-      = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, wrapper_html: {class: 'inline neighbour'}, label: false, input_html: {class: 'input-small'}
 
   %fieldset
     %legend= t('form.categories.allocation')

@@ -1,6 +1,6 @@
 en:
-  yes: Yes
-  no: No
+  yess: "Yes"
+  noo: "No"
   here: here
   actions:
     new: New
@@ -108,10 +108,16 @@ en:
       occurrences: Occurrences
     edit:
       title: Edit task
-    schedule:
+    task:
+      manual-tooltip: This task is necessary!
+  task_occurrences:
+    form:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
-  task_occurrences:
+      explanation: 
+        "You should only schedule a task when you think it necessary that this task is performed. 
+        When you click 'yes', an occurrence will be scheduled and allocated to a person within the community.
+        This person will have to complete the task before the deadline."
     index:
       title: Schedule
       mytodos: My todos
@@ -120,8 +126,6 @@ en:
       task: Task
       duration: Duration
       deadline: Deadline
-      
-
 
 
   form:

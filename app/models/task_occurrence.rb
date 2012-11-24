@@ -5,6 +5,7 @@ class TaskOccurrence < ActiveRecord::Base
   belongs_to :user
   
   validates :task_id, presence: true
+  validates :user_id, presence: true
 
   scope :latest, order('created_at').limit(1)
   scope :for_user, lambda {|user| where(user_id: user.id)}
@@ -33,7 +34,7 @@ class TaskOccurrence < ActiveRecord::Base
     def allocate_in_turns
       ordered_id_list = task.user_order.split(',')
       previous_occurrence = task.task_occurrences.latest.first
-
+      debugger
       previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
       next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
 

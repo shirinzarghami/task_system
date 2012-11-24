@@ -19,7 +19,7 @@ update_instantiation = (chkbox) ->
     hide($('#instantiation_options'))
 
 jQuery ->
-
+  #  ---- New task form dynamics
   $('#tasks-tab a').each ->
     $(this).click ->
       $(this).tab('show')
@@ -48,3 +48,7 @@ jQuery ->
       text_box.val('')
       $('.sort-item').each ->
         text_box.val(text_box.val() + $(this).attr('user_id') + ',')
+
+
+  $('.tooltip-link').each ->
+    $(this).tooltip()
