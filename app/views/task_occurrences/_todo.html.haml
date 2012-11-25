@@ -1,4 +1,4 @@
 %tr
   %td= todo.task.name.truncate(30)
-  %td= todo.task.time
-  %td= todo.deadline
+  %td= l todo.task.time, format: :time_only
+  %td= l todo.deadline, format: :date_only
