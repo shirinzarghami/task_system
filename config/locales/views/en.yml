@@ -111,6 +111,9 @@ en:
     task:
       manual-tooltip: This task is necessary!
   task_occurrences:
+    all_open:
+      reassign: Re-assign this task
+      delete: Dispensate this task
     form:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
@@ -126,6 +129,9 @@ en:
       task: Task
       duration: Duration
       deadline: Deadline
+      allocated_to: Allocated to
+      completed_at: Completed at
+
 
 
   form:

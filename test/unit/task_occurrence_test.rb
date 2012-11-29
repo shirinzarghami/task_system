@@ -71,6 +71,24 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task_occurrence.user == task.user, "When the order string is invalid, it should be allocated to the creator of the task"
   end
 
+  test "todo scope: should be checked" do
+    task_occurrence = FactoryGirl.create(:task_occurrence_should_be_checked)
+    assert TaskOccurrence.todo.include?(task_occurrence)
+
+    task_occurrence.update_attributes checked: true
+    assert !TaskOccurrence.todo.include?(task_occurrence)
+  end
+
+  test "todo scope: should not be checked" do
+    task_occurrence = FactoryGirl.create(:task_occurrence)
+    assert TaskOccurrence.todo.include?(task_occurrence)
+
+    task_occurrence.update_attributes deadline: 2.weeks.ago
+    assert !TaskOccurrence.todo.include?(task_occurrence)
+  end
+
+
+
 
 
 end

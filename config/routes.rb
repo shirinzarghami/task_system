@@ -17,9 +17,9 @@ TaskSystem::Application.routes.draw do
   end 
   resources :communities, path: '' do
     resources :tasks do
-      resources :task_occurrences, except: [:index]
+      resources :task_occurrences, only: [:new, :create]
     end
-    resources :task_occurrences, path: 'schedule', only: [:index]
+    resources :task_occurrences, path: 'schedule', except: [:new, :create]
   end
   resources :community_users
 

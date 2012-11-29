@@ -51,4 +51,6 @@ gem 'simple_form'
 gem 'friendly_id'
 gem "letter_opener", :group => :development
 gem 'whenever', :require => false
+gem 'strong_parameters'
+
 # gem "factory_girl_rails", "~> 3.0"

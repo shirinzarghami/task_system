@@ -49,6 +49,7 @@ jQuery ->
       $('.sort-item').each ->
         text_box.val(text_box.val() + $(this).attr('user_id') + ',')
 
-
+  # Global
   $('.tooltip-link').each ->
     $(this).tooltip()
+

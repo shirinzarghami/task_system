@@ -1,0 +1,8 @@
+%tr
+  %td= history_entry.task.name.truncate(30)
+  %td= history_entry.user.name
+  %td= l history_entry.task.time, format: :time_only
+  - if history_entry.completed_at.nil?
+    %td= l history_entry.deadline, format: :date_only
+  - else
+    %td{:class => 'error' if history_entry.too_late?}= l history_entry.completed_at, format: :date_only

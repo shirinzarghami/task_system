@@ -1,0 +1,9 @@
+%tr
+  %td= all_open.task.name.truncate(30)
+  %td= all_open.user.name
+  %td= l all_open.task.time, format: :time_only
+  %td= l all_open.deadline, format: :date_only
+  %td
+    - if community_admin?
+      = image_button 'iconic/reload_12x14.png', community_task_occurrence_path(@community, all_open), data: {title: t('.reassign')}, class: 'tooltip-link'
+      = image_button 'iconic/trash_fill_12x12.png', community_task_occurrence_path(@community, all_open), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link'

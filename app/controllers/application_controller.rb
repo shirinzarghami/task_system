@@ -12,20 +12,23 @@ class ApplicationController < ActionController::Base
     @community_user = CommunityUser.find_by_community_id_and_user_id(@community, @user)
   end
 
-
-
   def check_community
     check((@community_user and @community))
   end
 
   def check_admin
-    check((@community_user and @community_user.role == 'admin'))
+    check community_admin?
   end
 
+  # Redirect if confition is not met
   def check condition, url=communities_path
     unless condition
       flash[:error] = t('messages.not_allowed')
       redirect_to url
     end
+  end
+
+  def community_admin?
+    @community_user and @community_user.role == 'admin'
   end
 end
