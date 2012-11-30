@@ -107,6 +107,7 @@ en:
       schedule: Schedule
       overview: Overview
       occurrences: Occurrences
+      next_occurrence: Next occurrence
     edit:
       title: Edit task
     task:

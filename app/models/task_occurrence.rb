@@ -42,6 +42,7 @@ class TaskOccurrence < ActiveRecord::Base
     when 'time_all' then allocate_by_time_all
     when 'user' then task.allocated_user
     end
+
   end
 
   def completed?

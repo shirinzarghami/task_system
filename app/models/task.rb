@@ -44,11 +44,9 @@ class Task < ActiveRecord::Base
     end
   end
 
-  # def start_on= value
-  #   debugger
-  #   self.last_occurrence = value unless self.start_on == value     
-  #   self[:start_on] = value
-  # end
+  def next_occurrence
+    last_occurrence + interval_time
+  end
 
   def reset_last_occurrence
     self.last_occurrence = self.start_on if self.start_on_changed?
