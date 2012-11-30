@@ -31,6 +31,10 @@ FactoryGirl.define do
     start_on Date.today
     allocation_mode 'in_turns'
     allocated_user_id 1
+    factory :task_single_allocation do
+      allocation_mode 'user'
+      association :allocated_user, factory: :user
+    end
     should_be_checked false
     association :community, factory: :community
 

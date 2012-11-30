@@ -36,13 +36,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def allocate
-    self.user = case task.allocation_mode
-    when 'in_turns' then allocate_in_turns
-    when 'time' then allocate_by_time
-    when 'time_all' then allocate_by_time_all
-    when 'user' then task.allocated_user
-    end
-
+    self.user = task.next_user
   end
 
   def completed?
@@ -56,23 +50,5 @@ class TaskOccurrence < ActiveRecord::Base
   private
     def set_initial_values
       checked = false if checked.nil?
-    end
-
-    def allocate_in_turns
-      ordered_id_list = task.user_order.split(',')
-      previous_occurrence = task.task_occurrences.latest.first
-      previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
-      next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
-
-      # allocate to creater of task when next user is not found
-      task.community.members.find_by_id(next_user_id) || task.user
-    end
-
-    def allocate_by_time
-      
-    end
-
-    def allocate_by_time_all
-      
     end
 end

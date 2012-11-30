@@ -4,7 +4,11 @@
     %td= task.instantiate_in_words
   - else
     %td= link_to task.instantiate_in_words, new_community_task_task_occurrence_path(@community, task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
-  %td= l(task.next_occurrence, format: :date_only) if task.instantiate_automatically
+  %td
+    - if task.instantiate_automatically
+      = l(task.next_occurrence, format: :date_only) 
+      %br
+      %small= task.next_user.name
   %td
     - if can_edit_task? task
       = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task))

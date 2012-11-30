@@ -38,6 +38,7 @@ class Task < ActiveRecord::Base
       Task.to_schedule.each do |task| 
         task_occurrence = task.task_occurrences.build 
         task_occurrence.deadline = Time.now + task.deadline_time
+        task_occurrence.allocate
         task.last_occurrence = Time.now
         task.save
       end
@@ -48,9 +49,16 @@ class Task < ActiveRecord::Base
     last_occurrence + interval_time
   end
 
-  def reset_last_occurrence
-    self.last_occurrence = self.start_on if self.start_on_changed?
+  def next_user
+    self.user = case allocation_mode
+      when 'in_turns' then allocate_in_turns
+      when 'time' then allocate_by_time
+      when 'time_all' then allocate_by_time_all
+      when 'user' then allocated_user
+    end
+
   end
+
 
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'
@@ -79,6 +87,10 @@ class Task < ActiveRecord::Base
 
   
   private
+    def reset_last_occurrence
+      self.last_occurrence = self.start_on.to_time if self.start_on_changed? and !new_record?
+    end
+
     def set_default_values
       self.instantiate_automatically = true if self.instantiate_automatically.nil?
       self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
@@ -86,6 +98,24 @@ class Task < ActiveRecord::Base
       self.deadline ||= 0
       self.time ||= Time.at(0) + 30.minutes
       self.last_occurrence ||= Time.now
+    end
+
+    def allocate_in_turns
+      ordered_id_list = user_order.split(',')
+      previous_occurrence = task_occurrences.latest.first
+      previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
+      next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
+
+      # allocate to creater of task when next user is not found
+      community.members.find_by_id(next_user_id) || user
+    end
+
+    def allocate_by_time
+      
+    end
+
+    def allocate_by_time_all
+      
     end
 
 end
