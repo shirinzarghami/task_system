@@ -1,6 +1,6 @@
 class TaskOccurrencesController < ApplicationController
   before_filter :find_task, only: [:create, :new]
-  before_filter :find_and_check_task_occurrence, only: [:update, :destroy]
+  before_filter :find_and_check_task_occurrence, only: [:update, :destroy, :reassign]
   before_filter :check_admin, only: [:destroy]
 
   def index
@@ -41,6 +41,12 @@ class TaskOccurrencesController < ApplicationController
     end
   end
 
+  def reassign
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def destroy
     if @task_occurrence.destroy
       flash[:notice] = t('messages.save_success')
@@ -64,7 +70,7 @@ class TaskOccurrencesController < ApplicationController
 
     def task_occurrence_params
       if community_admin?
-        params.require(:task_occurrence).permit(:checked, :remarks, :user)
+        params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
       elsif @task_occurrence.user == @user
         params.require(:task_occurrence).permit(:checked, :remarks)
       end

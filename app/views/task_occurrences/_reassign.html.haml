@@ -1,0 +1,11 @@
+%div#schedule-modal.modal.hide.fade{:tabindex =>"-1", :role => "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
+  %div.modal-header
+    %button.close.modal-destroy{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}= '×'
+    %h3#myModalLabel= t('.modal_header')
+  %div.modal-body
+    %p= t('.modal_body')
+    =simple_form_for [@community, @task_occurrence], html: {class: 'form-horizontal'} do |f|
+      = f.association(:user, collection: @community.members, include_blank: false, label: t('task_occurrences.index.allocated_to'))
+  %div.modal-footer
+    = button_tag t('.reassign'), class: 'btn btn-primary submit'
+    %button.btn.modal-destroy{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}= t('cancel')
