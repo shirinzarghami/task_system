@@ -115,6 +115,9 @@ en:
     all_open:
       reassign: Re-assign this task
       delete: Dispensate this task
+
+    todo:
+      complete: Complete this task
     form:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
@@ -126,6 +129,11 @@ en:
       modal_header: Re-assign task
       modal_body: Choose to which user the task should be re-assigned
       reassign: Re-assign
+    complete:
+      modal_header: Complete task
+      modal_body: "I have completed the task '<i>%{task_name}</i>'"
+      complete: Complete
+
     index:
       title: Schedule
       mytodos: My todos

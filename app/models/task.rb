@@ -26,7 +26,7 @@ class Task < ActiveRecord::Base
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
 
   after_initialize :set_default_values
-
+  before_save :reset_last_occurrence
   # Task.where('last_occurrence + INTERVAL tasks.interval DAY >= NOW()')
   scope :to_schedule, where(instantiate_automatically: true).where("
     (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY <= UTC_TIMESTAMP()) 
@@ -38,9 +38,20 @@ class Task < ActiveRecord::Base
       Task.to_schedule.each do |task| 
         task_occurrence = task.task_occurrences.build 
         task_occurrence.deadline = Time.now + task.deadline_time
+        task.last_occurrence = Time.now
         task.save
       end
     end
+  end
+
+  # def start_on= value
+  #   debugger
+  #   self.last_occurrence = value unless self.start_on == value     
+  #   self[:start_on] = value
+  # end
+
+  def reset_last_occurrence
+    self.last_occurrence = self.start_on if self.start_on_changed?
   end
 
   def instantiate_in_words

@@ -1,6 +1,6 @@
 class TaskOccurrencesController < ApplicationController
   before_filter :find_task, only: [:create, :new]
-  before_filter :find_and_check_task_occurrence, only: [:update, :destroy, :reassign]
+  before_filter :find_and_check_task_occurrence, only: [:update, :destroy, :reassign, :complete]
   before_filter :check_admin, only: [:destroy]
 
   def index
@@ -12,17 +12,15 @@ class TaskOccurrencesController < ApplicationController
   def new
     @task_occurrence = TaskOccurrence.new
     @task_occurrence.user = @task.allocated_user if @task.allocation_mode == 'user'
-    respond_to do |format|
-      format.js
-    end
+    show_modal :form
   end
 
   def create
     @task_occurrence = @task.task_occurrences.build task_occurrence_create_params
     @task_occurrence.deadline = Time.now + @task.deadline_time
     @task_occurrence.allocate unless @task_occurrence.user.present?
-
-    if @task_occurrence.save
+    @task.last_occurrence = Time.now
+    if @task.save
       flash[:notice] = t('messages.save_success')
       redirect_to community_task_occurrences_path @community
     else
@@ -41,10 +39,13 @@ class TaskOccurrencesController < ApplicationController
     end
   end
 
+  # Both reassign and complete route to update via PUT
   def reassign
-    respond_to do |format|
-      format.js
-    end
+    show_modal :reassign
+  end
+
+  def complete
+    show_modal :complete
   end
 
   def destroy

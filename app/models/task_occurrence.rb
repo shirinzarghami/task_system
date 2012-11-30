@@ -25,6 +25,16 @@ class TaskOccurrence < ActiveRecord::Base
 
   after_initialize :set_initial_values
 
+  def checked= value
+    if value
+      self[:checked] = true
+      self.completed_at = Time.now
+    else
+      self[:checked] = false
+      self.completed_at = nil
+    end
+  end
+
   def allocate
     self.user = case task.allocation_mode
     when 'in_turns' then allocate_in_turns

@@ -5,4 +5,4 @@
   - if history_entry.completed_at.nil?
     %td= l history_entry.deadline, format: :date_only
   - else
-    %td{:class => 'error' if history_entry.too_late?}= l history_entry.completed_at, format: :date_only
+    %td{:class => (history_entry.too_late? ? 'error' : '')}= l history_entry.completed_at, format: :date_only

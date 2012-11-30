@@ -22,6 +22,7 @@ TaskSystem::Application.routes.draw do
     resources :task_occurrences, path: 'schedule', except: [:new, :create] do
       member do
         get :reassign
+        get :complete
       end
     end
   end

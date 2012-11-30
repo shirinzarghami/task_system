@@ -31,4 +31,11 @@ class ApplicationController < ActionController::Base
   def community_admin?
     @community_user and @community_user.role == 'admin'
   end
+
+  def show_modal partial
+    respond_to do |format|
+      @partial = partial.to_s
+      format.js {render 'shared/modal'}
+    end
+  end
 end
