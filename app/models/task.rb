@@ -46,7 +46,11 @@ class Task < ActiveRecord::Base
   end
 
   def next_occurrence
-    last_occurrence + interval_time
+    if last_occurrence.utc > Time.now.utc
+      last_occurrence.utc
+    else
+      last_occurrence.utc + interval_time
+    end
   end
 
   def next_user
@@ -88,7 +92,7 @@ class Task < ActiveRecord::Base
   
   private
     def reset_last_occurrence
-      self.last_occurrence = self.start_on.to_time if self.start_on_changed? and !new_record?
+      self.last_occurrence = self.start_on.to_time(:utc) if self.start_on_changed? and !new_record?
     end
 
     def set_default_values
