@@ -20,7 +20,8 @@ class Task < ActiveRecord::Base
   validates :interval, :numericality => {:greater_than => 0}
   validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :user_order, format: {with: /(\d+)(,\d+)*/} 
-
+  validates :repeat, presence: true, :numericality => {:greater_than_or_equal_to => 0}
+  validates :repeat_infinite, presence: true
   validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
@@ -31,7 +32,8 @@ class Task < ActiveRecord::Base
   scope :to_schedule, where(instantiate_automatically: true).where("
     (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY <= UTC_TIMESTAMP()) 
     OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK <= UTC_TIMESTAMP()) 
-    OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH <= UTC_TIMESTAMP())")
+    OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH <= UTC_TIMESTAMP())").where("
+    tasks.repeat_infinite = true OR tasks.repeat > 0")
 
   class << self
     def schedule_upcoming_occurrences
@@ -40,6 +42,7 @@ class Task < ActiveRecord::Base
         task_occurrence.deadline = Time.now + task.deadline_time
         task_occurrence.allocate
         task.last_occurrence = Time.now
+        task.repeat-=1 if !task.repeat_infinite and task.repeat > 0
         task.save
       end
     end
@@ -102,6 +105,7 @@ class Task < ActiveRecord::Base
       self.deadline ||= 0
       self.time ||= Time.at(0) + 30.minutes
       self.last_occurrence ||= Time.now
+      self.repeat ||= 0
     end
 
     def allocate_in_turns
