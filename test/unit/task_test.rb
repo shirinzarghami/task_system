@@ -25,7 +25,7 @@ class TaskTest < ActiveSupport::TestCase
       task
     end
     Timecop.freeze(1.week.ago) do
-      # debugger
+      debugger
       Task.schedule_upcoming_occurrences
       assert task.task_occurrences.count == 0
     end

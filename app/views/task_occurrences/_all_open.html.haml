@@ -1,4 +1,4 @@
-%tr
+%tr{:class => (all_open.too_late? ? 'error' : '')}
   %td= all_open.task.name.truncate(30)
   %td= all_open.user.name
   %td= l all_open.task.time, format: :time_only

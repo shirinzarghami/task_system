@@ -44,7 +44,11 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def too_late?
-    completed_at.present? and completed_at <= deadline
+    if completed?
+      completed_at.present? and completed_at > deadline
+    else
+      Time.now.utc > deadline.utc
+    end
   end
 
   private

@@ -95,7 +95,7 @@ class Task < ActiveRecord::Base
   
   private
     def reset_last_occurrence
-      self.last_occurrence = self.start_on.to_time(:utc) if self.start_on_changed? and !new_record?
+      self.last_occurrence = self.start_on if self.start_on_changed? and !new_record?
     end
 
     def set_default_values
