@@ -23,7 +23,7 @@ class TaskOccurrence < ActiveRecord::Base
                                   OR 
                                   (tasks.should_be_checked = false AND UTC_TIMESTAMP() >= task_occurrences.deadline)')
 
-  after_initialize :set_initial_values
+  after_initialize :set_default_values
 
   def checked= value
     if value
@@ -36,7 +36,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def allocate
-    self.user = task.next_user
+    self.user = task.next_allocated_user
   end
 
   def completed?
@@ -52,7 +52,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   private
-    def set_initial_values
+    def set_default_values
       checked = false if checked.nil?
     end
 end

@@ -16,11 +16,7 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def create
-    @task_occurrence = @task.task_occurrences.build task_occurrence_create_params
-    @task_occurrence.deadline = Time.now + @task.deadline_time
-    @task_occurrence.allocate unless @task_occurrence.user.present?
-    @task.last_occurrence = Time.now
-    if @task.save
+    if @task.schedule task_occurrence_create_params
       flash[:notice] = t('messages.save_success')
       redirect_to community_task_occurrences_path @community
     else

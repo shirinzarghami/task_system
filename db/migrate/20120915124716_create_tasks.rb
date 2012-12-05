@@ -9,11 +9,10 @@ class CreateTasks < ActiveRecord::Migration
       t.boolean :should_be_checked
       t.integer :interval
       t.string :interval_unit
-      t.datetime :last_occurrence
       t.integer :user_id
       t.integer :community_id
       t.integer :repeat
-      t.date :start_on
+      t.date :next_occurrence
       t.string :allocation_mode
       t.integer :allocated_user_id
       t.boolean :instantiate_automatically

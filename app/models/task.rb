@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
     months: 1.month
   }
 
-  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :last_occurrence, :name, :repeat, :should_be_checked, :start_on, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit
+  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit
   # attr_accessor :interval_number, :interval_unit, :deadline_number, :deadline_unit
   belongs_to :community
   belongs_to :user # Creator of the task
@@ -27,45 +27,42 @@ class Task < ActiveRecord::Base
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
 
   after_initialize :set_default_values
-  before_save :reset_last_occurrence
-  # Task.where('last_occurrence + INTERVAL tasks.interval DAY >= NOW()')
-  scope :to_schedule, where(instantiate_automatically: true).where("
-    (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY <= UTC_TIMESTAMP()) 
-    OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK <= UTC_TIMESTAMP()) 
-    OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH <= UTC_TIMESTAMP())").where("
-    tasks.repeat_infinite = true OR tasks.repeat > 0")
+  # scope :to_schedule, where(instantiate_automatically: true).where("
+  #   (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY <= UTC_TIMESTAMP()) 
+  #   OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK <= UTC_TIMESTAMP()) 
+  #   OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH <= UTC_TIMESTAMP())").where("
+  #   tasks.repeat_infinite = true OR tasks.repeat > 0")  
+
+  scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence < UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
+
+
 
   class << self
     def schedule_upcoming_occurrences
-      Task.to_schedule.each do |task| 
-        task_occurrence = task.task_occurrences.build 
-        task_occurrence.deadline = Time.now + task.deadline_time
-        task_occurrence.allocate
-        task.last_occurrence = Time.now
-        task.repeat-=1 if !task.repeat_infinite and task.repeat > 0
-        task.save
-      end
+      Task.to_schedule.each {|task| task.schedule}
+    end 
+  end
+
+  def schedule task_occurrences_params = {}
+    ActiveRecord::Base.transaction do
+      task_occurrence = task_occurrences.build task_occurrences_params
+      task_occurrence.deadline = Time.now + deadline_time
+      task_occurrence.allocate if task_occurrence.user.nil?
+
+      self.next_occurrence += self.interval_time
+      self.repeat-=1 if !self.repeat_infinite and self.repeat > 0
+      save!
     end
   end
 
-  def next_occurrence
-    if last_occurrence.utc > Time.now.utc
-      last_occurrence.utc
-    else
-      last_occurrence.utc + interval_time
-    end
-  end
-
-  def next_user
+  def next_allocated_user
     self.user = case allocation_mode
       when 'in_turns' then allocate_in_turns
       when 'time' then allocate_by_time
       when 'time_all' then allocate_by_time_all
       when 'user' then allocated_user
     end
-
   end
-
 
   def instantiate_in_words
     t_root = 'activerecord.attributes.task.instantiate'
@@ -94,17 +91,13 @@ class Task < ActiveRecord::Base
 
   
   private
-    def reset_last_occurrence
-      self.last_occurrence = self.start_on if self.start_on_changed? and !new_record?
-    end
-
     def set_default_values
       self.instantiate_automatically = true if self.instantiate_automatically.nil?
       self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 1
       self.deadline ||= 0
       self.time ||= Time.at(0) + 30.minutes
-      self.last_occurrence ||= Time.now
+      self.next_occurrence ||= Date.today
       self.repeat ||= 0
     end
 

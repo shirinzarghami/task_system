@@ -34,6 +34,7 @@ en:
         task:
           interval_number: Repeat every
           instantiate_automatically: Schedule occurrences for this task automatically
+          next_occurrence: Start on
           allocation_modes:
             in_turns: Allocate in turns
             time: Assign to the user who spend the least amount of time for this task
