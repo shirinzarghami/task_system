@@ -9,7 +9,7 @@ class Task < ActiveRecord::Base
   }
 
   attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit
-  # attr_accessor :interval_number, :interval_unit, :deadline_number, :deadline_unit
+
   belongs_to :community
   belongs_to :user # Creator of the task
   belongs_to :allocated_user, class_name: 'User'
@@ -29,8 +29,6 @@ class Task < ActiveRecord::Base
 
   scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence <= UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
 
-
-
   class << self
     def schedule_upcoming_occurrences
       Task.to_schedule.each &:schedule
@@ -41,6 +39,7 @@ class Task < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       task_occurrence = task_occurrences.build task_occurrences_params
       task_occurrence.deadline = Time.now + deadline_time
+      task_occurrence.time_in_minutes = self.time_in_minutes
       task_occurrence.allocate if task_occurrence.user.nil?
 
       self.next_occurrence += self.interval_time
@@ -50,7 +49,7 @@ class Task < ActiveRecord::Base
   end
 
   def next_allocated_user
-    self.user = case allocation_mode
+    case allocation_mode
       when 'in_turns' then allocate_in_turns
       when 'time' then allocate_by_time
       when 'time_all' then allocate_by_time_all
@@ -77,8 +76,13 @@ class Task < ActiveRecord::Base
   end
 
   def ordered_members
+    # Sort members based on the attribute 'user_order' (list of ids)
     ordered_member_ids = self.user_order.split(',').map(&:to_i)
     self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
+  end
+
+  def time_in_minutes
+    time.hour * 60 + time.min
   end
 
   
@@ -104,11 +108,13 @@ class Task < ActiveRecord::Base
     end
 
     def allocate_by_time
-      
+      least_time_user_id = task_occurrences.group(:user_id).order(:sum_time_in_minutes).limit(1).sum(:time_in_minutes).keys.first
+      User.find least_time_user_id
     end
 
     def allocate_by_time_all
-      
+      least_time_user_id = TaskOccurrence.for_community(community).group('task_occurrences.user_id').order(:sum_time_in_minutes).limit(1).sum(:time_in_minutes).keys.first
+      User.find least_time_user_id
     end
 
 end

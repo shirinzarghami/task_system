@@ -78,6 +78,7 @@ FactoryGirl.define do
     remarks ""
     association :user, factory: :user
     association :task, factory: :task
+    time_in_minutes 60
     created_at Time.now
     updated_at Time.now
     factory :task_occurrence_should_be_checked do

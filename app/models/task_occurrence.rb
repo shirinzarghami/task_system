@@ -7,21 +7,24 @@ class TaskOccurrence < ActiveRecord::Base
   
   validates :task_id, presence: true
   validates :user_id, presence: true
+  validates :time_in_minutes, presence: true, :numericality => {:greater_than_or_equal_to => 0}
 
-  scope :latest, order('created_at').limit(1)
+  scope :latest, order('created_at DESC').limit(1)
   scope :for_user, lambda {|user| where(user_id: user.id)}
   scope :for_community, lambda {|community| joins(:task).where(['tasks.community_id = ?', community.id])}
-
+  scope :for_task, lambda {|task| where(task_id: task.id)}
+  
   # Not completed occurrences
-  scope :todo, joins(:task).where('
+  scope :todo, joins(:task).order('task_occurrences.deadline DESC').where('
                                   (tasks.should_be_checked = true AND task_occurrences.checked = false)
                                   OR 
                                   (tasks.should_be_checked = false AND UTC_TIMESTAMP() < task_occurrences.deadline)')
 
-  scope :completed, joins(:task).where('
+  scope :completed, joins(:task).order('task_occurrences.updated_at DESC').where('
                                   (tasks.should_be_checked = true AND task_occurrences.checked = true)
                                   OR 
                                   (tasks.should_be_checked = false AND UTC_TIMESTAMP() >= task_occurrences.deadline)')
+
 
   after_initialize :set_default_values
 
@@ -40,7 +43,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def completed?
-    task.should_be_checked ? checked : deadline < Time.now
+    task.should_be_checked ? checked : deadline < Date.today
   end
 
   def too_late?
