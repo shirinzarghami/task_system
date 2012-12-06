@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :task do
     name 'Do something'
     description 'Do something'
-    deadline 100
+    deadline 1
     deadline_unit 'weeks'
     user_order '1,2,3'
     interval 3
@@ -28,9 +28,9 @@ FactoryGirl.define do
     user_id 1
     community_id 1
     repeat 1
-    start_on Date.today
     allocation_mode 'in_turns'
     allocated_user_id 1
+    next_occurrence Date.today
     factory :task_single_allocation do
       allocation_mode 'user'
       association :allocated_user, factory: :user

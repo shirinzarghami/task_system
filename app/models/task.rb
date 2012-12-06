@@ -27,19 +27,14 @@ class Task < ActiveRecord::Base
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
 
   after_initialize :set_default_values
-  # scope :to_schedule, where(instantiate_automatically: true).where("
-  #   (tasks.interval_unit = 'days'AND last_occurrence + INTERVAL tasks.interval DAY <= UTC_TIMESTAMP()) 
-  #   OR (tasks.interval_unit = 'weeks'AND last_occurrence + INTERVAL tasks.interval WEEK <= UTC_TIMESTAMP()) 
-  #   OR (tasks.interval_unit = 'months'AND last_occurrence + INTERVAL tasks.interval MONTH <= UTC_TIMESTAMP())").where("
-  #   tasks.repeat_infinite = true OR tasks.repeat > 0")  
 
-  scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence < UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
+  scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence <= UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
 
 
 
   class << self
     def schedule_upcoming_occurrences
-      Task.to_schedule.each {|task| task.schedule}
+      Task.to_schedule.each &:schedule
     end 
   end
 
@@ -51,7 +46,8 @@ class Task < ActiveRecord::Base
 
       self.next_occurrence += self.interval_time
       self.repeat-=1 if !self.repeat_infinite and self.repeat > 0
-      save!
+      # debugger
+      self.save!
     end
   end
 
@@ -74,12 +70,10 @@ class Task < ActiveRecord::Base
   end
 
   def interval_time
-    # Task::TIME_UNITS[interval_unit.to_sym] * interval
     eval "#{interval}.#{interval_unit}" if TIME_UNITS.keys.include?(interval_unit.to_sym)
   end
 
-  def deadline_time 
-    # Task::TIME_UNITS[deadline_unit.to_sym] * deadline
+  def deadline_time
     eval "#{deadline}.#{deadline_unit}" if TIME_UNITS.keys.include?(deadline_unit.to_sym)
    
   end
@@ -95,7 +89,7 @@ class Task < ActiveRecord::Base
       self.instantiate_automatically = true if self.instantiate_automatically.nil?
       self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 1
-      self.deadline ||= 0
+      self.deadline ||= 1
       self.time ||= Time.at(0) + 30.minutes
       self.next_occurrence ||= Date.today
       self.repeat ||= 0

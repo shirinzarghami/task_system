@@ -9,5 +9,9 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  # This is required as the to_schedule scope in task does not work in a test environment.
+  # Timecop does not change the MySQL time
+  def schedule_task_occurrences
+    Task.all.select {|t| t.next_occurrence <= Date.today}.each {|t| t.schedule}
+  end
 end
