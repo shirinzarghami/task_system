@@ -21,7 +21,6 @@ class Task < ActiveRecord::Base
   validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :user_order, format: {with: /(\d+)(,\d+)*/} 
   validates :repeat, presence: true, :numericality => {:greater_than_or_equal_to => 0}
-  validates :repeat_infinite, presence: true
   validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
@@ -46,7 +45,6 @@ class Task < ActiveRecord::Base
 
       self.next_occurrence += self.interval_time
       self.repeat-=1 if !self.repeat_infinite and self.repeat > 0
-      # debugger
       self.save!
     end
   end

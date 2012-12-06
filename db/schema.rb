@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20121104204847) do
   create_table "task_occurrences", :force => true do |t|
     t.integer  "task_id"
     t.boolean  "checked",      :default => false
-    t.datetime "deadline"
+    t.date     "deadline"
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "completed_at"

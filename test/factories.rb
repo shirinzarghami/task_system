@@ -74,7 +74,7 @@ FactoryGirl.define do
 
   factory :task_occurrence do
     checked false
-    deadline 2.week.since
+    deadline 2.week.since.to_date
     remarks ""
     association :user, factory: :user
     association :task, factory: :task
@@ -86,6 +86,6 @@ FactoryGirl.define do
   end
 
   factory :task_occurrence_passed_deadline, parent: :task_occurrence do
-    deadline 2.weeks.ago
+    deadline 2.weeks.ago.to_date
   end
 end

@@ -18,7 +18,7 @@ class TaskTest < ActiveSupport::TestCase
     assert !task.save
   end
 
-  test "schedule first task event" do
+  test "schedule task occurrences" do
     Timecop.freeze(2.weeks.ago)
     task = FactoryGirl.create(:task_single_allocation, interval: 2, interval_unit: 'weeks', next_occurrence: Date.today)
     assert task.task_occurrences.count == 0, 'before scheduling there should be no occurrences'
@@ -35,39 +35,27 @@ class TaskTest < ActiveSupport::TestCase
     assert task.task_occurrences.count == 2, 'when scheduling after the interval has passed, an occurrence should be created'
   end
 
-  # test "schedule upcoming daily tasks" do
-  #   (2..4).to_a.each do |number|
-  #     task = FactoryGirl.create(:task_single_allocation, interval_unit: 'days', interval: 3, last_occurrence: number.days.ago)
-  #     Task.schedule_upcoming_occurrences
-  #     assert task.task_occurrences.count == (number < 3 ? 0 : 1)
-  #   end
-  # end
 
-  # test "schedule upcoming weekly tasks" do
-  #   (2..4).to_a.each do |number|
-  #     task = FactoryGirl.create(:task_single_allocation, interval_unit: 'weeks', interval: 3, last_occurrence: number.weeks.ago)
-  #     Task.schedule_upcoming_occurrences
-  #     assert task.task_occurrences.count == (number < 3 ? 0 : 1)
-  #   end
-  # end
+  test "set the correct deadline" do
+    task = FactoryGirl.create :task_single_allocation, deadline_unit: 'months', deadline: 3
+    Task.schedule_upcoming_occurrences
+    assert task.task_occurrences.count == 1, 'one occurrence should be created after scheduling'
+    assert task.task_occurrences.last.deadline.to_date == Date.today + 3.months, 'the deadline should be set depending on the task deadline interval'
+  end
 
-  # test "schedule upcoming monthly tasks" do
-  #   (2..4).to_a.each do |number|
-  #     task = FactoryGirl.create(:task_single_allocation, interval_unit: 'months', interval: 3, last_occurrence: number.months.ago)
-  #     Task.schedule_upcoming_occurrences
-  #     assert task.task_occurrences.count == (number < 3 ? 0 : 1)
-  #   end
-  # end
-
-  # test "set the correct deadline" do
-  #   Timecop.freeze(Time.now) do
-  #     task = FactoryGirl.create(:task_single_allocation, deadline_unit: 'months', deadline: 3, last_occurrence: 4.weeks.ago)
-  #     Task.schedule_upcoming_occurrences
-  #     assert task.task_occurrences.count == 1
-  #     # For some reason comparing time objects doesn't work
-  #     assert task.task_occurrences.last.deadline.localtime.to_s == (Time.now + 3.months).to_s
-  #   end
-  # end
+  test "task repetition" do
+    task = FactoryGirl.create :task_single_allocation, repeat_infinite: false, repeat: 1
+    Task.schedule_upcoming_occurrences
+    task.reload
+    assert task.repeat == 0, 'repeat value should be decreased by one'
+    assert task.task_occurrences.count == 1, 'one occurrence should be scheduled'
+    
+    task.update_attributes next_occurrence: Date.today
+    Task.schedule_upcoming_occurrences
+    task.reload
+    assert task.repeat == 0, 'repeat value should not go below 0'
+    assert task.task_occurrences.count == 1, 'when repeat 0, a new occurrence should not be scheduled'
+  end
 
   # test "last occurrence should change when a new start time is selected" do
   #   task = FactoryGirl.create(:task, last_occurrence: 4.weeks.ago)
