@@ -6,7 +6,7 @@
     %td= link_to task.instantiate_in_words, new_community_task_task_occurrence_path(@community, task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
   %td
     - if task.instantiate_automatically
-      = l(task.next_occurrence) 
+      = l task.next_occurrence, format: :long
       %br
       %small= task.next_allocated_user.name
   %td

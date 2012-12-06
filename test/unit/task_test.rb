@@ -57,10 +57,4 @@ class TaskTest < ActiveSupport::TestCase
     assert task.task_occurrences.count == 1, 'when repeat 0, a new occurrence should not be scheduled'
   end
 
-  # test "last occurrence should change when a new start time is selected" do
-  #   task = FactoryGirl.create(:task, last_occurrence: 4.weeks.ago)
-  #   task.update_attributes start_on: 1.week.since
-  #   assert task.last_occurrence = 1.week.since
-  # end
-
 end
