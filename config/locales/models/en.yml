@@ -54,6 +54,8 @@ en:
             months:
               one: Every month
               other: Every %{count} months
+          repeat: Repeat
+
       values:
         admin: Administrator
         normal: Normal user

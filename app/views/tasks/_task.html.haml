@@ -1,7 +1,10 @@
 %tr
   %td= task.name
   - if task.instantiate_automatically
-    %td= task.instantiate_in_words
+    %td
+      = task.instantiate_in_words
+      %br
+      %small= t("times", count: task.repeat) unless task.repeat_infinite
   - else
     %td= link_to task.instantiate_in_words, new_community_task_task_occurrence_path(@community, task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
   %td

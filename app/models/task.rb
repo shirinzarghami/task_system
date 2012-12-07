@@ -95,6 +95,7 @@ class Task < ActiveRecord::Base
       self.time ||= Time.at(0) + 30.minutes
       self.next_occurrence ||= Date.today
       self.repeat ||= 0
+      self.repeat_infinite = true if self.repeat_infinite.nil?
     end
 
     def allocate_in_turns

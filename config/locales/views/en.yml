@@ -3,6 +3,9 @@ en:
   noo: "No"
   here: here
   cancel: "Cancel"
+  times:
+    one: "%{count} time"
+    other: "%{count} times"
   actions:
     new: New
     edit: Edit

@@ -98,9 +98,39 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
       occurrences_count: 2
     )
     # debugger
-    assert task.next_allocated_user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
+    assert task.next_allocated_user == user1, "The occurrence should be scheduled to user1, since it has 0 time"
     Task.schedule_upcoming_occurrences && task.reload
-    assert task.task_occurrences.last.user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
+    assert task.task_occurrences.last.user == user1, "The occurrence should be scheduled to user1, since it has 0 time"
+
+    2.times {FactoryGirl.create(:task_occurrence, task: task, user: user1)}
+    assert task.next_allocated_user == user2, "The occurrence should be scheduled to user2, since it has less time"
   end
+
+  test "allocate by time on all tasks within community" do
+    community = FactoryGirl.create(:community_with_users, users_count: 2)
+    user1, user2 = community.members.first(2)
+      
+    task1 = FactoryGirl.create(:task_with_occurrences, 
+      allocation_mode: 'time',
+      community: community,
+      occurrences_user: user2,
+      occurrences_count: 3
+    )    
+
+    task2 = FactoryGirl.create(:task_with_occurrences, 
+      allocation_mode: 'time_all',
+      community: community,
+      occurrences_user: user1,
+      occurrences_count: 2
+    )
+
+    assert task2.next_allocated_user == user1, "Should be scheduled to user1, since it has lowest total time"
+
+    2.times {FactoryGirl.create(:task_occurrence, task: task1, user: user1)}
+    assert task2.next_allocated_user == user2, "Should be scheduled to user2, since it has lowest total time"
+
+
+  end
+
 
 end
