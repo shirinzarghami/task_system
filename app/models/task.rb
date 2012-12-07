@@ -108,12 +108,12 @@ class Task < ActiveRecord::Base
     end
 
     def allocate_by_time
-      least_time_user_id = task_occurrences.group(:user_id).order(:sum_time_in_minutes).limit(1).sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
       User.find least_time_user_id
     end
 
     def allocate_by_time_all
-      least_time_user_id = TaskOccurrence.for_community(community).group('task_occurrences.user_id').order(:sum_time_in_minutes).limit(1).sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
       User.find least_time_user_id
     end
 

@@ -87,8 +87,20 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert !TaskOccurrence.todo.include?(task_occurrence)
   end
 
-
-
-
+  test "allocate by time" do
+    community = FactoryGirl.create(:community_with_users, users_count: 2)
+    user1, user2 = community.members.first(2)
+      
+    task = FactoryGirl.create(:task_with_occurrences, 
+      allocation_mode: 'time',
+      community: community,
+      occurrences_user: user2,
+      occurrences_count: 2
+    )
+    debugger
+    assert task.next_allocated_user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
+    Task.schedule_upcoming_occurrences && task.reload
+    assert task.task_occurrences.last.user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
+  end
 
 end
