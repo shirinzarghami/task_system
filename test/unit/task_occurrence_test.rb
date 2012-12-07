@@ -97,7 +97,7 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
       occurrences_user: user2,
       occurrences_count: 2
     )
-    debugger
+    # debugger
     assert task.next_allocated_user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
     Task.schedule_upcoming_occurrences && task.reload
     assert task.task_occurrences.last.user == user1, "The occurrence should be scheduled to member2, since it has 0 time"
