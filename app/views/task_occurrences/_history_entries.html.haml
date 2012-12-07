@@ -5,3 +5,4 @@
     %th= t('.duration')
     %th= t('.completed_at')
   =render partial: 'history_entry', collection: @history
+=will_paginate @history, param_name: :history_page, class: 'pagination pagination-centered pagination-mini'

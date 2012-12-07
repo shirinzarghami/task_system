@@ -4,9 +4,9 @@ class TaskOccurrencesController < ApplicationController
   before_filter :check_admin, only: [:destroy]
 
   def index
-    @my_todos = TaskOccurrence.for_user(@user).for_community(@community).todo
-    @all_open = TaskOccurrence.for_community(@community).todo
-    @history = TaskOccurrence.for_community(@community).completed
+    @my_todos = TaskOccurrence.for_user(@user).for_community(@community).todo.paginate(page: params[:todo_page], per_page: 20)
+    @all_open = TaskOccurrence.for_community(@community).todo.paginate(page: params[:open_page], per_page: 3)
+    @history = TaskOccurrence.for_community(@community).completed.paginate(page: params[:history_page], per_page: 20)
   end
 
   def new

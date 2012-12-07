@@ -5,3 +5,4 @@
     %th= t('activerecord.attributes.community.members')
     %th
   = render partial: 'community', collection: @communities
+= will_paginate @communities, class: 'pagination pagination-centered pagination-mini'

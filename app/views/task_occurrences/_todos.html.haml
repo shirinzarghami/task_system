@@ -5,3 +5,4 @@
     %th= t('.deadline')
     %th
   =render partial: 'todo', collection: @my_todos
+=will_paginate @my_todos, param_name: :todo_page, class: 'pagination pagination-centered pagination-mini'

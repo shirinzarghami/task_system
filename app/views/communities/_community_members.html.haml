@@ -6,4 +6,5 @@
       %th= t('activerecord.attributes.user.email')
       %th= t('activerecord.attributes.user.role')
       %th
-    = render partial: 'community_member', collection: @community.community_users
+    = render partial: 'community_member', collection: @community_users
+=will_paginate @community_users, class: 'pagination pagination-centered pagination-mini'

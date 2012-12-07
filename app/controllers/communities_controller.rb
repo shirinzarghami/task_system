@@ -2,8 +2,8 @@
 class CommunitiesController < ApplicationController
   before_filter :new_invitations_flash
   def index
-    @community_users = @user.community_users
-    @invitations = current_user.invitations
+    @community_users = @user.community_users.paginate(page: params[:page], per_page: 10)
+    @invitations = current_user.invitations.paginate(page: params[:invitation_page], per_page: 10)
   end
 
   def create
@@ -20,7 +20,8 @@ class CommunitiesController < ApplicationController
   end
 
   def show
-    @invitations = @community.invitations
+    @invitations = @community.invitations.paginate(page: params[:invitation_page], per_page: 10)
+    @community_users = @community.community_users.paginate(page: params[:page], per_page: 20)
   end
 
 

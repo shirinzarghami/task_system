@@ -6,3 +6,4 @@
     %th= t('.deadline')
     %th
   =render partial: 'all_open', collection: @all_open
+=will_paginate @all_open, param_name: :open_page, class: 'pagination pagination-centered pagination-mini'

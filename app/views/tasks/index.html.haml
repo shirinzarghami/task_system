@@ -11,4 +11,5 @@
       %th= t('.next_occurrence')
       %th
     = render partial: 'task', collection: @tasks
+= will_paginate @tasks, class: 'pagination pagination-centered pagination-mini'
 

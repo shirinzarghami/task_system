@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_filter :check_task, only: [:edit, :update, :destroy]
 
   def index
-    @tasks = @community.tasks
+    @tasks = @community.tasks.paginate(page: params[:page], per_page: 20)
   end
 
   def show

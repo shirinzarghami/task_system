@@ -7,3 +7,4 @@
       %th= t('communities.index.members')
       %th
     = render partial: 'community_user', collection: @community_users
+=will_paginate @community_users, class: 'pagination pagination-centered pagination-mini'

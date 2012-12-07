@@ -8,3 +8,4 @@
       %th= t('activerecord.attributes.user.last_login')
       %th
     = render partial: 'user', collection: @users
+=will_paginate @users, class: 'pagination pagination-centered pagination-mini'
