@@ -27,6 +27,8 @@ en:
     deny_success: You've successfully denied the membership for %{community}
     invite_success: You have successfully created invitations
     new_invitation: There is a new invitation for you!
+    task_destroy_success: The task has been deleted
+    task_destroy_fail: The task could not be deleted
 
   activerecord:
       errors:

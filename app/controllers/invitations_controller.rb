@@ -1,6 +1,6 @@
 class InvitationsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:show, :accept_new_account, :accept]
-  skip_before_filter :find_community, except: [:create]
+  before_filter :find_community, only: [:create]
 
   before_filter :find_invitation_by_token, only: [:accept, :accept_new_account, :show]
   before_filter :accept_allowed?, only: [:accept]
@@ -80,8 +80,7 @@ class InvitationsController < ApplicationController
 
   protected
     def find_invitation_by_token
-      @invitation = Invitation.find_by_token(params[:id])
-      redirect if @invitation.nil?
+      @invitation = Invitation.find_by_token!(params[:id])
       @community = @invitation.community
     end
 
@@ -102,7 +101,6 @@ class InvitationsController < ApplicationController
 
     def find_community
       @community = current_user.communities.find params[:invitation][:community_id]
-      redirect unless @community
     end
 
     def destroy_allowed

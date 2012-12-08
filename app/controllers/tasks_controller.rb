@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
   before_filter :find_community
-  before_filter :check_community, only: [:index, :show, :new, :create, :edit]
+  # before_filter :check_community, only: [:index, :show, :new, :create, :edit]
   before_filter :find_task, only: [:edit, :update, :destroy]
-  before_filter :check_task, only: [:edit, :update, :destroy]
 
   def index
     @tasks = @community.tasks.paginate(page: params[:page], per_page: 20)
@@ -41,13 +40,17 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    if @task.destroy
+      flash[:notice] = t('messages.task_destroy_success')
+      redirect_to community_tasks_path @community
+    else
+      flash[:error] = t('messages.task_destroy_fails')
+      render action: 'edit'
+    end
   end
 
   protected
     def find_task
       @task = @community.tasks.find(params.has_key?(:task_id) ? params[:task_id] : params[:id]) 
-    end
-    def check_task
-      check((@community_user.role == 'admin' or @task.user == @user), community_tasks_path(@community))
     end
 end
