@@ -47,6 +47,11 @@ class Admin::CommunitiesController < AdminController
     redirect_to admin_communities_path
   end
 
+  private
+    def community_params
+      {creator: @user}.merge params.require(:community).permit(:name, :subdomain, :user_tokens, :admin_user_tokens)
+    end
+
 
 
 end

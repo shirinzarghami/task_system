@@ -20,6 +20,11 @@ class Invitation < ActiveRecord::Base
     self.token = SecureRandom.hex(15)
   end
 
+  def invitation_email= email
+    self[:invitation_email] = email
+    self.invitee = User.find_by_email email
+  end
+
   # Dummy variable for form
   def invitation_emails
     @invitation_emails

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   # has_and_belongs_to_many :communities
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
-
+  has_many :created_communities, class_name: 'Community', foreign_key: 'creator_id'
   has_many :admin_communities, through: :community_users, source: :community, class_name: 'Community', conditions: ['role = ?', 'admin']
   has_many :normal_communities, through: :community_users, source: :community,class_name: 'Community', conditions: ['role = ?', 'normal']
 

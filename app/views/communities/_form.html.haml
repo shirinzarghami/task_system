@@ -2,5 +2,5 @@
   = simple_form_for @community, html: {class: 'form-horizontal'} do |f|
     = f.input :name
     = f.input :subdomain, disabled: true
-    = f.input :invitation_emails, as: :text, hint: t('form.email_hint'), input_html: {rows: 5, class: 'span9'}
+    = f.input :invitation_emails, as: :text, hint: t('form.email_hint'), input_html: {rows: 5, class: 'span7'} 
     = f.button :submit, class: 'btn-primary'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104204847) do
+ActiveRecord::Schema.define(:version => 20121208135200) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20121104204847) do
     t.integer  "max_users",  :default => 20
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.integer  "creator_id"
   end
 
   create_table "community_users", :force => true do |t|

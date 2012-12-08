@@ -10,7 +10,6 @@ class CommunitiesController < ApplicationController
   def create
     @community = Community.new community_params
     @community.community_users.build role: 'admin', user: @user
-    @community.send_invitations_from @user
     if @community.save
       flash[:notice] = t('communities.new.created')
       redirect_to communities_path
@@ -25,7 +24,6 @@ class CommunitiesController < ApplicationController
     @community_users = @community.community_users.paginate(page: params[:page], per_page: 20)
   end
 
-
   def new
     @community = Community.new
   end
@@ -36,7 +34,7 @@ class CommunitiesController < ApplicationController
     end
 
     def community_params
-      params.require(:community).permit(:name, :subdomain, :invitation_emails)
+      {creator: @user}.merge params.require(:community).permit(:name, :subdomain, :invitation_emails)
     end
 
 
