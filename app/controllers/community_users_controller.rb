@@ -29,12 +29,8 @@ class CommunityUsersController < ApplicationController
   protected
 
     def find_community_user
-      # @community_user = (params.has_key?(:community_user) ? CommunityUser.find(params[:community_user][:id]) : CommunityUser.find(params[:id]))
       @community_user = CommunityUser.find(params[:id])
-      if @community_user.nil?
-        flash[:error] = t('community_users.not_found')
-        redirect_to communities_path
-      end
+      check @community_user.present?, communities_path, t('community_users.not_found')
     end
 
     def edit_allowed?

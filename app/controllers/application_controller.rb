@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
   end
 
   # Redirect if confition is not met
-  def check condition, url=communities_path
+  def check condition, url=communities_path, flash= t('messages.not_allowed')
     unless condition
-      flash[:error] = t('messages.not_allowed')
+      flash[:error] = flash
       redirect_to url
     end
   end
