@@ -1,4 +1,5 @@
 class TaskOccurrencesController < ApplicationController
+  before_filter :find_community
   before_filter :find_task, only: [:create, :new]
   before_filter :find_and_check_task_occurrence, only: [:update, :destroy, :reassign, :complete]
   before_filter :check_admin, only: [:destroy]

@@ -26,7 +26,7 @@ TaskSystem::Application.routes.draw do
       end
     end
   end
-  resources :community_users
+  resources :community_users, only: [:update, :destroy]
 
   root :to => 'Communities#index'
   # The priority is based upon order of creation:

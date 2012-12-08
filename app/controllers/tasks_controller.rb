@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_filter :find_community
   before_filter :check_community, only: [:index, :show, :new, :create, :edit]
   before_filter :find_task, only: [:edit, :update, :destroy]
   before_filter :check_task, only: [:edit, :update, :destroy]

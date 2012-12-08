@@ -49,7 +49,7 @@ class Community < ActiveRecord::Base
     self.subdomain = name.downcase.gsub(/[^a-z0-9\-_]/, '-').truncate(20, omission: '') if self.subdomain.nil?
   end
 
-  def invite invitor, email_list = ""
+  def send_invitations_from invitor, email_list = ""
     @invitation_emails = email_list if email_list.present?
     @invitation_emails.split(',').first(20).map(&:strip).each do |email|
       invitee = User.find_by_email email

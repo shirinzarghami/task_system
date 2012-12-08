@@ -1,8 +1,8 @@
 class CommunityUsersController < ApplicationController
-  skip_before_filter :find_community
-  before_filter :find_community_user, only: [:destroy, :update]
-  before_filter :edit_allowed?, only: [:destroy, :update]
-  
+  before_filter :find_community_user
+  before_filter :check_community_admin, only: [:update]
+  before_filter :check_destroy_allowed, only: [:destroy]
+
   def destroy
     if @community_user.destroy
       flash[:notice] = t('communitie_users.destroy.unsubscribed')
@@ -11,9 +11,6 @@ class CommunityUsersController < ApplicationController
       flash[:error] = t('messages.error')
       redirect_to communities_path
     end
-  end
-
-  def create
   end
 
   def update
@@ -30,23 +27,17 @@ class CommunityUsersController < ApplicationController
 
     def find_community_user
       @community_user = CommunityUser.find(params[:id])
-      check @community_user.present?, communities_path, t('community_users.not_found')
-    end
-
-    def edit_allowed?
-      unless @community_user.user == @user or user_is_community_admin?
-        flash[:error] = t('messages.not_allowed')
-        redirect_to communities_path
-      end
     end
 
     def user_is_community_admin?
-      current_community_user = @community_user.community.community_users.find_by_user_id(@user)
-      current_community_user.present? and current_community_user.role == 'admin'
+      CommunityUser.find_by_community_id_and_user_id!(@community_user.community, @user).role == 'admin'
     end
 
+    def check_community_admin
+      check user_is_community_admin?
+    end
 
-
-
-
+    def check_destroy_allowed
+      check @community_user.user == @user or user_is_community_admin?
+    end
 end

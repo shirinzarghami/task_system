@@ -1,5 +1,6 @@
 
 class CommunitiesController < ApplicationController
+  before_filter :find_community, only: [:show]
   before_filter :new_invitations_flash
   def index
     @community_users = @user.community_users.paginate(page: params[:page], per_page: 10)
@@ -9,7 +10,7 @@ class CommunitiesController < ApplicationController
   def create
     @community = Community.new params[:community]
     @community.community_users.build role: 'admin', user: @user
-    @community.invite @user
+    @community.send_invitations_from @user
     if @community.save
       flash[:notice] = t('communities.new.created')
       redirect_to communities_path

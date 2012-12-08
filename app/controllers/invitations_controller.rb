@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
 
   def create
     @invitation_dummy = Invitation.new params[:invitation]
-    @community.invite current_user, params[:invitation][:invitation_emails]
+    @community.send_invitations_from current_user, params[:invitation][:invitation_emails]
 
     if @community.save
       flash[:notice] = t('messages.invite_success')

@@ -77,10 +77,10 @@ en:
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
 
-    community_users:
-      destroy:
-        unsubscribed: Your are successfully unsubscribed
-      not_found: Couldn't find a user membership for this community
+  community_users:
+    destroy:
+      unsubscribed: Your are successfully unsubscribed
+    not_found: Couldn't find a user membership for this community
 
   invitations:
     show:
