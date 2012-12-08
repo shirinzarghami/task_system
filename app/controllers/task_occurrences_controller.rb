@@ -1,12 +1,12 @@
 class TaskOccurrencesController < ApplicationController
   before_filter :find_community
   before_filter :find_task, only: [:create, :new]
-  before_filter :find_and_check_task_occurrence, only: [:update, :destroy, :reassign, :complete]
-  before_filter :check_admin, only: [:destroy]
+  before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete]
+  before_filter :check_community_admin, only: [:destroy]
 
   def index
     @my_todos = TaskOccurrence.for_user(@user).for_community(@community).todo.paginate(page: params[:todo_page], per_page: 20)
-    @all_open = TaskOccurrence.for_community(@community).todo.paginate(page: params[:open_page], per_page: 3)
+    @all_open = TaskOccurrence.for_community(@community).todo.paginate(page: params[:open_page], per_page: 20)
     @history = TaskOccurrence.for_community(@community).completed.paginate(page: params[:history_page], per_page: 20)
   end
 
@@ -60,9 +60,8 @@ class TaskOccurrencesController < ApplicationController
       @task = @community.tasks.find(params[:task_id])
     end
 
-    def find_and_check_task_occurrence
+    def find_task_occurrence
       @task_occurrence = TaskOccurrence.find params[:id]
-      check @task_occurrence, community_tasks_path(@community)
       @task = @task_occurrence.task
     end
 

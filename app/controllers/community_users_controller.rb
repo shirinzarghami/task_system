@@ -14,7 +14,7 @@ class CommunityUsersController < ApplicationController
   end
 
   def update
-    if @community_user.update_attributes params[:community_user].except(:user_id, :community_id)
+    if @community_user.update_attributes community_user_params
       flash[:notice] = t('messages.save_success')
       redirect_to community_path(@community_user.community)
     else
@@ -23,8 +23,7 @@ class CommunityUsersController < ApplicationController
     end
   end
 
-  protected
-
+  private
     def find_community_user
       @community_user = CommunityUser.find(params[:id])
     end
@@ -39,5 +38,9 @@ class CommunityUsersController < ApplicationController
 
     def check_destroy_allowed
       check @community_user.user == @user or user_is_community_admin?
+    end
+
+    def community_user_params
+      params.require(:community_user).permit(:role)
     end
 end

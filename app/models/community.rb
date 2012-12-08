@@ -1,4 +1,5 @@
 class Community < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   extend FriendlyId
     friendly_id :subdomain
 

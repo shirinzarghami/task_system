@@ -8,7 +8,7 @@ class CommunitiesController < ApplicationController
   end
 
   def create
-    @community = Community.new params[:community]
+    @community = Community.new community_params
     @community.community_users.build role: 'admin', user: @user
     @community.send_invitations_from @user
     if @community.save
@@ -30,10 +30,15 @@ class CommunitiesController < ApplicationController
     @community = Community.new
   end
 
-  protected
+  private
     def new_invitations_flash
       flash[:info] = t('messages.new_invitation') if current_user.invitations.any?
     end
+
+    def community_params
+      params.require(:community).permit(:name, :subdomain, :invitation_emails)
+    end
+
 
 
 end

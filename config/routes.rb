@@ -15,7 +15,7 @@ TaskSystem::Application.routes.draw do
       post 'accept_new_account'
     end
   end 
-  resources :communities, path: '' do
+  resources :communities, path: '', except: [:edit, :upgrade] do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end

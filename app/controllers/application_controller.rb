@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_community_admin
+    check community_admin?    
+  end
+
   def community_admin?
     @community_user and @community_user.role == 'admin'
   end

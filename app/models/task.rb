@@ -1,4 +1,5 @@
 class Task < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   ALLOCATION_MODES = [:in_turns, :time, :time_all, :voluntary, :user]
   ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]} 
 
@@ -8,7 +9,7 @@ class Task < ActiveRecord::Base
     months: 1.month
   }
 
-  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit
+  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit, :user
 
   belongs_to :community
   belongs_to :user # Creator of the task
@@ -24,6 +25,7 @@ class Task < ActiveRecord::Base
   validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :allocation_mode, inclusion: {in: Task::ALLOCATION_MODES.map(&:to_s)}
+  validates :user_id, presence: true
 
   after_initialize :set_default_values
 
