@@ -34,16 +34,31 @@ class Invitation < ActiveRecord::Base
   def create_invitations_from invitor
     @community = invitor.communities.find(community)
     @community.build_invitations(invitor, self.invitation_emails)
-    # Return the save result and set error when necessary 
+    # Return the save result and set error when necessary
     @community.save or !set_community_errors
   end
 
   def deny
-    self.update_attributes status: 'denied'
+    self.status = 'denied'
+    save
   end
 
-  def accept
-    
+  def accept user
+    if user.email == invitee_email or invitee.nil?
+      ActiveRecord::Base.transaction do
+        if user.new_record?
+          user.skip_confirmation! if user.email == invitee_email
+          invitee = user
+          invitee_email = user.email
+          user.save!
+        end
+        CommunityUser.create! user: user, role: 'normal', community: community
+        self.status = 'accepted'
+        save!
+      end
+    else
+      false
+    end
   end
 
   private
@@ -52,7 +67,7 @@ class Invitation < ActiveRecord::Base
     end
 
     def set_default_values
-      status ||= 'requested'
+      self.status ||= 'requested'
     end
 
 end

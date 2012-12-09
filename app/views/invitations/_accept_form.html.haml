@@ -1,4 +1,4 @@
-= simple_form_for @user, url: invitation_path(@invitation.token) do |f|
+= simple_form_for @user, url: invitation_path(@invitation.token), method: :put do |f|
   %fieldset
     %legend= image_tag('iconic/question_mark_12x24.png') + t('invitations.edit.question')
     %div.control-group

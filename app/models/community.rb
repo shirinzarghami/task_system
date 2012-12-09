@@ -48,7 +48,8 @@ class Community < ActiveRecord::Base
   def build_invitations invitor, emails = ""
     @invitation_emails = emails unless emails.empty?
     @invitation_emails.split(',').first(20).map(&:strip).each do |email|
-      self.invitations.build invitor: invitor, invitee_email: email
+      invitee = User.find_by_email email
+      self.invitations.build invitor: invitor, invitee_email: email, invitee: invitee
     end
   end
 

@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  skip_before_filter :authenticate_user!, only: [:edit]
+  skip_before_filter :authenticate_user!, only: [:edit, :update]
   before_filter :find_invitation, only: [:destroy]
   before_filter :find_invitation_by_token, only: [:edit, :update]
   before_filter :destroy_allowed, only: [:destroy]
@@ -35,17 +35,24 @@ class InvitationsController < ApplicationController
   end
 
   def edit
+    redirect_to invitation_path(@invitation) unless @invitation.status == 'requested'
     @user = (@invitation.invitee ? @invitation.invitee : User.new(email: @invitation.invitee_email))
   end
 
   def update
+    @user = User.new user_params
     if params[:invitation] == 'accept'
-      @user = params.has_key?(:user) ? 
-    elsif params[:invitation] == 'deny'
-      if @invitation.deny
-        flash[:notice] = t('invitations.flashed.denied')
-        redirect_to invitation_path(@invitation)
+      if @invitation.accept(current_user ? current_user : @user)
+        sign_in(@user) unless current_user
+        flash[:notice] = t('messages.accept_invitation_success')
+        redirect_to community_path(@invitation.community)
+      else
+        flash[:error] = t('messages.accept_invitation_fail')
+        render action: 'edit'
       end
+    elsif params[:invitation] == 'deny' and @invitation.deny
+      flash[:notice] = t('invitations.flashed.denied')
+      redirect_to invitation_path(@invitation)
     else
       flash[:error] = t('invitations.flashed.select_error')
       render action: 'edit'
@@ -110,8 +117,6 @@ class InvitationsController < ApplicationController
     def user_params
       if @invitation.invitee.nil?
         params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :name)
-      else
-
       end
     end
 

@@ -33,7 +33,8 @@ class CommunityUsersController < ApplicationController
     end
 
     def check_destroy_allowed
-      check @community_user.user == @user or community_admin?(@community_user.community)
+      result = (@community_user.user == @user or community_admin?(@community_user.community))
+      check result
     end
 
     def community_user_params

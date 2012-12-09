@@ -1,12 +1,6 @@
 - content_for :title do
   = t('invitations.edit.title', community: @invitation.community.name)
 
-/ # User ingelogd == email invitation ==> accept scherm
-/ # User ingelogd != email invitation maar WEL bestaande user ==> login als andere user
-/ # User ingelogd != email invitation en een NIET bestaande user ==> Accept scherm als andere user
-/ # Geen user inglogd en invitation_email bestaat WEL ==> login als andere user
-/ # Geen user inglogd en invitation_email bestaat NIET ==> create nieuwe user
-
 - if current_user
   - if current_user.email == @invitation.invitee_email
     = render partial: 'accept_form'

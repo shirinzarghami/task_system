@@ -29,6 +29,8 @@ en:
     new_invitation: There is a new invitation for you!
     task_destroy_success: The task has been deleted
     task_destroy_fail: The task could not be deleted
+    accept_invitation_success: You have successfully accepted invitations
+    accept_invitation_fail: Failed to accept the invitation
 
 
   activerecord:
