@@ -2,6 +2,6 @@
 
 <%= t('invitation_mailer.invitation.body', invitor: @invitation.invitor.name, invitee: @invitee_name) %>
 
-<%= invitation_url(@invitation.token) %>
+<%= edit_invitation_url(@invitation.token) %>
 
 <%= t('invitation_mailer.invitation.greet') %>

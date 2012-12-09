@@ -1,32 +1,4 @@
 - content_for :title do
-  = t('invitations.show.title', community: @invitation.community.name)
-
-/ - if @user == current_user or @user.new_record?
-/   = render partial: 'accept_form'
-/ - elsif @user != current_user and !@user.new_record?
-/   %p= t('invitations.show.question', email: @user.email)
-
-/ - elsif current_user.nil? and @user.new_record?
-/   = render partial: 'accept_register_form'
-/ # User ingelogd == email invitation ==> accept scherm
-/ # User ingelogd != email invitation maar WEL bestaande user ==> login als andere user
-/ # User ingelogd != email invitation en een NIET bestaande user ==> Accept scherm als andere user
-/ # Geen user inglogd  en invitation_email bestaat WEL ==> login als andere user
-/ # Geen user inglogd  en invitation_email bestaat NIET ==> create nieuwe user
-
-- if current_user
-  - if current_user.email == @invitation.invitee_email
-    = render partial: 'accept_form'
-  - if current_user.email != @invitation.invitee_email and @invitation.invitee
-    %p= t('invitations.show.change_user', email: @invitation.invitee_email)
-    %p= link_to t('actions.logout'), destroy_user_session_path, method: :delete
-  - if current_user.email != @invitation.invitee_email and @invitation.invitee.nil?
-    = render partial: 'accept_form'
-- else
-  - if @invitation.invitee
-    %p= t('invitations.show.change_user', email: @invitation.invitee_email)
-    %p= link_to t('actions.login'), new_user_session_path
-  - else
-    = render partial: 'accept_register_form'
+  = t('.title')
 
 = render partial: 'invitation'

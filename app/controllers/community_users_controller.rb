@@ -28,16 +28,12 @@ class CommunityUsersController < ApplicationController
       @community_user = CommunityUser.find(params[:id])
     end
 
-    def user_is_community_admin?
-      CommunityUser.find_by_community_id_and_user_id!(@community_user.community, @user).role == 'admin'
-    end
-
     def check_community_admin
-      check user_is_community_admin?
+      check community_admin?(@community_user.community)
     end
 
     def check_destroy_allowed
-      check @community_user.user == @user or user_is_community_admin?
+      check @community_user.user == @user or community_admin?(@community_user.community)
     end
 
     def community_user_params

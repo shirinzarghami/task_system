@@ -25,8 +25,12 @@ class ApplicationController < ActionController::Base
     check community_admin?    
   end
 
-  def community_admin?
-    @community_user and @community_user.role == 'admin'
+  def community_admin? community=nil
+    if community.nil?
+      @community_user and @community_user.role == 'admin'
+    else
+      CommunityUser.find_by_community_id_and_user_id!(community, @user).role == 'admin'
+    end
   end
 
   def show_modal partial

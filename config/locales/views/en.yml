@@ -30,6 +30,7 @@ en:
     task_destroy_success: The task has been deleted
     task_destroy_fail: The task could not be deleted
 
+
   activerecord:
       errors:
         attributes:
@@ -72,7 +73,7 @@ en:
       name: Name
       role: Role
       members: Members
-    show:
+    edit:
       overview: Overview of community
     new:
       title: Create a new community
@@ -85,7 +86,10 @@ en:
     not_found: Couldn't find a user membership for this community
 
   invitations:
-    show:
+    flashes:
+      select_error: Please whether you wish to accept or deny the invitation
+      denied: The invitation is successfully denied
+    edit:
       title: Invitation for %{community}
       accept: I accept the invitation
       deny: I do NOT accept the invitation
@@ -97,6 +101,9 @@ en:
     accept:
       user: Create a user account
       community: You will be subscribed to following community
+    show:
+      title: Invitation
+
 
   tasks:
     new:

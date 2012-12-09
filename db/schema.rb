@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121208135200) do
+ActiveRecord::Schema.define(:version => 20121209140737) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20121208135200) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "token"
+    t.string   "status"
   end
 
   add_index "invitations", ["token"], :name => "index_invitations_on_token"

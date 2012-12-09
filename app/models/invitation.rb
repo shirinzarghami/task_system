@@ -1,6 +1,7 @@
 class Invitation < ActiveRecord::Base
   attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community, :invitation_emails
   
+  STATUS = [:requested, :denied, :accepted]
   # Dummy variable for form
   attr_accessor :invitation_emails
 
@@ -12,10 +13,10 @@ class Invitation < ActiveRecord::Base
   validates :invitor, presence: true
   validates :community_id, presence: true
   validates :invitee_email, format:  {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, allow_blank: true
-
+  validates :status, presence: true, :inclusion => { :in => Invitation::STATUS.map(&:to_s) }
   after_create :send_invitation_email
   before_create :generate_token
-
+  after_initialize :set_default_values
 
   def send_invitation_email
     InvitationMailer.invitation(self).deliver
@@ -37,9 +38,17 @@ class Invitation < ActiveRecord::Base
     @community.save or !set_community_errors
   end
 
+  def deny
+    self.update_attributes status: 'denied'
+  end
+
   private
     def set_community_errors
       @community.errors.select {|e| e.first == :invitations}.each {|e| self.errors.add(:invitation_emails, e.last)}
+    end
+
+    def set_default_values
+      status ||= 'requested'
     end
 
 end

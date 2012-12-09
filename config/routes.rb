@@ -9,12 +9,7 @@ TaskSystem::Application.routes.draw do
   end
 
   get "dashboard/index"
-  resources :invitations do 
-    member do
-      post 'accept'
-      post 'accept_new_account'
-    end
-  end 
+  resources :invitations, except: [:show, :index]
   resources :communities, path: '', except: [:edit, :upgrade] do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
