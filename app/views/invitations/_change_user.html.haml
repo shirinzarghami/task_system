@@ -1,0 +1,5 @@
+%p= t('invitations.edit.change_user', email: @invitation.invitee_email)
+- if current_user
+  %p= link_to t('actions.logout'), destroy_user_session_path, method: :delete
+- else
+  %p= link_to t('actions.login'), new_user_session_path

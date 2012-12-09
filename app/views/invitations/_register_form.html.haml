@@ -1,0 +1,7 @@
+%fieldset
+  %legend= image_tag('iconic/user_18x24.png') + t('invitations.accept.user')
+  / = simple_form_for @user, url: accept_invitation_path(@invitation.token) do |f|
+  = f.input :name
+  = f.input :email
+  = f.input :password
+  = f.input :password_confirmation
