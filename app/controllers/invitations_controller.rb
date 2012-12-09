@@ -40,7 +40,7 @@ class InvitationsController < ApplicationController
 
   def update
     if params[:invitation] == 'accept'
-
+      @user = params.has_key?(:user) ? 
     elsif params[:invitation] == 'deny'
       if @invitation.deny
         flash[:notice] = t('invitations.flashed.denied')
@@ -105,6 +105,14 @@ class InvitationsController < ApplicationController
 
     def destroy_allowed
       check @invitation.invitor == current_user or community_admin?(@community)
+    end
+
+    def user_params
+      if @invitation.invitee.nil?
+        params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :name)
+      else
+
+      end
     end
 
     # def accept_allowed?

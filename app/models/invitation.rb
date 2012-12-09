@@ -42,6 +42,10 @@ class Invitation < ActiveRecord::Base
     self.update_attributes status: 'denied'
   end
 
+  def accept
+    
+  end
+
   private
     def set_community_errors
       @community.errors.select {|e| e.first == :invitations}.each {|e| self.errors.add(:invitation_emails, e.last)}
