@@ -1,6 +1,5 @@
 class InvitationsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:show, :accept_new_account, :accept]
-  before_filter :find_community, only: [:create]
 
   before_filter :find_invitation_by_token, only: [:accept, :accept_new_account, :show]
   before_filter :accept_allowed?, only: [:accept]
@@ -14,14 +13,14 @@ class InvitationsController < ApplicationController
 
   def create
     @invitation_dummy = Invitation.new params[:invitation]
-    @community.send_invitations_from current_user, params[:invitation][:invitation_emails]
 
-    if @community.save
+    if @invitation_dummy.create_invitations_from(@user)
       flash[:notice] = t('messages.invite_success')
-      redirect_to community_path(@community)
+      redirect_to communities_path
     else
       flash[:error] = t('messages.error')
-      redirect_to community_path(@community)
+      @communities = current_user.communities
+      render action: 'new'
     end
   end
 
@@ -97,10 +96,6 @@ class InvitationsController < ApplicationController
     def find_invitation
       @invitation = Invitation.find params[:id]
       @community = @invitation.community
-    end
-
-    def find_community
-      @community = current_user.communities.find params[:invitation][:community_id]
     end
 
     def destroy_allowed

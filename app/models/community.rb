@@ -33,26 +33,28 @@ class Community < ActiveRecord::Base
   end
 
   def admin_user_tokens= ids
-     id_list = ids.split(',')
-     # Remove old entries
-     ((self.admin_users.map(&:id)) - id_list).each {|user_id| self.admin_users.delete(User.find(user_id))}
-     id_list.each { |id| self.community_users.build user_id: id, role: 'admin'} 
+    id_list = ids.split(',')
+    # Remove old entries
+    ((self.admin_users.map(&:id)) - id_list).each {|user_id| self.admin_users.delete(User.find(user_id))}
+    id_list.each { |id| self.community_users.build user_id: id, role: 'admin'} 
   end
 
   # Creates invitations for these emails
   def invitation_emails= emails
     @invitation_emails = emails
+    build_invitations creator
+  end
+
+  def build_invitations invitor, emails = ""
+    @invitation_emails = emails unless emails.empty?
     @invitation_emails.split(',').first(20).map(&:strip).each do |email|
-      self.invitations.build invitor: creator, invitee_email: email
+      self.invitations.build invitor: invitor, invitee_email: email
     end
   end
 
   def deduce_subdomain
     self.subdomain = name.downcase.gsub(/[^a-z0-9\-_]/, '-').truncate(20, omission: '') if self.subdomain.nil?
   end
-
-  # def send_invitations_from invitor, email_list = ""
-  # end
 
   protected
     def set_invitation_errors
