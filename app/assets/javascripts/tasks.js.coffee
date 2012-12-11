@@ -8,9 +8,9 @@ show_allocation_tag = (name) ->
 
 update_instantiation = (chkbox) ->
   if chkbox.attr('checked')
-    show($('#instantiation_options'))
+    tasksystem.show($('#instantiation_options'))
   else
-    hide($('#instantiation_options'))
+    tasksystem.hide($('#instantiation_options'))
 
 jQuery ->
   #  ---- New task form dynamics
