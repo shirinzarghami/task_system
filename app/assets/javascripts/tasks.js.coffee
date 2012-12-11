@@ -6,12 +6,6 @@ show_allocation_tag = (name) ->
     $(this).show() if $(this).attr('id') == name
     $(this).hide() if $(this).attr('id') != name
 
-show = (obj) ->
-  obj.show('fold', {}, 500) unless obj.is(':visible')
-
-hide = (obj) ->
-  obj.hide('fold', {}, 500) unless obj.is(':hidden')
-
 update_instantiation = (chkbox) ->
   if chkbox.attr('checked')
     show($('#instantiation_options'))

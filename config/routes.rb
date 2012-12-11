@@ -9,7 +9,7 @@ TaskSystem::Application.routes.draw do
   end
 
   get "dashboard/index"
-  resources :invitations, except: [:show, :index]
+  resources :invitations, except: [:index]
   resources :communities, path: '', except: [:edit, :upgrade] do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]

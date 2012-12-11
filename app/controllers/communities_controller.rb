@@ -30,7 +30,7 @@ class CommunitiesController < ApplicationController
 
   private
     def new_invitations_flash
-      flash[:info] = t('messages.new_invitation') if current_user.invitations.any?
+      flash[:info] = t('messages.new_invitation') if current_user.invitations.requested.any?
     end
 
     def community_params

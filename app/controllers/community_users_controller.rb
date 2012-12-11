@@ -5,7 +5,7 @@ class CommunityUsersController < ApplicationController
 
   def destroy
     if @community_user.destroy
-      flash[:notice] = t('communitie_users.destroy.unsubscribed')
+      flash[:notice] = t('community_users.destroy.unsubscribed')
       redirect_to communities_path
     else
       flash[:error] = t('messages.error')

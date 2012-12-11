@@ -30,6 +30,7 @@ en:
           invitee: Invitee
           invitee_email: E-mail
           created_at: Sent at
+          status: Status
 
         task:
           interval_number: Repeat every
@@ -59,3 +60,6 @@ en:
       values:
         admin: Administrator
         normal: Normal user
+        denied: Denied by invitee
+        accepted: Accepted by invitee
+        requested: Pending

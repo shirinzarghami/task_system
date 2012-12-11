@@ -1,9 +1,9 @@
 %fieldset
-  %legend=image_tag('iconic/info_12x24.png') + t('invitations.accept.community')
+  %legend=image_tag('iconic/info_12x24.png') + t('activerecord.models.invitation')
   %table.table
     %tr
-      %th= t('activerecord.attributes.community.name')
-      %td= @invitation.community.name
+      %th= t('activerecord.attributes.invitation.status')
+      =invitation_status(@invitation)     
     %tr
-      %th= t('activerecord.attributes.community.members')
-      %td= @invitation.community.members.map(&:name).join(', ')
+      %th= t('activerecord.attributes.invitation.created_at')
+      %td= l @invitation.created_at, format: :long

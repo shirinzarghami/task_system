@@ -15,5 +15,6 @@
 //= require jquery.tokeninput
 //= require jquery.ui.all
 //= require bootstrap
+//= require common
 //= require_tree .
 

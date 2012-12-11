@@ -7,6 +7,7 @@
       %th
         = show_accept ? t('activerecord.attributes.invitation.community') : t('activerecord.attributes.invitation.invitee_email')
       %th= t('activerecord.attributes.invitation.created_at')
+      %th= t('activerecord.attributes.invitation.status')
       %th
 
     = render partial: 'invitation', collection: @invitations, locals: {show_accept: show_accept}

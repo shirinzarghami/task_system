@@ -3,6 +3,7 @@
   %td
     = show_accept ? invitation.community.name : invitation.invitee_email
   %td= I18n.l invitation.created_at, format: :long
+  = invitation_status(invitation) 
   %td.actions
     =image_button 'iconic/trash_fill_12x12.png', invitation_path(invitation), method: :delete, confirm: t('messages.confirm') unless show_accept
-    =image_button 'iconic/check_16x13.png', invitation_path(invitation.token) if show_accept
+    =image_button 'iconic/check_16x13.png', edit_invitation_path(invitation.token) if show_accept
