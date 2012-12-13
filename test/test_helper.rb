@@ -14,4 +14,9 @@ class ActiveSupport::TestCase
   def schedule_task_occurrences
     Task.all.select {|t| t.next_occurrence <= Date.today}.each {|t| t.schedule}
   end
+
+end
+
+class ActionController::TestCase
+  include Devise::TestHelpers
 end

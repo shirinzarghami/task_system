@@ -78,8 +78,8 @@ class Task < ActiveRecord::Base
   end
 
   def ordered_members
+    ordered_member_ids = check_ordered_members_string
     # Sort members based on the attribute 'user_order' (list of ids)
-    ordered_member_ids = self.user_order.split(',').map(&:to_i)
     self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
   end
 
@@ -98,6 +98,20 @@ class Task < ActiveRecord::Base
       self.next_occurrence ||= Date.today
       self.repeat ||= 0
       self.repeat_infinite = true if self.repeat_infinite.nil?
+    end
+
+    def check_ordered_members_string
+      ordered_member_ids = self.user_order.split(',').map(&:to_i)
+      community_member_ids = self.community.members.map(&:id)
+
+      unless ordered_member_ids.sort == community_member_ids.sort
+        # Add new community members to the ordered list
+        community_member_ids.each {|member_id| ordered_member_ids << member_id unless ordered_member_ids.include?(member_id)}
+        # Remove members from the order list that are no langer part of the community
+        ordered_member_ids = ordered_member_ids.map {|member_id| community_member_ids.include?(member_id)}
+        self.update_attributes user_order: ordered_member_ids.join(',')
+      end
+      ordered_member_ids
     end
 
     def allocate_in_turns

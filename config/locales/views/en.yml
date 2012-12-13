@@ -127,6 +127,8 @@ en:
       title: Edit task
     task:
       manual-tooltip: This task is necessary!
+    flash:
+      save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
   task_occurrences:
     all_open:
       reassign: Re-assign this task

@@ -14,6 +14,7 @@ FactoryGirl.define do
     locale 'nl'
     password '123456'
     password_confirmation '123456'
+    confirmed_at Time.now
   end
 
   factory :task do
@@ -54,7 +55,7 @@ FactoryGirl.define do
 
   factory :community do
     name {generate :community_name}
-
+    creator_id 1
     factory :community_with_users do
       ignore do
         users_count 5
@@ -88,5 +89,19 @@ FactoryGirl.define do
 
   factory :task_occurrence_passed_deadline, parent: :task_occurrence do
     deadline 2.weeks.ago.to_date
+  end
+
+  factory :invitation do
+    status 'requested'
+    association :community, factory: :community
+    association :invitor, factory: :user
+    invitee_email {generate :email}
+    token "f2215de2764c983ae839f638c353ac"
+    factory :invitation_with_invitee do
+      mail = 'person7843758748574875@example.com'
+      association :invitee, factory: :user, email: mail
+      invitee_email mail
+    end
+
   end
 end
