@@ -43,9 +43,14 @@ class InvitationsController < ApplicationController
     @user = User.new user_params
     if params[:invitation] == 'accept'
       if @invitation.accept(current_user ? current_user : @user)
-        sign_in(@user) unless current_user
+        sign_in(@user) if !current_user and @user.confirmed?
         flash[:notice] = t('messages.accept_invitation_success')
-        redirect_to community_path(@invitation.community)
+        if current_user
+          redirect_to community_path(@invitation.community)
+        else
+          flash[:info] = t('messages.send_email_notice')
+          redirect_to invitation_path(@invitation.token)
+        end
       else
         flash[:error] = t('messages.accept_invitation_fail')
         render action: 'edit'

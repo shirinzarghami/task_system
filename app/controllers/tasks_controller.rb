@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      if community_admin? or @task.user == @user or @task.user.nil?
+      if community_admin? or @task.nil? or @task.user == @user
         params.require(:task).permit(:allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit).merge(user: @user)
       end
     end

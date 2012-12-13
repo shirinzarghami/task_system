@@ -11,7 +11,7 @@ class Invitation < ActiveRecord::Base
 
   # validates :community_id, presence: true
   validates :invitor, presence: true
-  validates :community_id, presence: true
+  # validates :community_id, presence: true
   validates :invitee_email, format:  {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, allow_blank: true
   validates :status, presence: true, :inclusion => { :in => Invitation::STATUS.map(&:to_s) }
   after_create :send_invitation_email

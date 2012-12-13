@@ -24,6 +24,12 @@ class User < ActiveRecord::Base
   has_many :tasks
   has_many :task_occurrences
   has_many :allocated_tasks, class_name: 'Task', foreign_key: 'allocated_user_id'
+
+  scope :unconfirmed, where("confirmed_at IS NULL")
   USER_ROLES = [:normal, :admin]
+
+  def confirmed?
+    confirmed_at.present?
+  end
 
 end
