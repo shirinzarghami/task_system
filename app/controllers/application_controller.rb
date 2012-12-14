@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def ajax_flash
-    
+  def error_messages_for object, flash = ""
+    render_to_string('shared/errors.html', layout: false, formats: [:html], locals: {object: object, flash: flash}).html_safe
   end
 end

@@ -13,7 +13,7 @@ class CommunityUser < ActiveRecord::Base
   scope :exclude, lambda {|community_user| where(['community_users.id != ?', community_user.id]) unless community_user.new_record?}
   protected
     def validate_at_least_one_admin
-      community_users = community.community_users.administrators.exclude(self)
+      community_users = community.present? ? community.community_users.administrators.exclude(self) : []
       errors.add(:base, :at_least_one_admin) unless community_users.count > 0 or self.role == 'admin'
     end
 

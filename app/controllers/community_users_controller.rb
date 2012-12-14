@@ -8,7 +8,7 @@ class CommunityUsersController < ApplicationController
       flash[:notice] = t('community_users.destroy.unsubscribed')
       redirect_to communities_path
     else
-      flash[:error] = t('messages.error')
+      flash[:error] = error_messages_for @community_user, t('messages.error')
       redirect_to communities_path
     end
   end
@@ -21,7 +21,7 @@ class CommunityUsersController < ApplicationController
         format.js {render 'shared/ajax_flash'}
       end
     else
-      flash[:error] = t('messages.error')
+      flash[:error] = error_messages_for @community_user, t('messages.error') 
       respond_to do |format|
         format.html {redirect_to community_path(@community_user.community)}
         format.js {render 'shared/ajax_flash'}
