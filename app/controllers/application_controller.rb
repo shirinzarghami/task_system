@@ -43,4 +43,12 @@ class ApplicationController < ActionController::Base
   def error_messages_for object, flash = ""
     render_to_string('shared/errors.html', layout: false, formats: [:html], locals: {object: object, flash: flash}).html_safe
   end
+
+  def after_sign_in_path_for(user)
+    if user.communities.count == 1
+      community_path user.communities.first
+    else
+      communites_path 
+    end
+  end
 end
