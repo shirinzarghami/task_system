@@ -11,4 +11,3 @@
   %td
     - if community_admin?
       = image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm')
-      = image_tag 'iconic/check_16x13.png', class: 'submit_community_user'

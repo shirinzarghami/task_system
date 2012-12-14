@@ -1,6 +1,13 @@
 %tr{:class => (all_open.too_late? ? 'error' : '')}
   %td= all_open.task.name.truncate(30)
-  %td= all_open.user.name
+  %td
+    - if all_open.user
+      = all_open.user.name
+    - else
+      = t('activerecord.attributes.task_occurrence.allocated_to.nobody') 
+      %br
+      %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
+
   %td= l all_open.task.time, format: :time_only
   %td= l all_open.deadline, format: :long
   %td

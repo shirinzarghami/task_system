@@ -5,7 +5,7 @@ class TaskOccurrencesController < ApplicationController
   before_filter :check_community_admin, only: [:destroy]
 
   def index
-    @my_todos = TaskOccurrence.for_user(@user).for_community(@community).todo.paginate(page: params[:todo_page], per_page: 20)
+    @my_todos = TaskOccurrence.for_user_or_open(@user).for_community(@community).todo.paginate(page: params[:todo_page], per_page: 20)
     @all_open = TaskOccurrence.for_community(@community).todo.paginate(page: params[:open_page], per_page: 20)
     @history = TaskOccurrence.for_community(@community).completed.paginate(page: params[:history_page], per_page: 20)
   end
@@ -27,7 +27,7 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def update
-    if @task_occurrence.update_attributes(task_occurrence_params)
+    if @task_occurrence.update_attributes task_occurrence_params
       flash[:notice] = t('messages.save_success')
       redirect_to community_task_occurrences_path @community
     else
@@ -67,9 +67,9 @@ class TaskOccurrencesController < ApplicationController
 
     def task_occurrence_params
       if community_admin?
-        params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
-      elsif @task_occurrence.user == @user
-        params.require(:task_occurrence).permit(:checked, :remarks)
+        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
+      elsif @task_occurrence.user == @user or @task_occurrence.user.nil?
+        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks)
       end
     end
 

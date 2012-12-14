@@ -55,6 +55,7 @@ class Task < ActiveRecord::Base
       when 'in_turns' then allocate_in_turns
       when 'time' then allocate_by_time
       when 'time_all' then allocate_by_time_all
+      when 'voluntary' then nil
       when 'user' then allocated_user
     end
   end
@@ -133,5 +134,6 @@ class Task < ActiveRecord::Base
       least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
       User.find least_time_user_id
     end
+
 
 end

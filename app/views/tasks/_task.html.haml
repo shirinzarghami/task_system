@@ -11,7 +11,7 @@
     - if task.instantiate_automatically
       = l task.next_occurrence, format: :long
       %br
-      %small= task.next_allocated_user.name
+      %small= next_allocated_user(task)
   %td
     - if can_edit_task? task
       = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task))
