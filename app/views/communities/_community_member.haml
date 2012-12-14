@@ -2,7 +2,7 @@
   %td= community_member.user.name
   %td= community_member.user.email
   %td
-    - if community_admin?
+    - if community_admin? and community_member != @community_user
       =simple_form_for(community_member, remote: true) do |f|
         = f.input :role, collection: ['admin', 'normal'], include_blank: false, label: false, input_html: {class: 'input-small'}
     - else

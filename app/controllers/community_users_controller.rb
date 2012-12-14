@@ -16,10 +16,16 @@ class CommunityUsersController < ApplicationController
   def update
     if @community_user.update_attributes community_user_params
       flash[:notice] = t('messages.save_success')
-      redirect_to community_path(@community_user.community)
+      respond_to do |format|
+        format.html {redirect_to community_path(@community_user.community)}
+        format.js {render 'shared/ajax_flash'}
+      end
     else
       flash[:error] = t('messages.error')
-      redirect_to community_path(@community_user.community)
+      respond_to do |format|
+        format.html {redirect_to community_path(@community_user.community)}
+        format.js {render 'shared/ajax_flash'}
+      end
     end
   end
 

@@ -61,7 +61,7 @@ FactoryGirl.define do
         users_count 5
       end
       after(:create) do |community, evaluator|
-        FactoryGirl.create_list(:community_user, evaluator.users_count, community: community)
+        FactoryGirl.create_list(:community_user, evaluator.users_count, community: community, role: 'admin')
       end
     end
 

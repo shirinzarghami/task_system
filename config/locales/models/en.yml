@@ -3,69 +3,75 @@
 
 en:
   activerecord:
+    errors:
       models:
-        community: Community
-        user: User
-        invitation: Invitation
-      attributes:
-        community:
-          user_tokens: Normal members
-          admin_user_tokens: Administrators
-          name: Name
-          subdomain: Subdomain
-          max_users: Max users
-          members: Members
-        user:
-          name: Name
-          password: Password
-          password_confirmation: Password confirmation
-          global_role: Role
-          locale: Locale
-          communities: Communities
-          confirmed: Confirmed
-          last_login: Last login
-          role: Role
-        invitation:
-          invitor: Invitor
-          invitee: Invitee
-          invitee_email: E-mail
-          created_at: Sent at
-          status: Status
+        community_user:
+          attributes:
+            base:
+              at_least_one_admin: There should be at least one admin in the community
+    models:
+      community: Community
+      user: User
+      invitation: Invitation
+    attributes:
+      community:
+        user_tokens: Normal members
+        admin_user_tokens: Administrators
+        name: Name
+        subdomain: Subdomain
+        max_users: Max users
+        members: Members
+      user:
+        name: Name
+        password: Password
+        password_confirmation: Password confirmation
+        global_role: Role
+        locale: Locale
+        communities: Communities
+        confirmed: Confirmed
+        last_login: Last login
+        role: Role
+      invitation:
+        invitor: Invitor
+        invitee: Invitee
+        invitee_email: E-mail
+        created_at: Sent at
+        status: Status
 
-        task:
-          interval_number: Repeat every
-          instantiate_automatically: Schedule occurrences for this task automatically
-          next_occurrence: Start on
-          allocation_modes:
-            in_turns: Allocate in turns
-            time: Assign to the user who spend the least amount of time for this task
-            time_all: Assign to the user who spend the least amount of time for all task
-            voluntary: This task is voluntary
-            user: Assign this task to one specific user
-          allocation_modes_short:
-            voluntary: Voluntary
+      task:
+        interval_number: Repeat every
+        instantiate_automatically: Schedule occurrences for this task automatically
+        next_occurrence: Start on
+        allocation_modes:
+          in_turns: Allocate in turns
+          time: Assign to the user who spend the least amount of time for this task
+          time_all: Assign to the user who spend the least amount of time for all task
+          voluntary: This task is voluntary
+          user: Assign this task to one specific user
+        allocation_modes_short:
+          voluntary: Voluntary
 
-          instantiate:
-            manual: Manual
-            every: Every %{number} %{unit}
-            weeks:
-              one: Every week
-              other: Every %{count} weeks
-            days:
-              one: Every day
-              other: Every %{count} days
-            months:
-              one: Every month
-              other: Every %{count} months
-          repeat: Repeat
+        instantiate:
+          manual: Manual
+          every: Every %{number} %{unit}
+          weeks:
+            one: Every week
+            other: Every %{count} weeks
+          days:
+            one: Every day
+            other: Every %{count} days
+          months:
+            one: Every month
+            other: Every %{count} months
+        repeat: Repeat
 
-        task_occurrence:
-          allocated_to:
-            nobody: Nobody
+      task_occurrence:
+        allocated_to:
+          nobody: Nobody
 
-      values:
-        admin: Administrator
-        normal: Normal user
-        denied: Denied by invitee
-        accepted: Accepted by invitee
-        requested: Pending
+    values:
+      admin: Administrator
+      normal: Normal user
+      denied: Denied by invitee
+      accepted: Accepted by invitee
+      requested: Pending

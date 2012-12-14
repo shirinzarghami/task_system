@@ -39,4 +39,8 @@ class ApplicationController < ActionController::Base
       format.js {render 'shared/modal'}
     end
   end
+
+  def ajax_flash
+    
+  end
 end
