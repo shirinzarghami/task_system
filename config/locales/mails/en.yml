@@ -2,11 +2,32 @@ en:
   invitation_mailer:
     invitation:
       subject: Invitation for task system
-      salutation: Dear %{invitee},
+      salutation: Hi %{invitee},
       body: |
         %{invitor} has sent you an invitation to join a group on www.task-system.com
         This website allows groups to manage household tasks, finance, shoppin lists and more. 
         If you wish to accept the invitation, please follow the link and sign up
       greet: |
         Best regards,
+        The task system
+
+  task_occurrence_mailer:
+    assign:
+      subject: "Task system: a task was assigned to you"
+      salutation: Hi %{user},
+      body: |
+        One or more tasks are scheduled and assigned to you:
+
+      greet: >
+        Best regards,<br>
+        The task system
+
+    reminder:
+      subject: "Task system: don't forget to complete your tasks!"
+      salutation: Hi %{user},
+      body: |
+        The following tasks need to completed soon:
+
+      greet: >
+        Best regards,<br>
         The task system
