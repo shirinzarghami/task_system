@@ -10,4 +10,4 @@
 
   %td
     - if community_admin?
-      = image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm')
+      = image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link'

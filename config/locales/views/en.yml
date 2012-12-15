@@ -82,6 +82,14 @@ en:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
+    community_user:
+      unsubscribe: Unsubscribe from this community
+      go: Go to this community
+    invitation:
+      view: View the invitation
+      delete: Remove the invitation. This will NOT remove users from the community that have accepted the invitation
+    community_member:
+      delete: Remove this user from the community
 
   community_users:
     destroy:
@@ -127,6 +135,8 @@ en:
       title: Edit task
     task:
       manual-tooltip: This task is necessary!
+      edit: Edit this task
+      delete: Delete this task
     flash:
       save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
   task_occurrences:
