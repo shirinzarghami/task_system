@@ -1,4 +1,5 @@
-= t('.salutation', user: @user.name)
+= content_for :title do
+  = t('.salutation', user: @user.name)
 %br
 = t('.body')
 %br
