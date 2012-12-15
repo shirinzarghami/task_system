@@ -4,3 +4,6 @@ window.tasksystem.show = (obj) ->
 
 window.tasksystem.hide = (obj) ->
   obj.hide('fold', {}, 500) unless obj.is(':hidden')
+
+jQuery ->
+  $('.alert').alert()
