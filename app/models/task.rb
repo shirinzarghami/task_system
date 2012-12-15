@@ -43,7 +43,9 @@ class Task < ActiveRecord::Base
       task_occurrence.deadline = Time.now + deadline_time
       task_occurrence.time_in_minutes = self.time_in_minutes
       task_occurrence.allocate if task_occurrence.user.nil?
-
+      task_occurrence.task_name = self.name
+      task_occurrence.should_be_checked = self.should_be_checked
+      
       self.next_occurrence += self.interval_time
       self.repeat-=1 if !self.repeat_infinite and self.repeat > 0
       self.save!

@@ -6,7 +6,7 @@ class TaskOccurrence < ActiveRecord::Base
   belongs_to :user
   
   validates :task_id, presence: true
-  # validates :user_id, presence: true
+  validates :task_name, presence: true
   validates :time_in_minutes, presence: true, :numericality => {:greater_than_or_equal_to => 0}
 
   scope :latest, order('created_at DESC').limit(1)
@@ -53,6 +53,10 @@ class TaskOccurrence < ActiveRecord::Base
     else
       Date.today > deadline
     end
+  end
+
+  def time
+    Time.mktime(0) + (time_in_minutes * 60)
   end
 
   private

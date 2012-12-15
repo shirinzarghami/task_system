@@ -74,8 +74,10 @@ FactoryGirl.define do
   end
 
   factory :task_occurrence do
+    task_name "Blabla"
     checked false
     deadline 2.week.since.to_date
+    should_be_checked true
     remarks ""
     association :user, factory: :user
     association :task, factory: :task

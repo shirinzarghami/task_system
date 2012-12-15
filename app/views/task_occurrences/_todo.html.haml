@@ -1,11 +1,11 @@
 %tr{:class => (todo.too_late? ? 'error' : '')}
   %td
-    = todo.task.name.truncate(30)
+    = todo.task_name.truncate(30)
     - if todo.user.nil?
       %br
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
-  %td= l todo.task.time, format: :time_only
+  %td= l todo.time, format: :time_only
   %td= l todo.deadline, format: :long
   %td
-    - if todo.task.should_be_checked
+    - if todo.should_be_checked
       = image_button 'iconic/check_16x13.png', complete_community_task_occurrence_path(@community, todo), remote: true, data: {title: t('.complete')}, class: 'tooltip-link'
