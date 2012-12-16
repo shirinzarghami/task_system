@@ -45,16 +45,17 @@ ActiveRecord::Schema.define(:version => 20121215153925) do
 
   create_table "task_occurrences", :force => true do |t|
     t.integer  "task_id"
-    t.boolean  "checked",           :default => false
+    t.boolean  "checked",                 :default => false
     t.date     "deadline"
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "completed_at"
-    t.integer  "time_in_minutes",   :default => 0
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.integer  "time_in_minutes",         :default => 0
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "task_name"
-    t.boolean  "should_be_checked", :default => true
+    t.boolean  "should_be_checked",       :default => true
+    t.boolean  "should_send_assign_mail", :default => false
   end
 
   create_table "tasks", :force => true do |t|
@@ -99,6 +100,8 @@ ActiveRecord::Schema.define(:version => 20121215153925) do
     t.string   "name"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
+    t.boolean  "receive_assign_mail",    :default => true
+    t.boolean  "receive_reminder_mail",  :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -26,7 +26,6 @@ class TaskOccurrence < ActiveRecord::Base
                                   OR 
                                   (tasks.should_be_checked = false AND UTC_TIMESTAMP() >= task_occurrences.deadline)')
 
-
   after_initialize :set_default_values
 
   def checked= value

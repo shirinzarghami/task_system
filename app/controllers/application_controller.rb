@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     if user.communities.count == 1
       community_path user.communities.first
     else
-      communites_path 
+      communities_path 
     end
   end
 end

@@ -7,9 +7,16 @@ en:
         %{invitor} has sent you an invitation to join a group on www.task-system.com
         This website allows groups to manage household tasks, finance, shoppin lists and more. 
         If you wish to accept the invitation, please follow the link and sign up
+
       greet: |
         Best regards,
         The task system
+
+      greet_html: >
+        Best regards,<br>
+        The task system
+
+      link: View the invitation
 
   task_occurrence_mailer:
     assign:
@@ -22,12 +29,21 @@ en:
         Best regards,<br>
         The task system
 
+      greet_html: >
+        Best regards,<br>
+        The task system
+
+
     reminder:
       subject: "Task system: don't forget to complete your tasks!"
       salutation: Hi %{user},
       body: |
         The following tasks need to completed soon:
 
-      greet: >
+      greet_html: >
         Best regards,<br>
         The task system
+      greet: |
+        Best regards,
+        The task system
+

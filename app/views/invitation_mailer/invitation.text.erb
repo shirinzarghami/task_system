@@ -1,7 +1,8 @@
-<%= t('invitation_mailer.invitation.salutation', invitee: @invitee_name) %>
+<%= t('.salutation', invitee: @invitee_name) %>
 
-<%= t('invitation_mailer.invitation.body', invitor: @invitation.invitor.name, invitee: @invitee_name) %>
+<%= t('.body', invitor: @invitation.invitor.name, invitee: @invitee_name) %>
 
+<%= t('.link') %>
 <%= edit_invitation_url(@invitation.token) %>
 
-<%= t('invitation_mailer.invitation.greet') %>
+<%= t('.greet') %>
