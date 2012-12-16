@@ -44,10 +44,7 @@ class Task < ActiveRecord::Base
     end 
   end
 
-  def schedule task_occurrences_params = {}, options = {}
-    default_options = {hold_email: false}
-    options = default_options.merge options
-
+  def schedule task_occurrences_params = {}, options = {hold_email: false}
     ActiveRecord::Base.transaction do
       task_occurrence = task_occurrences.build task_occurrences_params
       task_occurrence.deadline = Time.now + deadline_time
@@ -56,12 +53,7 @@ class Task < ActiveRecord::Base
       task_occurrence.task_name = self.name
       task_occurrence.should_be_checked = self.should_be_checked
 
-      if options[:hold_email] and task_occurrence.user.present?
-        task_occurrence.should_send_assign_mail = task_occurrence.user.receive_assign_mail 
-      else
-        should_send_assign_mail = false
-        TaskOccurrenceMailer.assign(task_occurrence.user).deliver
-      end
+      task_occurrence.send_email hold: options[:hold_email]
       self.next_occurrence += self.interval_time
       self.repeat-=1 if !self.repeat_infinite and self.repeat > 0
       self.save!

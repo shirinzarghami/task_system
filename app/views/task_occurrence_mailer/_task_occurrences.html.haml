@@ -1,0 +1,6 @@
+%table
+  %tr
+    %th= t('task_occurrences.index.task')
+    %th= t('task_occurrences.index.duration')
+    %th= t('task_occurrences.index.deadline')
+  = render partial: 'task_occurrence', collection: @task_occurrences

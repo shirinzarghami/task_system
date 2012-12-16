@@ -84,6 +84,7 @@ class TaskTest < ActiveSupport::TestCase
     assert task2.task_occurrences.last.should_send_assign_mail == false
 
     mails = ActionMailer::Base.deliveries
+    debugger
     assert mails.size == 1, "One mail should be sent eventhough 2 occurrences where assigned to the same user"
     assert mails.last.to.first == user.email, "Mail should be sent to the correct user"
   end

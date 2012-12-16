@@ -38,6 +38,16 @@ class TaskOccurrence < ActiveRecord::Base
     end
   end
 
+  def send_email options = {hold: false}
+    if user.present? and user.receive_assign_mail 
+      if options[:hold]
+        self.should_send_assign_mail = true
+      else
+        TaskOccurrenceMailer.assign(user, self).deliver
+      end
+    end
+  end
+
   def allocate
     self.user = task.next_allocated_user
   end
