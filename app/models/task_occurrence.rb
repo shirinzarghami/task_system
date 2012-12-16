@@ -14,7 +14,7 @@ class TaskOccurrence < ActiveRecord::Base
   scope :for_user_or_open, lambda {|user| where(['task_occurrences.user_id = ? OR task_occurrences.user_id IS NULL', user.id])}
   scope :for_community, lambda {|community| joins(:task).where(['tasks.community_id = ?', community.id])}
   scope :for_task, lambda {|task| where(task_id: task.id)}
-  
+  scope :to_email, where(should_send_assign_mail: true)
   # Not completed occurrences
   scope :todo, joins(:task).order('task_occurrences.deadline ASC').where('
                                   (tasks.should_be_checked = true AND task_occurrences.checked = false)

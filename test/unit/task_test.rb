@@ -71,4 +71,29 @@ class TaskTest < ActiveSupport::TestCase
     community.reload
     assert task.ordered_members == [user1, user3]
   end
+
+  test "email when task occurrence is assigned" do
+    community = FactoryGirl.create(:community_with_users, users_count: 1)
+    user = community.members.first
+    task1 = FactoryGirl.create(:task_single_allocation, next_occurrence: Date.today, community: community, allocated_user: user)
+    task2 = FactoryGirl.create(:task_single_allocation, next_occurrence: Date.today, community: community, allocated_user: user)
+
+    Task.schedule_upcoming_occurrences
+
+    assert task1.task_occurrences.last.should_send_assign_mail == false
+    assert task2.task_occurrences.last.should_send_assign_mail == false
+
+    mails = ActionMailer::Base.deliveries
+    assert mails.size == 1, "One mail should be sent eventhough 2 occurrences where assigned to the same user"
+    assert mails.last.to.first == user.email, "Mail should be sent to the correct user"
+  end
+
+  test "do not send assign mail when user has unsubscribed" do
+    user = FactoryGirl.create(:user, receive_assign_mail: false)
+    community = FactoryGirl.create(:community_with_users, members: [user])
+    task1 = FactoryGirl.create(:task_single_allocation, next_occurrence: Date.today, community: community, allocated_user: user)
+
+    Task.schedule_upcoming_occurrences
+    assert ActionMailer::Base.deliveries.size == 0, 'Users that have unsubscribed from assign mail, should not receive one'
+  end
 end

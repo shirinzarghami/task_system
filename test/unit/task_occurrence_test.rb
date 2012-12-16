@@ -128,9 +128,8 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
 
     2.times {FactoryGirl.create(:task_occurrence, task: task1, user: user1)}
     assert task2.next_allocated_user == user2, "Should be scheduled to user2, since it has lowest total time"
-
-
   end
+
 
 
 end

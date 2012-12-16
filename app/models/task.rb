@@ -33,7 +33,14 @@ class Task < ActiveRecord::Base
 
   class << self
     def schedule_upcoming_occurrences
-      Task.to_schedule.each &:schedule
+      Task.to_schedule.each {|task| task.schedule({}, hold_email: true)}
+      
+      # User.joins(:task_occurrences).group('users.id').where('task_occurrences.should_send_assign_mail = true').each do |user|
+      TaskOccurrence.group('user_id').where(should_send_assign_mail: true).where('user_id IS NOT NULL').each do |task_occurrence|  
+        # Send email
+        TaskOccurrenceMailer.assign(task_occurrence.user).deliver
+        TaskOccurrence.where(user_id: task_occurrence.user.id).update_all(should_send_assign_mail: false)
+      end
     end 
   end
 
@@ -49,11 +56,11 @@ class Task < ActiveRecord::Base
       task_occurrence.task_name = self.name
       task_occurrence.should_be_checked = self.should_be_checked
 
-      if options[:hold_email]
-        task_occurrence.should_send_assign_mail = task_occurrence.user.receive_assign_mail unless task_occurrence.user.nil?
+      if options[:hold_email] and task_occurrence.user.present?
+        task_occurrence.should_send_assign_mail = task_occurrence.user.receive_assign_mail 
       else
         should_send_assign_mail = false
-        TaskOccurrenceMailer.assign(user).deliver
+        TaskOccurrenceMailer.assign(task_occurrence.user).deliver
       end
       self.next_occurrence += self.interval_time
       self.repeat-=1 if !self.repeat_infinite and self.repeat > 0

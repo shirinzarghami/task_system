@@ -15,6 +15,8 @@ FactoryGirl.define do
     password '123456'
     password_confirmation '123456'
     confirmed_at Time.now
+    receive_assign_mail true
+    receive_reminder_mail true
   end
 
   factory :task do
@@ -59,9 +61,14 @@ FactoryGirl.define do
     factory :community_with_users do
       ignore do
         users_count 5
+        members []
       end
       after(:create) do |community, evaluator|
-        FactoryGirl.create_list(:community_user, evaluator.users_count, community: community, role: 'admin')
+        if evaluator.members.any?
+          evaluator.members.each {|user| FactoryGirl.create(:community_user, community: community, user: user, role: 'admin')}
+        else
+          FactoryGirl.create_list(:community_user, evaluator.users_count, community: community, role: 'admin')
+        end
       end
     end
 
