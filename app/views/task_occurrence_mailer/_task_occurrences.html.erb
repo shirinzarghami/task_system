@@ -1,0 +1,17 @@
+<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+    <tr>
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading00">
+          <%= t('task_occurrences.index.task') %>
+        </th>        
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading00">
+          <%= t('activerecord.models.community') %>
+        </th>
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading01">
+          <%= t('task_occurrences.index.duration') %>
+        </th>
+        <th scope="col" valign="top" width="50%" class="dataTableHeading" mc:edit="data_table_heading02">
+          <%= t('task_occurrences.index.deadline') %>
+        </th>
+    </tr>
+    <%= render partial: 'task_occurrence', collection: @task_occurrences %>
+</table>

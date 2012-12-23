@@ -1,8 +1,0 @@
-%tr
-  %td
-    = task_occurrence.task_name.truncate(30)
-    - if task_occurrence.user.nil?
-      %br
-      %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
-  %td= l task_occurrence.time, format: :time_only
-  %td= l task_occurrence.deadline, format: :long

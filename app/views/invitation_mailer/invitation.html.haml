@@ -1,5 +1,7 @@
-= content_for :title do
-  = t('.salutation', invitee: @invitee_name)
+- content_for :title do
+  =t('.subject')
+  
+%h1= t('.salutation', invitee: @invitee_name)
 
 %p= t('.body', invitor: @invitation.invitor.name, invitee: @invitee_name)
 

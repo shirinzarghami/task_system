@@ -1,7 +1,9 @@
 - content_for :title do
-  = t('.salutation', user: @user.name)
+  =t('.subject')
 
+- content_for :table do
+  = render partial: 'task_occurrences'  
+
+%h2= t('.salutation', user: @user.name)
 %p= t('.body')
-%p= render partial: 'task_occurrences'  
-
 %p= t('.greet').html_safe

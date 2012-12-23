@@ -1,4 +1,7 @@
 en:
+  mailers:
+    unsubscribe: Unsubscribe
+
   invitation_mailer:
     invitation:
       subject: Invitation for task system
@@ -23,7 +26,9 @@ en:
       subject: "Task system: a task was assigned to you"
       salutation: Hi %{user},
       body: |
-        One or more tasks are scheduled and assigned to you:
+        One or more tasks are scheduled and assigned to you as listed below. 
+        Note that some tasks need to be checked after completion before the deadline.
+        
 
       greet: >
         Best regards,<br>
