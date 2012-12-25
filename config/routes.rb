@@ -14,10 +14,15 @@ TaskSystem::Application.routes.draw do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end
-    resources :task_occurrences, path: 'schedule', except: [:new, :create] do
+    resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
       member do
         get :reassign
         get :complete
+      end
+      collection do
+        get :todo
+        get :open
+        get :completed
       end
     end
   end

@@ -1,9 +1,0 @@
-%table.table.table-striped
-  %tr
-    %th= t('.task')
-    %th= t('.allocated_to')
-    %th= t('.duration')
-    %th= t('.deadline')
-    %th
-  =render partial: 'all_open', collection: @all_open
-=will_paginate @all_open, param_name: :open_page, class: 'pagination pagination-centered pagination-mini'

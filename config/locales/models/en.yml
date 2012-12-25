@@ -66,8 +66,14 @@ en:
         repeat: Repeat
 
       task_occurrence:
-        allocated_to:
+        allocated_user:
           nobody: Nobody
+        allocated_to: Allocated to
+        task: Task
+        duration: Duration
+        deadline: Deadline
+        completed_at: Completed at
+
 
     values:
       admin: Administrator

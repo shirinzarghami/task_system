@@ -4,10 +4,16 @@ class TaskOccurrencesController < ApplicationController
   before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete]
   before_filter :check_community_admin, only: [:destroy]
 
-  def index
-    @my_todos = TaskOccurrence.for_user_or_open(@user).for_community(@community).todo.paginate(page: params[:todo_page], per_page: 20)
-    @all_open = TaskOccurrence.for_community(@community).todo.paginate(page: params[:open_page], per_page: 20)
-    @history = TaskOccurrence.for_community(@community).completed.paginate(page: params[:history_page], per_page: 20)
+  def todo
+    @task_occurrences = TaskOccurrence.for_user_or_open(@user).for_community(@community).todo.paginate(page: params[:page],per_page: 20)
+  end
+
+  def open
+    @task_occurrences = TaskOccurrence.for_community(@community).todo.paginate(page: params[:page],per_page: 20)
+  end
+
+  def completed
+    @task_occurrences = TaskOccurrence.for_community(@community).completed.paginate(page: params[:page], per_page: 20)
   end
 
   def new

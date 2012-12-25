@@ -47,10 +47,18 @@ en:
             many: "Cannot delete record because dependent %{record} exist"
 
 
-  layout:
-    communities: Communities
-    users: Users
-    tasks: Tasks
+  layouts:
+    application:
+      communities: Communities
+      users: Users
+      tasks: Tasks
+      overview: Overview
+      create: Create
+      schedule: Schedule
+      todos: My todos
+      allopen: All todos
+      completed: Completed
+
   admin:
     communities:
       index:
@@ -140,12 +148,17 @@ en:
     flash:
       save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
   task_occurrences:
-    all_open:
+    open:
+      title: Open tasks
       reassign: Re-assign this task
       delete: Dispensate this task
 
     todo:
+      title: My todos
       complete: Complete this task
+
+    completed:
+      title: Completed taks
     form:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
@@ -161,17 +174,6 @@ en:
       modal_header: Complete task
       modal_body: "I have completed the task '<i>%{task_name}</i>'"
       complete: Complete
-
-    index:
-      title: Schedule
-      mytodos: My todos
-      allopen: All open
-      history: History
-      task: Task
-      duration: Duration
-      deadline: Deadline
-      allocated_to: Allocated to
-      completed_at: Completed at
 
 
 

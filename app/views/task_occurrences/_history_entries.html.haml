@@ -1,8 +1,0 @@
-%table.table.table-striped
-  %tr
-    %th= t('.task')
-    %th= t('.allocated_to')
-    %th= t('.duration')
-    %th= t('.completed_at')
-  =render partial: 'history_entry', collection: @history
-=will_paginate @history, param_name: :history_page, class: 'pagination pagination-centered pagination-mini'
