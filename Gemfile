@@ -52,4 +52,6 @@ gem "letter_opener", :group => :development
 gem 'whenever', :require => false
 gem 'strong_parameters'
 gem 'bootstrap-will_paginate'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 # gem "factory_girl_rails", "~> 3.0"

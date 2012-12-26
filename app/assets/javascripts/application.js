@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery.tokeninput
 //= require jquery.ui.all
+//= require turbolinks
+//= require jquery.turbolinks
 //= require bootstrap
 //= require common
 //= require_tree .

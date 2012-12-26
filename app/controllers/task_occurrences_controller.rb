@@ -25,20 +25,20 @@ class TaskOccurrencesController < ApplicationController
   def create
     if @task.schedule task_occurrence_create_params
       flash[:notice] = t('messages.save_success')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     else
       flash[:error] = t('messages.save_fail')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     end
   end
 
   def update
     if @task_occurrence.update_attributes task_occurrence_params
       flash[:notice] = t('messages.save_success')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     else
       flash[:error] = t('messages.save_fail')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     end
   end
 
@@ -54,10 +54,10 @@ class TaskOccurrencesController < ApplicationController
   def destroy
     if @task_occurrence.destroy
       flash[:notice] = t('messages.save_success')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     else
       flash[:error] = t('messages.save_fail')
-      redirect_to community_task_occurrences_path @community
+      redirect_to todo_community_task_occurrences_path @community
     end
   end
 
