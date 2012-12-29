@@ -12,6 +12,6 @@
 = will_paginate @tasks, class: 'pagination pagination-centered pagination-mini'
 
 %p
-  =link_to t('.create'), new_community_task_path(@community), class: 'btn btn-primary'
-  =link_to t('.schedule'), todo_community_task_occurrences_path(@community), class: 'btn'
+  =icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true
+  =icon_button t('.schedule'), todo_community_task_occurrences_path(@community), icon_class: 'icon-calendar'
 

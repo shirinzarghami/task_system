@@ -29,5 +29,9 @@ module ButtonHelper
     link_to image_tag(image, image_options), link, link_options
   end
 
+  # Bootstrap buttons
 
+  def icon_button text, url, options = {link_class: '', icon_class: '', icon_white: false}
+    render partial: 'shared/bootstrap_button', locals: {options: options, text: text, url: url}
+  end
 end
