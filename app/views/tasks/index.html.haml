@@ -1,7 +1,5 @@
 - content_for :title do
   = t('tasks.index.title')
-- content_for :menu do
-  =render partial: 'menu.html.haml'
 %p
   %h2= image_tag('broom32.png') + t('tasks.index.tasks')
   %table.table.table-striped
@@ -15,4 +13,5 @@
 
 %p
   =link_to t('.create'), new_community_task_path(@community), class: 'btn btn-primary'
+  =link_to t('.schedule'), todo_community_task_occurrences_path(@community), class: 'btn'
 
