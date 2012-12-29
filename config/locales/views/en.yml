@@ -53,11 +53,8 @@ en:
       users: Users
       tasks: Tasks
       overview: Overview
-      create: Create
       schedule: Schedule
-      todos: My todos
-      allopen: All todos
-      completed: Completed
+
 
   admin:
     communities:
@@ -139,6 +136,7 @@ en:
       overview: Overview
       occurrences: Occurrences
       next_occurrence: Next occurrence
+      create: Create
     edit:
       title: Edit task
     task:
@@ -159,6 +157,12 @@ en:
 
     completed:
       title: Completed taks
+
+    navigation:
+      title: Schedule
+      todo: My todos
+      open: All open
+      completed: Completed
     form:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
