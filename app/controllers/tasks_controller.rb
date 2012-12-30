@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task_occurrences = @task.task_occurrences.paginate(page: params[:page], per_page: 20)
+    @task_occurrences = @task.task_occurrences.latest.paginate(page: params[:page], per_page: 20)
   end
 
   def new

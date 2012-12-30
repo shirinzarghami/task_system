@@ -88,6 +88,7 @@ en:
         statuses:
           uncompleted: Uncompleted
           completed_at: Completed at %{date}
+        remarks: Remarks by executor
 
 
     values:

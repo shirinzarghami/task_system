@@ -1,7 +1,5 @@
 %tr{:class => (task_occurrence.too_late? ? 'error' : '')}
   %td
-    %small= task_occurrence.remarks
-  %td
     - if task_occurrence.user
       = task_occurrence.user.name
     - else
@@ -11,3 +9,5 @@
 
   %td= l task_occurrence.deadline, format: :long
   %td= task_occurrence_status task_occurrence
+  %td.span6
+    %small= task_occurrence.remarks

@@ -10,11 +10,23 @@ module TasksHelper
   end
 
   def task_occurrence_status task_occurrence
-    if task_occurrence.completed?
-      completed_date = task_occurrence.should_be_checked? ? task_occurrence.completed_at : task_occurrence.deadline
-      t('activerecord.attributes.task_occurrence.statuses.completed_at')
-    else
-      t('activerecord.attributes.task_occurrence.statuses.uncompleted')
-    end
+
+    status_text = if task_occurrence.completed?
+                    completed_date = task_occurrence.should_be_checked? ? task_occurrence.completed_at : task_occurrence.deadline
+                    t('activerecord.attributes.task_occurrence.statuses.completed_at', date: l(completed_date, format: :date_only))
+                  else
+                    t('activerecord.attributes.task_occurrence.statuses.uncompleted')
+                  end
+
+    status_class = if task_occurrence.too_late?
+                    'error-text'
+                   else
+                    task_occurrence.completed? ? 'valid-text' : 'danger-text'
+                   end
+    content_tag :span, status_text, class: status_class
+  end
+
+  def task_distribution task
+    TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", task.id]).group("community_users.user_id").count
   end
 end

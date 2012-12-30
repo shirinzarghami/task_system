@@ -1,0 +1,32 @@
+%table.table-full-width
+  %tr
+    %td
+      %strong= Task.human_attribute_name(:name)
+    %td= @task.name
+  %tr
+    %td
+      %strong= Task.human_attribute_name(:time)
+    %td= l @task.time, format: :time_only
+  %tr
+    %td
+      %strong= Task.human_attribute_name(:schedule_interval)
+    - if @task.instantiate_automatically
+      %td
+        = @task.instantiate_in_words
+        %small= t("times", count: @task.repeat) unless @task.repeat_infinite
+    - else
+      %td= link_to @task.instantiate_in_words, new_community_task_task_occurrence_path(@community, @task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
+
+  %tr
+    %td 
+      %strong= Task.human_attribute_name(:deadline)
+    %td= @task.deadline_in_words
+
+  %tr
+    %td 
+      %strong= Task.human_attribute_name(:next_occurrence)
+    %td= l @task.next_occurrence, format: :long
+  %tr
+    %td 
+      %strong= Task.human_attribute_name(:next_allocated_user)
+    %td= next_allocated_user(@task)

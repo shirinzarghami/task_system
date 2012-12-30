@@ -1,54 +1,22 @@
 - content_for :title do
   = @task.name
-
-%p
-  %h2= image_tag('broom32.png') + @task.name
+%div.row
+  %h2= image_tag('iconic/chart_alt_30x32.png') + @task.name
 
 %div.row
-  %div.span6= content_tag :div, '', id: 'task-donut'
+  %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
   %div.span6
-    %div.well
-      %table.table-full-width
-        %tr
-          %td
-            %strong= Task.human_attribute_name(:name)
-          %td= @task.name
-        %tr
-          %td
-            %strong= Task.human_attribute_name(:time)
-          %td= l @task.time, format: :time_only
-        %tr
-          %td
-            %strong= Task.human_attribute_name(:schedule_interval)
-          - if @task.instantiate_automatically
-            %td
-              = @task.instantiate_in_words
-              %small= t("times", count: @task.repeat) unless @task.repeat_infinite
-          - else
-            %td= link_to @task.instantiate_in_words, new_community_task_task_occurrence_path(@community, @task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
-
-        %tr
-          %td 
-            %strong= Task.human_attribute_name(:deadline)
-          %td= @task.deadline_in_words
-
-        %tr
-          %td 
-            %strong= Task.human_attribute_name(:next_occurrence)
-          %td= l @task.next_occurrence, format: :long
-        %tr
-          %td 
-            %strong= Task.human_attribute_name(:next_allocated_user)
-          %td= next_allocated_user(@task)
+    %div.well= render partial: 'task_info'
+      
 
 %div.row
-  %h2= image_tag('broom32.png') + t('.log')
+  %h2= image_tag('iconic/book_28x32.png') + t('.log')
   %table.table.table-striped
     %tr
-      %th= TaskOccurrence.human_attribute_name(:task)
       %th= TaskOccurrence.human_attribute_name(:allocated_to)
       %th= TaskOccurrence.human_attribute_name(:deadline)
       %th= TaskOccurrence.human_attribute_name(:status)
+      %th= TaskOccurrence.human_attribute_name(:remarks)
 
     =render partial: 'task_occurrence', collection: @task_occurrences
   =will_paginate @task_occurrences, class: 'pagination pagination-centered pagination-mini'

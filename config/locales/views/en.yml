@@ -147,10 +147,11 @@ en:
       delete: Delete this task
     flash:
       save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
-
-    show:
+    task_info:
       manual-tooltip: This task is necessary!
+    show:
       log: Log book
+
   task_occurrences:
     open:
       title: Open tasks
