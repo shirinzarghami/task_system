@@ -8,3 +8,6 @@
       %th
     = render partial: 'community_user', collection: @community_users
 =will_paginate @community_users, class: 'pagination pagination-centered pagination-mini'
+
+%p
+  =icon_button t('.create'), new_community_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true

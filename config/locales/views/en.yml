@@ -87,6 +87,8 @@ en:
       title: Create a new community
       created: The community has been created successfully. The invited members will receive an email.
       not_created: Could not create the community
+    community_users:
+      create: 'New community'
     community_user:
       unsubscribe: Unsubscribe from this community
       go: Go to this community
@@ -145,6 +147,10 @@ en:
       delete: Delete this task
     flash:
       save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
+
+    show:
+      manual-tooltip: This task is necessary!
+      log: Log book
   task_occurrences:
     open:
       title: Open tasks

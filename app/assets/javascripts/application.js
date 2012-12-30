@@ -16,6 +16,8 @@
 //= require jquery.ui.all
 //= require turbolinks
 //= require jquery.turbolinks
+//= require raphael
+//= require morris
 //= require bootstrap
 //= require common
 //= require_tree .

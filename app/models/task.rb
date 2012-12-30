@@ -79,13 +79,17 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def deadline_in_words
+    t_root = 'activerecord.attributes.task.deadline-info'
+    I18n.t("#{t_root}.#{deadline_unit}", count: deadline)
+  end
+
   def interval_time
     eval "#{interval}.#{interval_unit}" if TIME_UNITS.keys.include?(interval_unit.to_sym)
   end
 
   def deadline_time
     eval "#{deadline}.#{deadline_unit}" if TIME_UNITS.keys.include?(deadline_unit.to_sym)
-   
   end
 
   def ordered_members

@@ -6,14 +6,12 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %div.navbar.navbar-inverse  
+    %div.navbar 
       %div.navbar-inner 
         %ul.nav
-          = tab_link t('.communities'), communities_path
+          = tab_link t('.communities'), communities_path, icon_class: 'icon-user'
           - if (@community.present? and !@community.new_record?)
-            - #tab_link t('layout.tasks'), community_tasks_path(@community)
-            %li.dropdown
-              = link_to t('.tasks'), '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'
+            = tab_link t('.tasks'), '#', icon_class: 'icon-tasks', controller_list: [:tasks, :task_occurrences], dropdown: true do
               %ul.dropdown-menu
                 %li= link_to t('.overview'), community_tasks_path(@community)
                 %li= link_to t('.schedule'), todo_community_task_occurrences_path(@community)

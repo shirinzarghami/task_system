@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_filter :find_community
-  before_filter :find_task, only: [:edit, :update, :destroy]
+  before_filter :find_task, only: [:edit, :update, :destroy, :show]
   before_filter :check_destroy_allowed, only: [:destroy]
   before_filter :check_edit_allowed, only: [:edit, :update]
 
@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task_occurrences = @task.task_occurrences.paginate(page: params[:page], per_page: 20)
   end
 
   def new

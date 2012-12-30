@@ -50,7 +50,8 @@ en:
           user: Assign this task to one specific user
         allocation_modes_short:
           voluntary: Voluntary
-
+        schedule: Schedule
+        next_allocated_user: Next user
         instantiate:
           manual: Manual
           every: Every %{number} %{unit}
@@ -63,7 +64,18 @@ en:
           months:
             one: Every month
             other: Every %{count} months
-        repeat: Repeat
+        deadline: Deadline
+        deadline-info:
+          after: After %{number} %{unit}
+          weeks:
+            one: After one week
+            other: After %{count} weeks
+          days:
+            one: After one day
+            other: After %{count} days
+          months:
+            one: After one month
+            other: After %{count} months
 
       task_occurrence:
         allocated_user:
@@ -73,6 +85,9 @@ en:
         duration: Duration
         deadline: Deadline
         completed_at: Completed at
+        statuses:
+          uncompleted: Uncompleted
+          completed_at: Completed at %{date}
 
 
     values:

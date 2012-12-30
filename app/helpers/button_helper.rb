@@ -12,11 +12,27 @@ module ButtonHelper
     end
   end
 
-  def tab_link text, url
-    # "<li class='#{current_page?(url) ? 'active' : ''}'>#{link_to text, url}</li>".html_safe
-    content_tag :li, class: (controller.controller_name == text.downcase ? 'active' : '') do
-      link_to text, url
-    end
+  def tab_link text, url, options = {}, &block
+    default_options = {
+      icon_class: '',
+      controller_list: [],
+      dropdown: false
+    }
+    options = default_options.merge options
+    icon_html = options[:icon_class].present? ? content_tag(:i, '', class: options[:icon_class]) : ''
+    is_active = (options[:controller_list].select {|c| controller.controller_name == c.to_s}.any? or controller.controller_name == text.downcase)
+
+    li_class = is_active ? 'active' : ''
+    li_class+= ' dropdown' if options[:dropdown]
+
+    link_options = options[:dropdown] ? {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} : {}
+
+    subcontent = block_given? ? capture(&block) : nil
+    link = link_to "#{icon_html} #{text}".html_safe, url, link_options
+
+    content = link + subcontent
+    content_tag :li,content, class: li_class
+    
   end
 
   def filter_button text, filter_name
