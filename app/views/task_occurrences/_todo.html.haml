@@ -1,6 +1,6 @@
 %tr{:class => (todo.too_late? ? 'error' : '')}
   %td
-    = todo.task_name.truncate(30)
+    = link_to todo.task_name.truncate(30), community_task_path(@community, todo)
     - if todo.user.nil?
       %br
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 

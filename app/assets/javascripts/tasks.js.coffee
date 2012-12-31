@@ -48,17 +48,9 @@ jQuery ->
     $(this).tooltip()
 
   # Donut graph task#show
-  Morris.Donut({
+  Morris.Donut
     element: 'task-donut',
     data: $('#task-donut').data('distribution')
-  });  
+    colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00']
 
-  # Morris.Donut({
-  #   element: 'task-donut',
-  #   data: [
-  #     {label: "Download Sales", value: 12},
-  #     {label: "In-Store Sales", value: 30},
-  #     {label: "Mail-Order Sales", value: 20}
-  #   ]
-  # });
 

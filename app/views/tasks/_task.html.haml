@@ -1,5 +1,5 @@
 %tr
-  %td= task.name
+  %td= link_to task.name, community_task_path(@community, task)
   - if task.instantiate_automatically
     %td
       = task.instantiate_in_words

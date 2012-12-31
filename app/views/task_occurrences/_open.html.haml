@@ -1,5 +1,5 @@
 %tr{:class => (open.too_late? ? 'error' : '')}
-  %td= open.task_name.truncate(30)
+  %td= link_to open.task_name.truncate(30), community_task_path(@community, open)
   %td
     - if open.user
       = open.user.name

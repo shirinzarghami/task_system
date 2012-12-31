@@ -27,6 +27,10 @@ module TasksHelper
   end
 
   def task_distribution task
-    TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", task.id]).group("community_users.user_id").count
+    # result = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", task.id]).group("community_users.user_id").count
+    # result.to_a.map {|i| {label: User.find(i.first).name, value: i.last}}.to_json
+    result = TaskOccurrence.joins("RIGHT OUTER JOIN users ON task_occurrences.user_id = users.id").where(["task_occurrences.task_id = ?", task.id]).group("users.id").select('users.name as label, COUNT(users.id) as value')
+    result.to_json
+
   end
 end

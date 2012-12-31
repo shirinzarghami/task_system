@@ -1,5 +1,5 @@
 %tr{:class => (completed.too_late? ? 'error' : '')}
-  %td= completed.task_name.truncate(30)
+  %td= link_to completed.task_name.truncate(30), community_task_path(@community, completed)
   %td= completed.user.name
   %td= l completed.time, format: :time_only
   - if completed.completed_at.nil?

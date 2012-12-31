@@ -97,6 +97,8 @@ en:
       delete: Remove the invitation. This will NOT remove users from the community that have accepted the invitation
     community_member:
       delete: Remove this user from the community
+    community_members:
+      invite: Invite a user
 
   community_users:
     destroy:
