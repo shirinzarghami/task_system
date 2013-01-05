@@ -5,6 +5,7 @@
 
 %div.row
   %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
+%hr
 
 %div.row
   %div.span6
@@ -15,6 +16,7 @@
       %h2= image_tag('iconic/list_32x28.png') + Task.human_attribute_name(:description)
       %p= @task.description
 
+%hr
 %div.row
   %h2= image_tag('iconic/book_28x32.png') + t('.log')
   %table.table.table-striped
