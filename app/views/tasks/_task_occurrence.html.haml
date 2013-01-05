@@ -1,3 +1,4 @@
+- show_comment_button = true if show_comment_button.nil?
 %tr{:class => (task_occurrence.too_late? ? 'error' : '')}
   %td
     - if task_occurrence.user
@@ -11,3 +12,6 @@
   %td= task_occurrence_status task_occurrence
   %td.span6
     %small= task_occurrence.remarks
+  %td
+    - if show_comment_button
+      =image_button 'iconic/comment_stroke_12x11.png', community_task_occurrence_path(@community, task_occurrence), data: {title: t('.comments')}, class: 'tooltip-link'

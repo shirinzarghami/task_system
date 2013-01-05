@@ -5,9 +5,15 @@
 
 %div.row
   %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
+
+%div.row
   %div.span6
-    %div.well= render partial: 'task_info'
-      
+    %h2= image_tag('iconic/info_16x32.png') + t('.info')
+    %p= render partial: 'task_info'
+  %div.span6
+    - if @task.description.present?      
+      %h2= image_tag('iconic/list_32x28.png') + Task.human_attribute_name(:description)
+      %p= @task.description
 
 %div.row
   %h2= image_tag('iconic/book_28x32.png') + t('.log')
@@ -17,6 +23,7 @@
       %th= TaskOccurrence.human_attribute_name(:deadline)
       %th= TaskOccurrence.human_attribute_name(:status)
       %th= TaskOccurrence.human_attribute_name(:remarks)
+      %th
 
     =render partial: 'task_occurrence', collection: @task_occurrences
   =will_paginate @task_occurrences, class: 'pagination pagination-centered pagination-mini'

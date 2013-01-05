@@ -1,5 +1,11 @@
 TaskSystem::Application.routes.draw do
 
+  get "comments/index"
+
+  get "comments/create"
+
+  get "comments/update"
+
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
 
   namespace :admin do
@@ -15,6 +21,7 @@ TaskSystem::Application.routes.draw do
       resources :task_occurrences, only: [:new, :create]
     end
     resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
+      resources :comments, only: [:create]
       member do
         get :reassign
         get :complete

@@ -1,8 +1,12 @@
 class TaskOccurrencesController < ApplicationController
   before_filter :find_community
   before_filter :find_task, only: [:create, :new]
-  before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete]
+  before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete, :show]
   before_filter :check_community_admin, only: [:destroy]
+
+  def show
+      
+  end
 
   def todo
     @task_occurrences = TaskOccurrence.for_user_or_open(@user).for_community(@community).todo.paginate(page: params[:page],per_page: 20)

@@ -3,9 +3,11 @@ en:
   noo: "No"
   here: here
   cancel: "Cancel"
+  infinite: Infinite
   times:
     one: "%{count} time"
     other: "%{count} times"
+    infinite: "Infinite times"
   actions:
     new: New
     edit: Edit
@@ -153,6 +155,9 @@ en:
       manual-tooltip: This task is necessary!
     show:
       log: Log book
+      info: Info
+    task_occurrence:
+      comments: Comments
 
   task_occurrences:
     open:
@@ -187,6 +192,7 @@ en:
       modal_header: Complete task
       modal_body: "I have completed the task '<i>%{task_name}</i>'"
       complete: Complete
+    show:
 
 
 

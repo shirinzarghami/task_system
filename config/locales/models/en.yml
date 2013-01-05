@@ -39,7 +39,10 @@ en:
         status: Status
 
       task:
+        time: Time to complete
         interval_number: Repeat every
+        repeat: Repeat
+        description: Description
         instantiate_automatically: Schedule occurrences for this task automatically
         next_occurrence: Start on
         allocation_modes:

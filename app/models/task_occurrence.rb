@@ -5,6 +5,8 @@ class TaskOccurrence < ActiveRecord::Base
   belongs_to :task
   belongs_to :user
   
+  acts_as_commentable
+    
   validates :task_id, presence: true
   validates :task_name, presence: true
   validates :time_in_minutes, presence: true, :numericality => {:greater_than_or_equal_to => 0}
