@@ -1,6 +1,5 @@
-class AdminController < ActionController::Base
-    protect_from_forgery
-    before_filter :authenticate_user!
+class AdminController < ApplicationController
+    before_filter :check_admin_user
 
     FILTERS = {
       admin_only: ["global_role = 'admin'"],
@@ -23,6 +22,11 @@ class AdminController < ActionController::Base
 
     def find_community
       (params.has_key? :query) ? ['name LIKE ?', "%#{params[:query]}%"] : []
+    end
+
+    def check_admin_user
+      condition = current_user.global_role == 'admin'
+      check condition
     end
 
 end

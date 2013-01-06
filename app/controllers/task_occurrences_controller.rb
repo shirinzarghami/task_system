@@ -6,7 +6,7 @@ class TaskOccurrencesController < ApplicationController
 
   def show
     @comment = Comment.new
-    @comments = @task_occurrence.root_comments
+    @comments = @task_occurrence.root_comments.paginate(page: params[:page], per_page: 10)
   end
 
   def todo

@@ -11,4 +11,5 @@
 %hr
 %h2= image_tag('iconic/comment_stroke_32x28.png') + 'Comments'
 %div.comments= render partial: 'comments/comment', collection: @comments
+= will_paginate @comments, class: 'pagination pagination-centered pagination-mini'
 = render partial: 'comments/form'
