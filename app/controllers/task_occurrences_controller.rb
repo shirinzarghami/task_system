@@ -5,7 +5,7 @@ class TaskOccurrencesController < ApplicationController
   before_filter :check_community_admin, only: [:destroy]
 
   def show
-      
+    @comment = Comment.new
   end
 
   def todo

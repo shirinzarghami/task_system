@@ -8,5 +8,6 @@
       %th= TaskOccurrence.human_attribute_name(:remarks)
       %th
     = render partial: 'tasks/task_occurrence', object: @task_occurrence, locals: {show_comment_button: false}
-
+%hr
 %h2= image_tag('iconic/comment_stroke_32x28.png') + 'Comments'
+= render partial: 'comments/form'
