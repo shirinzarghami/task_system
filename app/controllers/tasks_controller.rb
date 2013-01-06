@@ -53,11 +53,7 @@ class TasksController < ApplicationController
 
   private
     def find_task
-      @task = @community.tasks.find(params.has_key?(:task_id) ? params[:task_id] : params[:id]) 
-    end
-
-    def check_destroy_allowed
-      check @task.user == @user or community_admin?
+      @object = @task = @community.tasks.find(params.has_key?(:task_id) ? params[:task_id] : params[:id]) 
     end
 
     def task_params

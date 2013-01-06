@@ -52,6 +52,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_destroy_allowed
+    condition = @object.user == @user or community_admin?
+    check condition
+  end
+
   def load_commentable
     klass = [TaskOccurrence].detect {|c| params["#{c.name.underscore}_id"]}
     @commentable = klass.find params["#{klass.name.underscore}_id"]

@@ -21,7 +21,7 @@ TaskSystem::Application.routes.draw do
       resources :task_occurrences, only: [:new, :create]
     end
     resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
-      resources :comments, only: [:create]
+      resources :comments
       member do
         get :reassign
         get :complete
@@ -32,7 +32,6 @@ TaskSystem::Application.routes.draw do
         get :completed
       end
     end
-    resources :comments, only: [:update, :destroy]
   end
   resources :community_users, only: [:update, :destroy]
 
