@@ -6,4 +6,9 @@ module TaskOccurrencesHelper
       link_to text, controller: :task_occurrences, action: action_name
     end
   end
+
+  def number_of_comments task_occurrence
+    count = task_occurrence.comment_threads.count
+    count unless count == 0
+  end
 end

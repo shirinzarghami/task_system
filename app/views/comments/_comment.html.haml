@@ -1,0 +1,11 @@
+%div.comment
+  %div.comment-header
+    = image_tag 'iconic/right_quote_32x24.png', class: 'user-logo'
+    %strong= comment.user.name
+    %br
+    %small= l comment.created_at, format: :short
+    %div.comment-actions
+      - if can_edit_object? comment
+        = image_button 'iconic/trash_fill_12x12.png', community_comment_path(@community, comment), method: :delete, confirm: t('messages.confirm'), data: {title: t('actions.delete')}, class: 'tooltip-link'
+
+  %div.comment-body= comment.body

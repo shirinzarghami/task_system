@@ -6,6 +6,7 @@ class TaskOccurrencesController < ApplicationController
 
   def show
     @comment = Comment.new
+    @comments = @task_occurrence.root_comments
   end
 
   def todo

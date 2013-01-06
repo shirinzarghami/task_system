@@ -32,6 +32,7 @@ TaskSystem::Application.routes.draw do
         get :completed
       end
     end
+    resources :comments, only: [:update, :destroy]
   end
   resources :community_users, only: [:update, :destroy]
 

@@ -13,6 +13,6 @@
       %br
       %small= next_allocated_user(task)
   %td
-    - if can_edit_task? task
+    - if can_edit_object? task
       = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task), data: {title: t('.edit')}, class: 'tooltip-link')
       = (image_button 'iconic/trash_fill_12x12.png', community_task_path(@community, task), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link') 
