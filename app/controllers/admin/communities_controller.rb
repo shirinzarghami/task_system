@@ -16,8 +16,7 @@ class Admin::CommunitiesController < AdminController
   end
 
   def create
-    @community = Community.new params[:community]
-
+    @community = Community.new community_params
     if @community.save 
       flash[:notice] = t('messages.save_success')
       redirect_to admin_communities_path
@@ -32,7 +31,7 @@ class Admin::CommunitiesController < AdminController
 
   def update
     @community = Community.find params[:id]
-    if @community.update_attributes params[:community]
+    if @community.update_attributes community_params
       flash[:notice] = t('messages.save_success')
       redirect_to admin_communities_path
     else
@@ -49,7 +48,7 @@ class Admin::CommunitiesController < AdminController
 
   private
     def community_params
-      {creator: @user}.merge params.require(:community).permit(:name, :subdomain, :user_tokens, :admin_user_tokens)
+      {creator: current_user}.merge params.require(:community).permit(:name, :subdomain, :user_tokens, :admin_user_tokens, :max_users)
     end
 
 

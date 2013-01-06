@@ -7,6 +7,7 @@ class CommunityUser < ActiveRecord::Base
 
   validates :community_id, uniqueness: {scope: :user_id}
   validate :validate_at_least_one_admin
+  # before_save :validate_max_members_exceeded
   before_destroy :destroy_has_at_least_one_admin?
 
   scope :administrators, where(role: 'admin')
@@ -22,4 +23,8 @@ class CommunityUser < ActiveRecord::Base
       errors.add(:base, :at_least_one_admin) unless community_users.count > 0
       errors.blank?
     end
+    
+    # def validate_max_members_exceeded
+    #   errors.add(:base, :max_members_exceeded) if self.community.members.count >= community.max_users
+    # end
 end

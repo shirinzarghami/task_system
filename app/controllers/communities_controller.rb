@@ -34,7 +34,7 @@ class CommunitiesController < ApplicationController
     end
 
     def community_params
-      {creator: @user}.merge params.require(:community).permit(:name, :subdomain, :invitation_emails)
+      {creator: current_user}.merge params.require(:community).permit(:name, :subdomain, :invitation_emails)
     end
 
 

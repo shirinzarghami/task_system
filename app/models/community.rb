@@ -3,7 +3,7 @@ class Community < ActiveRecord::Base
   extend FriendlyId
     friendly_id :subdomain
 
-  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :max_users, :invitation_emails, :creator
+  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :invitation_emails, :creator, :max_users
   attr_reader :user_tokens, :admin_user_tokens
   attr_accessor :invitation_emails
 
