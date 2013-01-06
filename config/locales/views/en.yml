@@ -16,6 +16,7 @@ en:
     unsubscribe: Unsubscribe
     login: Log in
     logout: Log out
+    post: Post
   messages:
     save_success: Item was successfully saved
     save_fail: Item could not be saved

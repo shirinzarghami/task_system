@@ -10,10 +10,16 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.build_from(@commentable, current_user, params[:comment_body])
     if @comment.save
-      redirect_to return_url
+      respond_to do |format|
+        format.js {render 'create'}
+        format.html {redirect_to return_url}
+      end
     else
       flash[:error] = t('messages.error')
-      redirect_to return_url
+      respond_to do |format|
+        format.js {render 'shared/ajax_flash'}
+        format.html {redirect_to return_url}
+      end
     end
   end
 
@@ -22,10 +28,16 @@ class CommentsController < ApplicationController
 
   def destroy
     if @comment.destroy
-
+      respond_to do |format|
+        format.js {render 'destroy'}
+        format.html {redirect_to return_url}
+      end
     else
       flash[:error] = t('messages.error')
-      render 'shared/ajax_flash'
+      respond_to do |format|
+        format.js {render 'shared/ajax_flash'}
+        format.html {redirect_to return_url}
+      end
     end
   end
 

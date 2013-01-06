@@ -10,5 +10,5 @@
     = render partial: 'tasks/task_occurrence', object: @task_occurrence, locals: {show_comment_button: false}
 %hr
 %h2= image_tag('iconic/comment_stroke_32x28.png') + 'Comments'
-= render partial: 'comments/comment', collection: @comments
+%div.comments= render partial: 'comments/comment', collection: @comments
 = render partial: 'comments/form'

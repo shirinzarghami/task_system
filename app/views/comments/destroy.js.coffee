@@ -1,1 +1,1 @@
-$('#comment_<%= @comment.id%>') .hide('fold', {}, 500) unless obj.is(':hidden')
+$('#comment_<%= @comment.id%>').hide('fold', {}, 500)
