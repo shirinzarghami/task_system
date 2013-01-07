@@ -27,7 +27,7 @@ group :test do
 end
 gem 'jquery-rails'
 gem 'acts_as_commentable_with_threading'
-
+gem 'shoulda-context'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

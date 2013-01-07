@@ -52,7 +52,8 @@ class InvitationsController < ApplicationController
           redirect_to invitation_path(@invitation.token)
         end
       else
-        flash[:error] = t('messages.accept_invitation_fail')
+        # flash[:error] = t('messages.accept_invitation_fail')
+        flash[:error] = error_messages_for @invitation, t('messages.accept_invitation_fail')
         render action: 'edit'
       end
     elsif params[:invitation] == 'deny' and @invitation.deny

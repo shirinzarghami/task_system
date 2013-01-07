@@ -5,11 +5,22 @@ en:
   activerecord:
     errors:
       models:
+        invitation:
+          attributes:
+            base:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+        community:
+          attributes:
+            user_tokens:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added        
+            admin_user_tokens:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+            invitation_emails:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
         community_user:
           attributes:
             base:
               at_least_one_admin: There should be at least one admin in the community
-              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
     models:
       community: Community
       user: User

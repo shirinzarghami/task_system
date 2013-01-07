@@ -5,7 +5,7 @@ class Invitation < ActiveRecord::Base
   # Dummy variable for form
   attr_accessor :invitation_emails
 
-  belongs_to :community
+  belongs_to :community, validate: true
   belongs_to :invitor, class_name: 'User'
   belongs_to :invitee, class_name: 'User'
 
@@ -45,7 +45,8 @@ class Invitation < ActiveRecord::Base
   end
 
   def accept user
-    if user.email == invitee_email or invitee.nil?
+    return false unless (user.email == invitee_email or invitee.nil?)
+    begin
       ActiveRecord::Base.transaction do
         if user.new_record?
           user.skip_confirmation! if user.email == invitee_email
@@ -57,7 +58,10 @@ class Invitation < ActiveRecord::Base
         self.status = 'accepted'
         save!
       end
-    else
+    rescue
+      self.community.errors.messages.to_a.map{|m|m.last.last}.uniq.each do |message|
+        self.errors.add(:base, message)
+      end
       false
     end
   end
