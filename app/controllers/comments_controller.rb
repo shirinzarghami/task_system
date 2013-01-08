@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.build_from(@commentable, current_user, params[:comment_body])
+    @comment = Comment.build_from(@commentable, current_user.id, params[:comment_body])
     if @comment.save
       respond_to do |format|
         format.js {render 'create'}
