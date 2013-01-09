@@ -17,6 +17,7 @@
                 %ul.dropdown-menu
                   %li= link_to t('.overview'), community_tasks_path(@community)
                   %li= link_to t('.schedule'), todo_community_task_occurrences_path(@community)
+            = tab_link t('.settings'), edit_user_registration_path, icon_class: 'icon-cog', controller_list: [:registrations]
 
 
     %div.container
