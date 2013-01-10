@@ -12,6 +12,14 @@ update_instantiation = (chkbox) ->
   else
     tasksystem.hide($('#instantiation_options'))
 
+donut_formatter = (value) ->
+  minutes = value % 60
+  if (minutes < 10)
+    minutes = '0' + minutes 
+
+
+  return parseInt(value / 60) + ':' + minutes + 'h'
+
 jQuery ->
   #  ---- New task form dynamics
   $('#tasks-tab a').each ->
@@ -50,7 +58,8 @@ jQuery ->
   # Donut graph task#show
   Morris.Donut
     element: 'task-donut',
-    data: $('#task-donut').data('distribution')
-    colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00']
+    data: $('#task-donut').data('distribution'),
+    colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00'],
+    formatter: donut_formatter
 
 

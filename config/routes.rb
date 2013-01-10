@@ -7,7 +7,9 @@ TaskSystem::Application.routes.draw do
   get "comments/update"
 
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
-
+  devise_scope :user do
+    get "logout", :to => "devise/sessions#destroy"
+  end
   namespace :admin do
     root to: 'Communities#index'
     resources :communities
