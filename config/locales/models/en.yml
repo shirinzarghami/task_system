@@ -43,6 +43,10 @@ en:
         confirmed: Confirmed
         last_login: Last login
         role: Role
+        avatar: Avatar
+        notify_comment: Send me an e-mail when a comment is posted
+        notify_task_occurrence: Send me an e-mail when a task is assigned to me 
+        notify_remind_task_occurrence: "Send me an reminder e-mail when a task, assigned to me, approaches the deadline for completion"
       invitation:
         invitor: Invitor
         invitee: Invitee

@@ -1,0 +1,32 @@
+%h2= t('.title')
+= simple_form_for(resource, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f|
+  %fieldset
+    %legend= t('.account')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    %div.control-group
+      =f.input :name
+      =f.input :email
+      
+    %legend= t('.password')
+    = image_tag 'iconic/lock_stroke_24x32.png', class: 'logo'
+    %div.control-group
+      =f.input :password, hint: t('.hint_password')
+      =f.input :password_confirmation
+      =f.input :current_password, hint: t('.hint_current_password')
+  %fieldset
+    %legend= t('.avatar')
+    = image_tag 'iconic/camera_32x32.png', class: 'logo'
+    %div.control-group
+      %div.controls= image_tag @user.avatar(:thumb) unless @user.avatar.nil?
+    %div.control-group
+      =f.input :avatar
+
+  %fieldset
+    %legend= t('.notifications')
+    = image_tag 'iconic/mail_32x24.png', class: 'logo'
+    %div.control-group
+      =f.input :notify_comment, as: :boolean, inline_label: User.human_attribute_name(:notify_comment), label: false
+      =f.input :notify_task_occurrence, inline_label: User.human_attribute_name(:notify_task_occurrence), label: false
+      =f.input :notify_remind_task_occurrence, inline_label: User.human_attribute_name(:notify_remind_task_occurrence), label: false
+
+    = f.submit class: 'btn btn-primary'

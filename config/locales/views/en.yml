@@ -229,3 +229,13 @@ en:
     overview: Overview
     schedule: Schedule
 
+  devise:
+    registrations:
+      edit:
+        title: Edit preferences
+        account: Account
+        hint_password: leave blank if you don't want to change it
+        hint_current_password: we need your current password to confirm your changes
+        avatar: Avatar
+        notifications: E-mail notifications
+        password: Password

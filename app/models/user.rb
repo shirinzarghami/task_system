@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :locale
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :locale, :global_role, as: :admin
-  # attr_accessible :title, :body
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :locale, :avatar,:notify_comment, :notify_task_occurrence, :notify_remind_task_occurrence 
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :locale, :global_role, :notify_comment, :notify_task_occurrence, :notify_remind_task_occurrence, as: :admin
+
   validates :name, presence: true, length: {minimum: 2, maximum: 40}
   validates :email, presence: true, length: {minimum: 2, maximum: 40}
   validates :global_role, presence: true
@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   has_many :tasks
   has_many :task_occurrences, dependent: :destroy
   has_many :allocated_tasks, class_name: 'Task', foreign_key: 'allocated_user_id'
+
+  has_attached_file :avatar, styles: {small: "40x40>", thumb: "100x100>" }
 
   scope :unconfirmed, where("confirmed_at IS NULL")
   USER_ROLES = [:normal, :admin]
