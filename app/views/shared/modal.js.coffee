@@ -1,4 +1,4 @@
-$('div.container').append("<%= j render partial: @partial %>")
+$('body').append("<%= j render partial: @partial %>")
 $('#schedule-modal').modal()
 
 

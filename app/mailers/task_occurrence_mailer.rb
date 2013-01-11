@@ -10,7 +10,8 @@ class TaskOccurrenceMailer < ActionMailer::Base
     end
   end
 
-  def reminder
+  def reminder user, task_occurrences
+    @task_occurrences = task_occurrences
     @user = user
     mail to: user.email do |format|
       format.html { render :layout => 'email' }

@@ -25,8 +25,8 @@
     %legend= t('.notifications')
     = image_tag 'iconic/mail_32x24.png', class: 'logo'
     %div.control-group
-      =f.input :notify_comment, as: :boolean, inline_label: User.human_attribute_name(:notify_comment), label: false
-      =f.input :notify_task_occurrence, inline_label: User.human_attribute_name(:notify_task_occurrence), label: false
-      =f.input :notify_remind_task_occurrence, inline_label: User.human_attribute_name(:notify_remind_task_occurrence), label: false
+      =f.input :receive_comment_mail, as: :boolean, inline_label: User.human_attribute_name(:receive_comment_mail), label: false
+      =f.input :receive_assign_mail, inline_label: User.human_attribute_name(:receive_assign_mail), label: false
+      =f.input :receive_reminder_mail, inline_label: User.human_attribute_name(:receive_reminder_mail), label: false
 
     = f.submit class: 'btn btn-primary'

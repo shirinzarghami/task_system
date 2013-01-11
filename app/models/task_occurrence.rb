@@ -17,6 +17,8 @@ class TaskOccurrence < ActiveRecord::Base
   scope :for_community, lambda {|community| joins(:task).where(['tasks.community_id = ?', community.id])}
   scope :for_task, lambda {|task| where(task_id: task.id)}
   scope :to_email, where(should_send_assign_mail: true)
+  scope :approaching_deadline, where(['task_occurrences.deadline < (UTC_TIMESTAMP() + INTERVAL 1 DAY)'])
+  scope :no_reminder_sent, where(reminder_mail_sent: false)
   # Not completed occurrences
   scope :todo, joins(:task).order('task_occurrences.deadline ASC').where('
                                   (tasks.should_be_checked = true AND task_occurrences.checked = false)
@@ -30,6 +32,17 @@ class TaskOccurrence < ActiveRecord::Base
 
   after_initialize :set_default_values
 
+  def self.send_reminders
+    approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |user_id|
+      ActiveRecord::Base.transaction do 
+        task_occurrences = approaching_deadline.no_reminder_sent.where(user_id: user_id)
+        user = User.find user_id
+        TaskOccurrenceMailer.remind user, task_occurrences
+        task_occurrences.update_all! reminder_mail_sent: true
+      end
+    end
+  end
+
   def checked= value
     if value
       self[:checked] = true
@@ -41,7 +54,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def send_email options = {hold: false}
-    if user.present? and user.receive_assign_mail 
+    if user.present? and user.notify_task_occurrence
       if options[:hold]
         self.should_send_assign_mail = true
       else
