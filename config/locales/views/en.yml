@@ -53,9 +53,10 @@ en:
   layouts:
     application:
       communities: Communities
+      manage_communities: Manage communities
       users: Users
       tasks: Tasks
-      overview: Overview
+      overview: Manage tasks
       schedule: Schedule
       settings: Settings
       logout: Logout

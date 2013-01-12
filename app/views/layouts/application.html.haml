@@ -11,7 +11,12 @@
         %div.container
           = link_to(@community.name.capitalize, '#', class: 'brand') if @community.present?
           %ul.nav.offset3
-            = tab_link t('.communities'), communities_path, icon_class: 'icon-user'
+            = tab_link t('.communities'), communities_path, icon_class: 'icon-user', dropdown: true do
+              %ul.dropdown-menu
+                %li= link_to t('.manage_communities'), communities_path
+                %li.divider
+                - current_user.communities.each do |community|
+                  %li= link_to community.name, community_path(community)
             - if (@community.present? and !@community.new_record?)
               = tab_link t('.tasks'), '#', icon_class: 'icon-tasks', controller_list: [:tasks, :task_occurrences], dropdown: true do
                 %ul.dropdown-menu

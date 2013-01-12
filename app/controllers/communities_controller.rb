@@ -8,9 +8,9 @@ class CommunitiesController < ApplicationController
   end
 
   def create
-    @community = Community.new community_params
-    @community.community_users.build role: 'admin', user: @user
-    if @community.save
+    @new_community = Community.new community_params
+    @new_community.community_users.build role: 'admin', user: @user
+    if @new_community.save
       flash[:notice] = t('communities.new.created')
       redirect_to communities_path
     else
@@ -25,7 +25,7 @@ class CommunitiesController < ApplicationController
   end
 
   def new
-    @community = Community.new
+    @new_community = Community.new
   end
 
   private
