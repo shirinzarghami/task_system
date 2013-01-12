@@ -50,5 +50,19 @@ en:
         The task system
       greet: |
         Best regards,
+        The task system      
+
+  comment_mailer:
+    posted:
+      subject: "Task system: new comment posted"
+      salutation: Hi %{user},
+      body: |
+        A new comment was posted:
+      view_link: View the discussion
+      greet_html: >
+        Best regards,<br>
+        The task system
+      greet: |
+        Best regards,
         The task system
 
