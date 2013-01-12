@@ -2,6 +2,10 @@ require 'test_helper'
 
 class TaskOccurrenceTest < ActiveSupport::TestCase
 
+  def setup
+    ActionMailer::Base.deliveries.clear
+  end
+
   test "completed method for a task that should be checked" do
     Timecop.freeze(Time.now) do
       task_occurrence = FactoryGirl.create(:task_occurrence_should_be_checked)
@@ -130,6 +134,26 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task2.next_allocated_user == user2, "Should be scheduled to user2, since it has lowest total time"
   end
 
+
+  test "send a reminder mail" do
+    @user = FactoryGirl.create(:user)
+    @task_occurrences = 2.times.map {FactoryGirl.create(:task_occurrence, deadline: 2.days.since, user: @user)}
+    TaskOccurrence.send_reminders
+
+    assert ActionMailer::Base.deliveries.size == 0, "Do not send mail more 24h before the deadline"
+
+    TaskOccurrence.update_all deadline: 1.day.since
+    TaskOccurrence.send_reminders
+    mails = ActionMailer::Base.deliveries
+    assert mails.size == 1, "Send 1 mail for 2 occurrences 24h or less before deadline"
+    assert mails.last.to.first == @user.email, "Reminder to correct email"
+    assert @task_occurrences.select {|to| to.reload.reminder_mail_sent == false}.size == 0
+
+    TaskOccurrence.send_reminders
+    mails = ActionMailer::Base.deliveries
+    assert mails.size == 1, "Do not send mail again"
+
+  end
 
 
 end

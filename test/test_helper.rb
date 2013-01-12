@@ -8,7 +8,7 @@ class ActiveSupport::TestCase
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
   fixtures :all
-
+  Debugger.settings[:autoeval] = true
   # This is required as the to_schedule scope in task does not work in a test environment.
   # Timecop does not change the MySQL time
   def schedule_task_occurrences

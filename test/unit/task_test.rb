@@ -96,4 +96,5 @@ class TaskTest < ActiveSupport::TestCase
     Task.schedule_upcoming_occurrences
     assert ActionMailer::Base.deliveries.size == 0, 'Users that have unsubscribed from assign mail, should not receive one'
   end
+
 end

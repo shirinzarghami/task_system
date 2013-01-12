@@ -33,12 +33,12 @@ class TaskOccurrence < ActiveRecord::Base
   after_initialize :set_default_values
 
   def self.send_reminders
-    approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |user_id|
+    approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |result|
       ActiveRecord::Base.transaction do 
-        task_occurrences = approaching_deadline.no_reminder_sent.where(user_id: user_id)
-        user = User.find user_id
-        TaskOccurrenceMailer.remind user, task_occurrences
-        task_occurrences.update_all! reminder_mail_sent: true
+        task_occurrences = approaching_deadline.no_reminder_sent.where(user_id: result.user_id)
+        user = User.find result.user_id
+        TaskOccurrenceMailer.reminder(user, task_occurrences).deliver
+        task_occurrences.update_all reminder_mail_sent: true
       end
     end
   end
@@ -54,7 +54,7 @@ class TaskOccurrence < ActiveRecord::Base
   end
 
   def send_email options = {hold: false}
-    if user.present? and user.notify_task_occurrence
+    if user.present? and user.receive_assign_mail
       if options[:hold]
         self.should_send_assign_mail = true
       else
