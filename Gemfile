@@ -55,7 +55,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'friendly_id'
-gem 'whenever', :require => false
+gem 'whenever'
 gem 'strong_parameters'
 gem 'bootstrap-will_paginate'
 gem 'turbolinks'
