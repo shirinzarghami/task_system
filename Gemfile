@@ -38,19 +38,20 @@ gem "paperclip"
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
 
 # To use debugger
 gem 'debugger'
-gem "capistrano", :group => :development
+group :development do
+  gem "capistrano"
+  gem 'rvm-capistrano'
+  gem "letter_opener"
+end
 # haml gem
 gem 'haml'
 gem 'devise'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'friendly_id'
-gem "letter_opener", :group => :development
 gem 'whenever', :require => false
 gem 'strong_parameters'
 gem 'bootstrap-will_paginate'
