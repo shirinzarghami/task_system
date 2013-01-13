@@ -46,6 +46,7 @@ group :development do
   gem 'rvm-capistrano'
   gem "letter_opener"
 end
+
 # haml gem
 gem 'haml'
 gem 'devise'
