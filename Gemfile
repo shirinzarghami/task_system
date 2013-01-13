@@ -43,7 +43,7 @@ gem "paperclip"
 
 # To use debugger
 gem 'debugger'
-
+gem "capistrano", :group => :development
 # haml gem
 gem 'haml'
 gem 'devise'
