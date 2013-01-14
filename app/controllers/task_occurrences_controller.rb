@@ -38,6 +38,7 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def update
+    debugger
     if @task_occurrence.update_attributes task_occurrence_params
       flash[:notice] = t('messages.save_success')
       redirect_to todo_community_task_occurrences_path @community
@@ -78,9 +79,9 @@ class TaskOccurrencesController < ApplicationController
 
     def task_occurrence_params
       if community_admin?
-        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
+        {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
       elsif @task_occurrence.user == @user or @task_occurrence.user.nil?
-        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks)
+        {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks)
       end
     end
 
