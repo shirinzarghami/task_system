@@ -10,11 +10,11 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.build_from(@commentable, current_user.id, params[:comment_body])
     if @comment.save
-      send_emails
       respond_to do |format|
         format.js {render 'create'}
         format.html {redirect_to return_url}
       end
+      send_emails
     else
       flash[:error] = t('messages.error')
       respond_to do |format|
