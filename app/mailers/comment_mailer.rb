@@ -7,7 +7,7 @@ class CommentMailer < ActionMailer::Base
     @link = find_comment_link(@comment)
     mail to: @user.email do |format|
       format.html { render :layout => 'email' }
-      format.text
+      # format.text
     end
   end
 

@@ -38,7 +38,6 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def update
-    debugger
     if @task_occurrence.update_attributes task_occurrence_params
       flash[:notice] = t('messages.save_success')
       redirect_to todo_community_task_occurrences_path @community
