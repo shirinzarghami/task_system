@@ -52,6 +52,7 @@ class Task < ActiveRecord::Base
       task_occurrence.allocate if task_occurrence.user.nil?
       task_occurrence.task_name = self.name
       task_occurrence.should_be_checked = self.should_be_checked
+      task_occurrence.community = self.community
 
       task_occurrence.send_email hold: options[:hold_email]
       self.next_occurrence += self.interval_time
@@ -142,6 +143,7 @@ class Task < ActiveRecord::Base
     def allocate_by_time
       least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
       # User.find least_time_user_id
+      # debugger
       least_time_user_id.nil? ? community.members.first : community.members.find(least_time_user_id)
     end
 

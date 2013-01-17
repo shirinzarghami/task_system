@@ -84,15 +84,17 @@ FactoryGirl.define do
     task_name "Blabla"
     checked false
     deadline 2.week.since.to_date
-    should_be_checked true
+    should_be_checked false
     remarks ""
     association :user, factory: :user
     association :task, factory: :task
+    association :community, factory: :community
     time_in_minutes 60
     created_at Time.now
     updated_at Time.now
     factory :task_occurrence_should_be_checked do
       association :task, factory: :task, should_be_checked: true
+      should_be_checked true
     end
   end
 

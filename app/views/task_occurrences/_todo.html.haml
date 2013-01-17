@@ -3,7 +3,8 @@
     - if todo.task.present?
       = link_to todo.task_name.truncate(30), community_task_path(@community, todo.task)
     - else
-      = todo.task_name.truncate(30
+      = todo.task_name.truncate(30)
+    
     - if todo.user.nil?
       %br
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 

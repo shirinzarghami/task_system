@@ -1,9 +1,9 @@
 %tr{:class => (open.too_late? ? 'error' : '')}
   %td
-  - if open.task.present?
-    = link_to open.task_name.truncate(30), community_task_path(@community, open.task)
-  - else
-    = open.task_name.truncate(30
+    - if open.task.present?
+      = link_to open.task_name.truncate(30), community_task_path(@community, open.task)
+    - else
+      = open.task_name.truncate(30)
 
   %td
     - if open.user
