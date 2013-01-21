@@ -4,6 +4,10 @@ class TasksController < ApplicationController
   before_filter :check_destroy_allowed, only: [:destroy]
   before_filter :check_edit_allowed, only: [:edit, :update]
 
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:error] = t('messages.task_not_found')
+    redirect_to (@community.present? ? community_tasks_path(@community) : communities_path)
+  end
   def index
     @tasks = @community.tasks.paginate(page: params[:page], per_page: 20)
   end

@@ -6,7 +6,7 @@ class TaskOccurrenceMailer < ActionMailer::Base
 
     mail to: @user.email do |format|
       format.html { render :layout => 'email' }
-      format.text
+      # format.text
     end
   end
 
@@ -15,7 +15,7 @@ class TaskOccurrenceMailer < ActionMailer::Base
     @user = user
     mail to: user.email do |format|
       format.html { render :layout => 'email' }
-      format.text
+      # format.text
     end
   end
 end

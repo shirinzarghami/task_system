@@ -18,3 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+every 1.hours do
+  runner "Task.schedule_upcoming_occurrences"
+  runner "TaskOccurrence.send_reminders"
+end

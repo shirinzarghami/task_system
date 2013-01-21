@@ -35,6 +35,7 @@ en:
     accept_invitation_success: You have successfully accepted invitations
     accept_invitation_fail: Failed to accept the invitation
     send_email_notice: An account confirmation e-mail has been sent to your e-mail. Please follow the instructions in this mail in order to activate your account
+    task_not_found: Could not find the task
 
 
   activerecord:

@@ -14,12 +14,13 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'jquery-ui-rails'
   gem 'bootstrap-sass'
-  gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
+
+gem 'coffee-rails', '~> 3.2.1'
 
 group :test do
   gem 'factory_girl_rails'
@@ -29,6 +30,9 @@ gem 'jquery-rails'
 gem 'acts_as_commentable_with_threading'
 gem 'shoulda-context'
 gem "paperclip"
+
+gem 'execjs'
+gem 'therubyracer'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -53,7 +57,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'friendly_id'
-gem 'whenever', :require => false
+gem 'whenever'
 gem 'strong_parameters'
 gem 'bootstrap-will_paginate'
 gem 'turbolinks'

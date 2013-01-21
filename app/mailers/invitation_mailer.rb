@@ -6,7 +6,7 @@ class InvitationMailer < ActionMailer::Base
     @invitee_name = @invitation.invitee.nil? ? @invitation.invitee_email : @invitation.invitee.name
     mail to: @invitation.invitee_email do |format|
       format.html { render :layout => 'email' }
-      format.text
+      # format.text
     end
   end
 end

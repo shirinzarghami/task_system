@@ -10,15 +10,15 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def todo
-    @task_occurrences = TaskOccurrence.for_user_or_open(@user).for_community(@community).todo.paginate(page: params[:page],per_page: 20)
+    @task_occurrences = @community.task_occurrences.for_user_or_open(@user).todo.paginate(page: params[:page],per_page: 20)
   end
 
   def open
-    @task_occurrences = TaskOccurrence.for_community(@community).todo.paginate(page: params[:page],per_page: 20)
+    @task_occurrences = @community.task_occurrences.todo.paginate(page: params[:page],per_page: 20)
   end
 
   def completed
-    @task_occurrences = TaskOccurrence.for_community(@community).completed.paginate(page: params[:page], per_page: 20)
+    @task_occurrences = @community.task_occurrences.completed.paginate(page: params[:page], per_page: 20)
   end
 
   def new
@@ -78,9 +78,9 @@ class TaskOccurrencesController < ApplicationController
 
     def task_occurrence_params
       if community_admin?
-        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
+        {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
       elsif @task_occurrence.user == @user or @task_occurrence.user.nil?
-        {"user_id" => @user}.merge params.require(:task_occurrence).permit(:checked, :remarks)
+        {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks)
       end
     end
 
