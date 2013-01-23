@@ -101,7 +101,6 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
       occurrences_user: user2,
       occurrences_count: 2
     )
-    debugger
     assert task.next_allocated_user == user1, "The occurrence should be scheduled to user1, since it has 0 time"
     Task.schedule_upcoming_occurrences && task.reload
     assert task.task_occurrences.last.user == user1, "The occurrence should be scheduled to user1, since it has 0 time"
@@ -152,6 +151,16 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     TaskOccurrence.send_reminders
     mails = ActionMailer::Base.deliveries
     assert mails.size == 1, "Do not send mail again"
+
+  end
+
+  test "reminder mail completed task" do
+    @user = FactoryGirl.create(:user)
+    @task_occurrence = FactoryGirl.create(:task_occurrence, deadline: 1.days.since, user: @user, should_be_checked: true, checked: true)
+
+    TaskOccurrence.send_reminders
+    mails = ActionMailer::Base.deliveries
+    assert mails.size == 0, "Do not send reminder when task is already completed"
 
   end
 

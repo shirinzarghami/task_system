@@ -31,12 +31,18 @@ class TaskOccurrence < ActiveRecord::Base
   scope :completed, order('updated_at DESC').where('
                                   (should_be_checked = true AND checked = true)
                                   OR 
-                                  (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')
+                                  (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')  
+
+  scope :uncompleted, order('updated_at DESC').where('
+                                  (should_be_checked = true AND checked = false)
+                                  OR 
+                                  (should_be_checked = false AND UTC_TIMESTAMP() <= deadline)')
+
 
   after_initialize :set_default_values
 
   def self.send_reminders
-    approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |result|
+    uncompleted.approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |result|
       ActiveRecord::Base.transaction do 
         task_occurrences = approaching_deadline.no_reminder_sent.where(user_id: result.user_id)
         user = User.find result.user_id
