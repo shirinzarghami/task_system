@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 every 1.hours do
-  runner "Task.schedule_upcoming_occurrences"
-  runner "TaskOccurrence.send_reminders"
+  # runner "Task.schedule_upcoming_occurrences"
+  # runner "TaskOccurrence.send_reminders"
+  rake "necura:schedule_upcoming_occurrences"
+  rake "necura:send_reminders"
 end
