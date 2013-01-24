@@ -1,5 +1,9 @@
 TaskSystem::Application.routes.draw do
-  devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}
+  get "registrations/new"
+
+  get "registrations/create"
+
+  devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
   devise_scope :user do
     get "logout", :to => "devise/sessions#destroy"
   end

@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+CONFIG = YAML.load File.read(File.expand_path('../application.yml', __FILE__))
+CONFIG.merge! CONFIG.fetch(Rails.env, {})
+CONFIG.symbolize_keys!
+
 module TaskSystem
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -63,14 +67,17 @@ module TaskSystem
 
     config.max_created_communities = 5
     config.max_members = 10
+    
+
 
     config.to_prepare do
         # Devise::SessionsController.layout "devise"
-        Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application"   : "devise/registrations" }
+        # Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application"   : "registrations" }
+        Devise::RegistrationsController.layout "application"
         Devise::Mailer.layout "email"
-        # Devise::ConfirmationsController.layout "devise"
+        Devise::ConfirmationsController.layout "registrations"
+        Devise::PasswordsController.layout "registrations"        
         # Devise::UnlocksController.layout "devise"            
-        # Devise::PasswordsController.layout "devise"        
     end
   end
 end
