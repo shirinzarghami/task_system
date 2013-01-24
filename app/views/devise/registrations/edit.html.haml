@@ -17,7 +17,7 @@
     %legend= t('.avatar')
     = image_tag 'iconic/camera_32x32.png', class: 'logo'
     %div.control-group
-      %div.controls= image_tag @user.avatar(:thumb) unless @user.avatar.nil?
+      %div.controls= image_tag @user.avatar(:thumb) unless @user.avatar.exists?
     %div.control-group
       =f.input :avatar
 

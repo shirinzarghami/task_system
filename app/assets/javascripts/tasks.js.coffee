@@ -6,11 +6,13 @@ show_allocation_tag = (name) ->
     $(this).show() if $(this).attr('id') == name
     $(this).hide() if $(this).attr('id') != name
 
-update_instantiation = (chkbox) ->
+update_instantiation = (chkbox, animate = true) ->
+  obj = $('#instantiation_options')
   if chkbox.attr('checked')
-    tasksystem.show($('#instantiation_options'))
+    if animate then obj.slideDown() else obj.show()
   else
-    tasksystem.hide($('#instantiation_options'))
+    if animate then obj.slideUp() else obj.hide()
+    # tasksystem.hide($('#instantiation_options'))
 
 donut_formatter = (value) ->
   minutes = value % 60
@@ -26,7 +28,8 @@ jQuery ->
     $(this).click ->
       $(this).tab('show')
 
-  update_instantiation $('#task_instantiate_automatically')
+  update_instantiation $('#task_instantiate_automatically'), false
+
   show_allocation_tag($('#task_allocation_mode').val() + '_tab')
   $('input.datepicker').each ->
     $(this).datepicker

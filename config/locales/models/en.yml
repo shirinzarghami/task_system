@@ -59,6 +59,7 @@ en:
         interval_number: Repeat every
         repeat: Repeat
         description: Description
+        should_be_checked: The executor of this task has to report when the task is completed
         instantiate_automatically: Schedule occurrences for this task automatically
         next_occurrence: Start on
         allocation_modes:

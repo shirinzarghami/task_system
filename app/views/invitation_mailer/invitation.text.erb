@@ -1,6 +1,6 @@
 <%= t('.salutation', invitee: @invitee_name) %>
 
-<%= t('.body', invitor: @invitation.invitor.name, invitee: @invitee_name) %>
+<%= t('.body', invitor: @invitation.invitor.name, domain: CONFIG[:domain]) %>
 
 <%= t('.link') %>
 <%= edit_invitation_url(@invitation.token) %>

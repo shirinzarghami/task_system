@@ -7,7 +7,7 @@ en:
       subject: Invitation for task system
       salutation: Hi %{invitee},
       body: |
-        %{invitor} has sent you an invitation to join a group on www.task-system.com
+        %{invitor} has sent you an invitation to join a group on %{domain}
         This website allows groups to manage household tasks, finance, shoppin lists and more. 
         If you wish to accept the invitation, please follow the link and sign up
 

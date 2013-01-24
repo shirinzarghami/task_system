@@ -68,7 +68,7 @@ module TaskSystem
     config.max_created_communities = 5
     config.max_members = 10
     
-
+    config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
 
     config.to_prepare do
         # Devise::SessionsController.layout "devise"
