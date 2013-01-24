@@ -56,10 +56,11 @@ jQuery ->
     $(this).tooltip()
 
   # Donut graph task#show
-  Morris.Donut
-    element: 'task-donut',
-    data: $('#task-donut').data('distribution'),
-    colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00'],
-    formatter: donut_formatter
+  if $('#task-donut').length > null
+    Morris.Donut
+      element: 'task-donut',
+      data: $('#task-donut').data('distribution'),
+      colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00'],
+      formatter: donut_formatter
 
 
