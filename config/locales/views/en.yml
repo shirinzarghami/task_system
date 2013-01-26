@@ -36,7 +36,9 @@ en:
     accept_invitation_fail: Failed to accept the invitation
     send_email_notice: An account confirmation e-mail has been sent to your e-mail. Please follow the instructions in this mail in order to activate your account
     task_not_found: Could not find the task
-
+    registrations:
+      turned_off: Registering on this server is not allowed
+      success: Registration has succeeded. Please check your mail for confirmation instructions
 
   activerecord:
       errors:
@@ -241,4 +243,25 @@ en:
         hint_current_password: we need your current password to confirm your changes
         avatar: Avatar
         notifications: E-mail notifications
-        password: Password
+
+    confirmations:
+      new:
+        title: Resend confirmation
+        resend: Resend
+
+    passwords:
+      new:
+        title: Forgot password
+        send: Send      
+      edit:
+        title: Reset password
+        change: Change
+
+  registrations:
+    new:
+      password: Password
+      title: Create an account
+      account: Account
+      notifications: E-mail notifications
+      password: Password
+

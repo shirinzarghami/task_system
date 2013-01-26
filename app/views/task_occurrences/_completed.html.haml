@@ -6,7 +6,7 @@
       = completed.task_name.truncate(30)  
   %td= completed.user.name
   %td= l completed.time, format: :time_only
-  - if completed.completed_at.nil?
-    %td= l completed.deadline, format: :date_only
-  - else
+  - if completed.should_be_checked
     %td= l completed.completed_at, format: :date_only
+  - else
+    %td= l completed.deadline, format: :long

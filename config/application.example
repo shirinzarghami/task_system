@@ -1,0 +1,12 @@
+development:
+  registration_allowed: true
+  
+test:
+  registration_allowed: true
+
+staging:
+  registration_allowed: false
+
+production:
+  registration_allowed: false
+

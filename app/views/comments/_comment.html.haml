@@ -1,6 +1,6 @@
 %div.comment{:id => "comment_#{comment.id}"}
   %div.comment-header
-    - if comment.user.avatar.present?
+    - if comment.user.avatar.exists?
       = image_tag comment.user.avatar.url(:small), class: 'user-logo'
     - else
       = image_tag 'iconic/right_quote_32x24.png', class: 'user-logo'
