@@ -165,6 +165,16 @@ en:
     task_occurrence:
       comments: Comments
 
+  errors:
+    error_404:
+      title: Page not found
+      explanation: The page you have requested does not exist. 
+      home: Home
+    error_500:
+      title: Internal Server Error
+      explanation: Something went very, very wrong! 
+      home: Home
+
   task_occurrences:
     open:
       title: Open tasks

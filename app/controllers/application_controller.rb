@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :find_user
   
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
+    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
+  end
+
   def find_user
     @user = current_user
   end
@@ -62,4 +67,12 @@ class ApplicationController < ActionController::Base
     klass = [TaskOccurrence].detect {|c| params["#{c.name.underscore}_id"]}
     @commentable = klass.find params["#{klass.name.underscore}_id"]
   end
+
+  private
+    def render_error(status, exception)
+      respond_to do |format|
+        format.html { render template: "errors/error_#{status}", layout: 'layouts/errors', status: status }
+        format.all { render nothing: true, status: status }
+      end
+    end
 end

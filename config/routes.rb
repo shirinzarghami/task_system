@@ -1,4 +1,8 @@
 TaskSystem::Application.routes.draw do
+  get "errors/error_404"
+
+  get "errors/error_500"
+
   get "registrations/new"
 
   get "registrations/create"
@@ -35,6 +39,10 @@ TaskSystem::Application.routes.draw do
   resources :community_users, only: [:update, :destroy]
 
   root :to => 'Communities#index'
+
+  unless Rails.application.config.consider_all_requests_local
+     match '*not_found', to: 'errors#error_404'
+   end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
