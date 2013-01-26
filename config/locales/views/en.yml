@@ -63,6 +63,7 @@ en:
       schedule: Schedule
       settings: Settings
       logout: Logout
+      version: Version
 
 
   admin:

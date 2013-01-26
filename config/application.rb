@@ -64,7 +64,7 @@ module TaskSystem
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
+    config.necura_version = '1.00 Alpha'
     config.max_created_communities = 5
     config.max_members = 10
     
