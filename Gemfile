@@ -25,6 +25,8 @@ gem 'coffee-rails', '~> 3.2.1'
 group :test do
   gem 'factory_girl_rails'
   gem 'timecop'
+  gem 'capybara'
+  gem 'database_cleaner'
 end
 gem 'jquery-rails'
 gem 'acts_as_commentable_with_threading'
