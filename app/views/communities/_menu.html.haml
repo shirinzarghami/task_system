@@ -1,0 +1,7 @@
+%ul.nav.nav-list
+  %li.nav-header= t('menu.actions')
+  %li=link_to t('menu.create_community'), new_community_path, class: 'button'
+  %li=link_to t('menu.create_invitation'), new_invitation_path, class: 'button'
+
+=render partial: 'shared/menu.html.haml'
+

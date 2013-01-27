@@ -1,0 +1,18 @@
+- content_for :title do
+  = t('invitations.edit.title', community: @invitation.community.name)
+
+- if current_user
+  - if current_user.email == @invitation.invitee_email
+    = render partial: 'accept_form'
+  - elsif current_user.email != @invitation.invitee_email and @invitation.invitee
+    = render partial: 'change_user'
+  - elsif current_user.email != @invitation.invitee_email and @invitation.invitee.nil?
+    = render partial: 'accept_form'
+- else
+  - if @invitation.invitee
+    = render partial: 'change_user'
+  - else
+    = render partial: 'accept_form'
+
+= render partial: 'invitation'
+= render partial: 'community'

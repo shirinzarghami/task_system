@@ -1,0 +1,7 @@
+%tr
+  %td= community.name
+  %td= community.subdomain
+  %td= community.members.count
+  %td
+    =image_button 'iconic/pen_12x12.png', edit_admin_community_path(community)
+    =image_button 'iconic/trash_fill_12x12.png', admin_community_path(community), method: :delete, confirm: t('messages.confirm')

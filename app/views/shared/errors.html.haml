@@ -1,0 +1,7 @@
+- if flash
+  = flash
+  %br
+- if object.errors.any?
+  %ul
+    - object.errors.full_messages.each do |e| 
+      %li= e

@@ -1,0 +1,9 @@
+%fieldset
+  %legend=image_tag('iconic/cloud_24x15.png') + t('invitations.accept.community')
+  %table.table
+    %tr
+      %th= t('activerecord.attributes.community.name')
+      %td= @invitation.community.name
+    %tr
+      %th= t('activerecord.attributes.community.members')
+      %td= @invitation.community.members.map(&:name).join(', ')

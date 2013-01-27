@@ -12,4 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.tokeninput
+//= require jquery.ui.all
+//= require turbolinks
+//= require jquery.turbolinks
+//= require raphael
+//= require morris
+//= require bootstrap
+//= require common
 //= require_tree .
+

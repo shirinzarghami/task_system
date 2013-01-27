@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+%html
+  %head
+    %title Task System
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    %div.navbar.navbar-inverse  
+      %div.navbar-inner 
+        %ul.nav
+          =tab_link t('layout.communities'), admin_communities_path
+          =tab_link t('layout.users'), admin_users_path
+
+    %div.container
+      %div.row
+        %div.span9
+          - if flash[:notice]
+            %div.alert.alert-success= flash[:notice]
+          - if flash[:error]
+            %div.alert.alert-error= flash[:error]
+          - if flash[:info]
+            %div.alert.alert-block= flash[:info]
+          %h1= yield :title
+          =yield
+        %div.span3= yield :menu
+
+     
+
+
+

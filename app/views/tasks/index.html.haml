@@ -1,0 +1,17 @@
+- content_for :title do
+  = t('tasks.index.title')
+%p
+  %h2= image_tag('broom32.png') + t('tasks.index.tasks')
+  %table.table.table-striped
+    %tr
+      %th= t('tasks.index.name')
+      %th= t('tasks.index.schedule')
+      %th= t('.next_occurrence')
+      %th
+    = render partial: 'task', collection: @tasks
+= will_paginate @tasks, class: 'pagination pagination-centered pagination-mini'
+
+%p
+  =icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true
+  =icon_button t('.schedule'), todo_community_task_occurrences_path(@community), icon_class: 'icon-calendar'
+

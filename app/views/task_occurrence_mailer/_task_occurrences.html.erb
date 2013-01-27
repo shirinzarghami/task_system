@@ -1,0 +1,17 @@
+<table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
+    <tr>
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading00">
+          <%= Task.model_name.human %>
+        </th>        
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading00">
+          <%= Community.model_name.human %>
+        </th>
+        <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading01">
+          <%= TaskOccurrence.human_attribute_name(:duration) %>
+        </th>
+        <th scope="col" valign="top" width="50%" class="dataTableHeading" mc:edit="data_table_heading02">
+          <%= TaskOccurrence.human_attribute_name(:deadline) %>
+        </th>
+    </tr>
+    <%= render partial: 'task_occurrence', collection: @task_occurrences %>
+</table>

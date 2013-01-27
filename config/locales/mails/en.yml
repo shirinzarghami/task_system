@@ -1,0 +1,68 @@
+en:
+  mailers:
+    unsubscribe: Unsubscribe
+
+  invitation_mailer:
+    invitation:
+      subject: Invitation for task system
+      salutation: Hi %{invitee},
+      body: |
+        %{invitor} has sent you an invitation to join a group on %{domain}
+        This website allows groups to manage household tasks, finance, shoppin lists and more. 
+        If you wish to accept the invitation, please follow the link and sign up
+
+      greet: |
+        Best regards,
+        The task system
+
+      greet_html: >
+        Best regards,<br>
+        The task system
+
+      link: View the invitation
+
+  task_occurrence_mailer:
+    assign:
+      subject: "Task system: a task was assigned to you"
+      salutation: Hi %{user},
+      body: |
+        One or more tasks are scheduled and assigned to you as listed below. 
+        Note that some tasks need to be checked after completion before the deadline.
+        
+
+      greet: >
+        Best regards,<br>
+        The task system
+
+      greet_html: >
+        Best regards,<br>
+        The task system
+
+
+    reminder:
+      subject: "Task system: don't forget to complete your tasks!"
+      salutation: Hi %{user},
+      body: |
+        The following tasks need to completed soon:
+
+      greet_html: >
+        Best regards,<br>
+        The task system
+      greet: |
+        Best regards,
+        The task system      
+
+  comment_mailer:
+    posted:
+      subject: "Task system: new comment posted"
+      salutation: Hi %{user},
+      body: |
+        A new comment was posted:
+      view_link: View the discussion
+      greet_html: >
+        Best regards,<br>
+        The task system
+      greet: |
+        Best regards,
+        The task system
+

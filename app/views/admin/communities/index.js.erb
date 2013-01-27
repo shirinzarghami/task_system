@@ -1,0 +1,13 @@
+$(".filter").each(function(){
+    $(this).removeClass('active');
+});
+$('#<%= @filter %>').addClass('active');
+// $('#<%= @filter %>').animate({'background-color':'red'}, 2000);
+  $('#communities').fadeOut('slow', function() {
+    $('#communities').html("<%= j render partial: 'communities' %>");
+    $('#communities').fadeIn('slow');
+  });
+
+<% if params.has_key?(:filter) and params[:filter].present? %>
+  $('#query').val('');
+<% end %>

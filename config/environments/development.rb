@@ -9,6 +9,7 @@ TaskSystem::Application.configure do
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
+  # config.assets.compile = false
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
@@ -34,4 +35,9 @@ TaskSystem::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  # config.assets.compile = false
+
+  # Devise mail host
+  
+  config.action_mailer.delivery_method = :letter_opener
 end

@@ -1,0 +1,14 @@
+%h2= t('.title')
+= simple_form_for(resource, url: password_path(resource_name), html: {class: 'form-horizontal', method: :put}) do |f|
+  %fieldset
+    %legend= t('.account')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    = f.hidden_field :reset_password_token
+    %div.control-group
+      =f.input :password
+      =f.input :password_confirmation
+    %div.control-group
+      %div.controls= render "devise/shared/links"
+
+  %div.form-actions
+    = f.submit t('.change'), class: 'btn btn-primary'

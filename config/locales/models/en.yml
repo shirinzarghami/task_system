@@ -1,0 +1,119 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord:
+    errors:
+      models:
+        invitation:
+          attributes:
+            base:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+        community:
+          attributes:
+            user_tokens:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added        
+            admin_user_tokens:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+            invitation_emails:
+              max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+        community_user:
+          attributes:
+            base:
+              at_least_one_admin: There should be at least one admin in the community
+    models:
+      community: Community
+      user: User
+      invitation: Invitation
+    attributes:
+      community:
+        user_tokens: Normal members
+        admin_user_tokens: Administrators
+        name: Name
+        subdomain: Subdomain
+        max_users: Max users
+        members: Members
+      user:
+        name: Name
+        password: Password
+        password_confirmation: Password confirmation
+        global_role: Role
+        locale: Locale
+        communities: Communities
+        confirmed: Confirmed
+        last_login: Last login
+        role: Role
+        avatar: Avatar
+        receive_comment_mail: Send me an e-mail when a comment is posted
+        receive_assign_mail: Send me an e-mail when a task is assigned to me 
+        receive_reminder_mail: "Send me an reminder e-mail when a task, assigned to me, approaches the deadline for completion"
+      invitation:
+        invitor: Invitor
+        invitee: Invitee
+        invitee_email: E-mail
+        created_at: Sent at
+        status: Status
+
+      task:
+        time: Time to complete
+        interval_number: Repeat every
+        repeat: Repeat
+        description: Description
+        should_be_checked: The executor of this task has to report when the task is completed
+        instantiate_automatically: Schedule occurrences for this task automatically
+        next_occurrence: Start on
+        allocation_modes:
+          in_turns: Allocate in turns
+          time: Assign to the user who spend the least amount of time for this task
+          time_all: Assign to the user who spend the least amount of time for all task
+          voluntary: This task is voluntary
+          user: Assign this task to one specific user
+        allocation_modes_short:
+          voluntary: Voluntary
+        schedule: Schedule
+        next_allocated_user: Next user
+        instantiate:
+          manual: Manual
+          every: Every %{number} %{unit}
+          weeks:
+            one: Every week
+            other: Every %{count} weeks
+          days:
+            one: Every day
+            other: Every %{count} days
+          months:
+            one: Every month
+            other: Every %{count} months
+        deadline: Deadline
+        deadline-info:
+          after: After %{number} %{unit}
+          weeks:
+            one: After one week
+            other: After %{count} weeks
+          days:
+            one: After one day
+            other: After %{count} days
+          months:
+            one: After one month
+            other: After %{count} months
+
+      task_occurrence:
+        allocated_user:
+          nobody: Nobody
+        allocated_to: Allocated to
+        task: Task
+        duration: Duration
+        deadline: Deadline
+        completed_at: Completed at
+        statuses:
+          uncompleted: Uncompleted
+          completed_at: Completed at %{date}
+        remarks: Remarks by executor
+
+
+    values:
+      admin: Administrator
+      normal: Normal user
+      denied: Denied by invitee
+      accepted: Accepted by invitee
+      requested: Pending

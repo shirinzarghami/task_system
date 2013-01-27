@@ -1,0 +1,10 @@
+- content_for :title do
+  =t('.subject')
+  
+%h1= t('.salutation', invitee: @invitee_name)
+
+%p= t('.body', invitor: @invitation.invitor.name, domain: CONFIG[:domain])
+
+%p= link_to t('.link'), edit_invitation_url(@invitation.token)
+
+%p= t('.greet_html').html_safe

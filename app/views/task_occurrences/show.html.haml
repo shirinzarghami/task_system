@@ -1,0 +1,15 @@
+%h2= image_tag('iconic/info_16x32.png') + @task_occurrence.task_name
+%p
+  %table.table.table-striped
+    %tr
+      %th= TaskOccurrence.human_attribute_name(:allocated_to)
+      %th= TaskOccurrence.human_attribute_name(:deadline)
+      %th= TaskOccurrence.human_attribute_name(:status)
+      %th= TaskOccurrence.human_attribute_name(:remarks)
+      %th
+    = render partial: 'tasks/task_occurrence', object: @task_occurrence, locals: {show_comment_button: false}
+%hr
+%h2= image_tag('iconic/comment_stroke_32x28.png') + 'Comments'
+%div.comments= render partial: 'comments/comment', collection: @comments
+= will_paginate @comments, class: 'pagination pagination-centered pagination-mini'
+= render partial: 'comments/form'

@@ -1,0 +1,5 @@
+%tr
+  %td= link_to community_user.community.name, community_path(community_user.community), data: {title: t('.go')}, class: 'tooltip-link'
+  %td= community_user.role
+  %td= first_members community_user.community, 5
+  %td= image_button 'iconic/trash_fill_12x12.png', community_user_path(community_user), method: :delete, confirm: t('messages.confirm'), data: {title: t('.unsubscribe')}, class: 'tooltip-link'

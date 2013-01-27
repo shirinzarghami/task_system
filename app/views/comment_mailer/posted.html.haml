@@ -1,0 +1,8 @@
+- content_for :title do
+  =t('.subject')
+
+%h2= t('.salutation', user: @user.name)
+%p= t('.body')
+%p= @comment.body
+%p= link_to t('.view_link'), @link
+%p= t('.greet_html').html_safe

@@ -1,0 +1,18 @@
+<tr mc:repeatable>
+    <td valign="top" class="dataTableContent" mc:edit="data_table_content00">
+      <%= task_occurrence.task_name.truncate(30) %>
+      <% if task_occurrence.user.nil? %>
+        <br>
+        <small><%= t('activerecord.attributes.task.allocation_modes_short.voluntary') %></small>
+      <% end -%>
+    </td>
+    <td valign="top" class="dataTableContent" mc:edit="data_table_content01">
+      <%= task_occurrence.task.community.name %>
+    </td>
+    <td valign="top" class="dataTableContent" mc:edit="data_table_content02">
+      <%= l task_occurrence.time, format: :time_only %>
+    </td>    
+    <td valign="top" class="dataTableContent" mc:edit="data_table_content02">
+      <%= l task_occurrence.deadline, format: :long %>
+    </td>
+</tr>

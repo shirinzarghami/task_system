@@ -1,0 +1,20 @@
+development:
+  registration_allowed: true
+  
+test:
+  registration_allowed: true
+
+staging:
+  domain: staging.necura.deepshit.8s.nl
+  registration_allowed: false
+  email_settings:
+    address: "smtp.gmail.com"
+    port: 587
+    authentication: "plain"
+    user_name: "example@gmail.com"
+    password: "qwerty"
+
+
+production:
+  registration_allowed: false
+

@@ -1,0 +1,18 @@
+%tr
+  %td= link_to task.name, community_task_path(@community, task)
+  - if task.instantiate_automatically
+    %td
+      = task.instantiate_in_words
+      %br
+      %small= t("times", count: task.repeat) unless task.repeat_infinite
+  - else
+    %td= link_to task.instantiate_in_words, new_community_task_task_occurrence_path(@community, task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
+  %td
+    - if task.instantiate_automatically
+      = l task.next_occurrence, format: :long
+      %br
+      %small= next_allocated_user(task)
+  %td
+    - if can_edit_object? task
+      = (image_button 'iconic/pen_12x12.png', edit_community_task_path(@community, task), data: {title: t('.edit')}, class: 'tooltip-link')
+      = (image_button 'iconic/trash_fill_12x12.png', community_task_path(@community, task), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link') 

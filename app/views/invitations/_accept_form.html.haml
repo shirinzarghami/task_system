@@ -1,0 +1,14 @@
+= simple_form_for @user, url: invitation_path(@invitation.token), method: :put do |f|
+  %fieldset
+    %legend= image_tag('iconic/question_mark_12x24.png') + t('invitations.edit.question')
+    %div.control-group
+      = label_tag nil, class: 'radio' do
+        = radio_button_tag 'invitation', 'accept', class: 'radio'
+        = t('invitations.edit.accept')
+    %div.control-group
+      = label_tag nil, class: 'radio' do
+        = radio_button_tag 'invitation', 'deny', class: 'radio'
+        = t('invitations.edit.deny')
+  = render partial: 'register_form', locals: {f: f} unless current_user
+  %div.form-actions
+    = submit_tag t('actions.submit'), class: 'btn btn-primary'

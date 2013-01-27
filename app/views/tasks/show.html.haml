@@ -1,0 +1,31 @@
+- content_for :title do
+  = @task.name
+%div.row
+  %h2= image_tag('iconic/chart_alt_30x32.png') + @task.name
+
+%div.row
+  %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
+%hr
+
+%div.row
+  %div.span6
+    %h2= image_tag('iconic/info_16x32.png') + t('.info')
+    %p= render partial: 'task_info'
+  %div.span6
+    - if @task.description.present?      
+      %h2= image_tag('iconic/list_32x28.png') + Task.human_attribute_name(:description)
+      %p= @task.description
+
+%hr
+%div.row
+  %h2= image_tag('iconic/book_28x32.png') + t('.log')
+  %table.table.table-striped
+    %tr
+      %th= TaskOccurrence.human_attribute_name(:allocated_to)
+      %th= TaskOccurrence.human_attribute_name(:deadline)
+      %th= TaskOccurrence.human_attribute_name(:status)
+      %th= TaskOccurrence.human_attribute_name(:remarks)
+      %th
+
+    =render partial: 'task_occurrence', collection: @task_occurrences
+  =will_paginate @task_occurrences, class: 'pagination pagination-centered pagination-mini'

@@ -1,0 +1,9 @@
+%div#schedule-modal.modal.hide.fade{:tabindex =>"-1", :role => "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
+  %div.modal-header
+    %button.close.modal-destroy{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}= '×'
+    = yield :modal_header
+    
+  %div.modal-body
+    = yield :modal_body
+
+  %div.modal-footer= yield :modal_footer

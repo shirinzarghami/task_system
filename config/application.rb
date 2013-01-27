@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+CONFIG = YAML.load File.read(File.expand_path('../application.yml', __FILE__))
+CONFIG.merge! CONFIG.fetch(Rails.env, {})
+CONFIG.symbolize_keys!
+
 module TaskSystem
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -31,7 +35,8 @@ module TaskSystem
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.default_locale = :en
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -41,6 +46,7 @@ module TaskSystem
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
+
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -58,5 +64,20 @@ module TaskSystem
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    config.necura_version = '1.00 Alpha'
+    config.max_created_communities = 5
+    config.max_members = 10
+    
+    config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
+
+    config.to_prepare do
+        # Devise::SessionsController.layout "devise"
+        # Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application"   : "registrations" }
+        Devise::RegistrationsController.layout "application"
+        Devise::Mailer.layout "email"
+        Devise::ConfirmationsController.layout "registrations"
+        Devise::PasswordsController.layout "registrations"        
+        # Devise::UnlocksController.layout "devise"            
+    end
   end
 end

@@ -1,0 +1,5 @@
+%ul.nav.nav-list
+  %li.nav-header= t('menu.tasks')
+  %li= link_to t('menu.create_task'), new_community_task_path(@community), class: 'button'
+  
+=render partial: 'shared/menu.html.haml'

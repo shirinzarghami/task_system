@@ -1,0 +1,11 @@
+%p
+  %table#users.table.table-striped
+    %tr.line
+      %th= t('activerecord.attributes.user.name')
+      %th= t('activerecord.attributes.user.global_role')
+      %th= t('activerecord.attributes.user.communities')
+      %th= t('activerecord.attributes.user.confirmed')
+      %th= t('activerecord.attributes.user.last_login')
+      %th
+    = render partial: 'user', collection: @users
+=will_paginate @users, class: 'pagination pagination-centered pagination-mini'

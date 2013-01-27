@@ -1,0 +1,25 @@
+%h2= t('.title')
+= simple_form_for(@user, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f|
+  %fieldset
+    %legend= t('.account')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    %div.control-group
+      =f.input :name
+      =f.input :email
+      
+    %legend= t('.password')
+    = image_tag 'iconic/lock_stroke_24x32.png', class: 'logo'
+    %div.control-group
+      =f.input :password
+      =f.input :password_confirmation
+
+  %fieldset
+    %legend= t('.notifications')
+    = image_tag 'iconic/mail_32x24.png', class: 'logo'
+    %div.control-group
+      =f.input :receive_comment_mail, as: :boolean, inline_label: User.human_attribute_name(:receive_comment_mail), label: false
+      =f.input :receive_assign_mail, inline_label: User.human_attribute_name(:receive_assign_mail), label: false
+      =f.input :receive_reminder_mail, inline_label: User.human_attribute_name(:receive_reminder_mail), label: false
+
+    = f.submit class: 'btn btn-primary'
+=render "devise/shared/links"

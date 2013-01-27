@@ -1,0 +1,14 @@
+- content_for :modal_header do
+  %h3= t('.modal_header')
+
+- content_for :modal_footer do
+  = button_tag t('.complete'), class: 'btn btn-primary submit'
+  %button.btn.modal-destroy{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}= t('cancel')
+
+- content_for :modal_body do
+  %p= t('.modal_body', task_name: @task.name).html_safe
+  =simple_form_for [@community, @task_occurrence], html: {class: 'form-horizontal'} do |f|
+    = f.input :remarks, input_html: {rows: 5, class: 'span4'}
+    = f.hidden_field :checked, value: :true
+
+= render 'shared/modal'

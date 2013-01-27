@@ -1,0 +1,40 @@
+- content_for :logo do
+  = image_tag 'iconic/list_32x28.png'
+= simple_form_for([@community, @task], html: {class: 'form-horizontal'}) do |f|
+  %fieldset
+    %legend= t('form.categories.general')
+    = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
+    %div.control-group
+      = f.input :name
+      = f.input :description, input_html: {rows: 5, class: 'span7'}
+      = f.input :time, as: :time, hint: t('form.task_time_hint'), input_html: {class: 'input-small'}
+      = f.input :deadline, as: :integer, label: t('tasks.new.deadline'), wrapper_html: {class: 'inline'}, input_html: {class: 'input-mini'}
+      = f.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, wrapper_html: {class: 'inline neighbour'}, label: false, input_html: {class: 'input-small'}
+      = f.input :should_be_checked, label: t('form.should_be_checked_hint'), wrapper_tag: false, inline_label: Task.human_attribute_name(:should_be_checked), label: false
+
+  %fieldset
+    %legend= t('form.categories.instantiation')
+    = image_tag 'iconic/clock_32x32.png', class: 'logo'
+    = f.input :instantiate_automatically, inline_label: Task.human_attribute_name(:instantiate_automatically), label: false
+
+    %div#instantiation_options
+      = f.input :next_occurrence, as: :string, input_html: {class: 'datepicker'}
+
+      = f.input :interval, as: :integer, input_html: {class: 'input-mini'}, wrapper_html: {class: 'inline'}
+      = f.input :interval_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, input_html: {class: 'input-small'}, wrapper_html: {class: 'inline neighbour'}, label: false
+
+      = f.input :repeat, input_html: {class: 'input-mini'}
+      = f.input :repeat_infinite, as: :boolean, label: t('tasks.new.repeat_infinite')
+  
+
+  %fieldset
+    %legend= t('form.categories.allocation')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    = f.input :allocation_mode, as: :select, collection: Task::ALLOCATION_MODES_FORM, include_blank: false, input_html: {class: 'input-xlarge'}
+    %div#user_tab.allocation_tab
+      = f.association :allocated_user, collection: @members, include_blank: false
+    %div#in_turns_tab.allocation_tab
+      =render partial: 'user_sort', locals: {f: f}
+    
+  = f.button :submit, class: 'btn btn-primary'
+

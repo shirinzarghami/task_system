@@ -1,0 +1,278 @@
+en:
+  yess: "Yes"
+  noo: "No"
+  here: here
+  cancel: "Cancel"
+  infinite: Infinite
+  times:
+    one: "%{count} time"
+    other: "%{count} times"
+    infinite: "Infinite times"
+  actions:
+    new: New
+    edit: Edit
+    delete: Delete
+    submit: Save
+    unsubscribe: Unsubscribe
+    login: Log in
+    logout: Log out
+    post: Post
+  messages:
+    save_success: Item was successfully saved
+    save_fail: Item could not be saved
+    delete: "Item has been deleted"
+    delete_fail: "Item could not be deleted"
+    confirm: Are you sure?
+    error: An error occured
+    not_allowed: You are not allowed to perform this action
+    accept_success: You are now a member of %{community}
+    accept_fail: Creating subscription for %{community} failed.
+    deny_success: You've successfully denied the membership for %{community}
+    invite_success: You have successfully created invitations
+    new_invitation: There is a new invitation for you!
+    task_destroy_success: The task has been deleted
+    task_destroy_fail: The task could not be deleted
+    accept_invitation_success: You have successfully accepted invitations
+    accept_invitation_fail: Failed to accept the invitation
+    send_email_notice: An account confirmation e-mail has been sent to your e-mail. Please follow the instructions in this mail in order to activate your account
+    task_not_found: Could not find the task
+    registrations:
+      turned_off: Registering on this server is not allowed
+      success: Registration has succeeded. Please check your mail for confirmation instructions
+
+  activerecord:
+      errors:
+        attributes:
+          invitation_emails:
+            in_valid: This are unvalid emails
+        messages:
+          taken: "has already been taken"
+          record_invalid: "Validation failed: %{errors}"
+          restrict_dependent_destroy:
+            one: "Cannot delete record because a dependent %{record} exists"
+            many: "Cannot delete record because dependent %{record} exist"
+
+
+  layouts:
+    application:
+      communities: Communities
+      manage_communities: Manage communities
+      users: Users
+      tasks: Tasks
+      overview: Manage tasks
+      schedule: Schedule
+      settings: Settings
+      logout: Logout
+      version: Version
+
+
+  admin:
+    communities:
+      index:
+        title: Manage communities
+      edit:
+        title: Edit community
+      new:
+        title: New community
+
+    users:
+      index:
+        title: Manage users
+      edit:
+        title: Edit users
+      new:
+        title: New users
+
+  communities:
+    index:
+      title: Your communities
+      memberships: Your memberships
+      invitations: Invitations for you
+      name: Name
+      role: Role
+      members: Members
+    edit:
+      overview: Overview of community
+    new:
+      title: Create a new community
+      created: The community has been created successfully. The invited members will receive an email.
+      not_created: Could not create the community
+    community_users:
+      create: 'New community'
+    community_user:
+      unsubscribe: Unsubscribe from this community
+      go: Go to this community
+    invitation:
+      view: View the invitation
+      delete: Remove the invitation. This will NOT remove users from the community that have accepted the invitation
+    community_member:
+      delete: Remove this user from the community
+    community_members:
+      invite: Invite a user
+
+  community_users:
+    destroy:
+      unsubscribed: Successfully unsubscribed
+    not_found: Couldn't find a user membership for this community
+
+  invitations:
+    flashes:
+      select_error: Please whether you wish to accept or deny the invitation
+      denied: The invitation is successfully denied
+    edit:
+      title: Invitation for %{community}
+      accept: I accept the invitation
+      deny: I do NOT accept the invitation
+      question: Do you wish to accept the invitation?
+      login: Please login as %{email} in order accept this invitation
+      change_user: This invitation is for %{email}. You need to login as this user before you can accept the invitation.
+    new:
+      title: Create an invitation for community
+    accept:
+      user: Create a user account
+      community: Community information
+    show:
+      title: Invitation
+
+  tasks:
+    new:
+      title: Create a new task
+      man_instantiate: This task will be instantiated manually
+      auto_instantiate: This task will be instantiated automatically
+      repeat_infinite: Repeat infinite times
+      drag_hint: Click and drag the user to change the order
+      deadline: Deadline for completion
+    index:
+      title: Overview of tasks
+      tasks: Tasks
+      schedule: Schedule
+      overview: Overview
+      occurrences: Occurrences
+      next_occurrence: Next occurrence
+      create: Create
+    edit:
+      title: Edit task
+    task:
+      manual-tooltip: This task is necessary!
+      edit: Edit this task
+      delete: Delete this task
+    flash:
+      save_not_allowed: You are not allowed to modify this task. Only the creator and administrators can do this.
+    task_info:
+      manual-tooltip: This task is necessary!
+    show:
+      log: Log book
+      info: Info
+    task_occurrence:
+      comments: Comments
+
+  errors:
+    error_404:
+      title: Page not found
+      explanation: The page you have requested does not exist. 
+      home: Home
+    error_500:
+      title: Internal Server Error
+      explanation: Something went very, very wrong! 
+      home: Home
+
+  task_occurrences:
+    open:
+      title: Open tasks
+      reassign: Re-assign this task
+      delete: Dispensate this task
+
+    todo:
+      title: My todos
+      complete: Complete this task
+
+    completed:
+      title: Completed taks
+
+    navigation:
+      title: Schedule
+      todo: My todos
+      open: All open
+      completed: Completed
+    form:
+      modal_header: Schedule task
+      modal_body: Do you wish to schedule this task?
+      explanation: 
+        "You should only schedule a task when you think it necessary that this task is performed. 
+        When you click 'yes', an occurrence will be scheduled and allocated to a person within the community.
+        This person will have to complete the task before the deadline."
+    reassign:
+      modal_header: Re-assign task
+      modal_body: Choose to which user the task should be re-assigned
+      reassign: Re-assign
+    complete:
+      modal_header: Complete task
+      modal_body: "I have completed the task '<i>%{task_name}</i>'"
+      complete: Complete
+    show:
+
+
+
+  form:
+    categories:
+      general: General
+      instantiation: Occurrences
+      allocation: Allocation
+
+    details: "%{model} details"
+    token_hint: Type an user e-mail to search and add users
+    user_search_hint: Find a user
+    email_hint: Type some email addresses that you wish to invite for this community separated by a comma
+    task_time_hint: How much time does it take to complete this task? (hours / minutes)
+    should_be_checked_hint: The executor of this task has to report when the task is completed
+
+
+  menu:
+    filters: Filters
+    filter_admin: Only administrators
+    filter_unconfirmed: Unconfirmed users
+    filter_none: Show all results    
+    filter_empty: Empty communities
+    create_community: Create a community
+    create_invitation: Invite someone
+    create_user: Create a user
+    create_task: Create a task
+    logout: Logout
+    tasks: Tasks
+    actions: Actions
+    other: Other
+    search: Search
+    overview: Overview
+    schedule: Schedule
+
+  devise:
+    registrations:
+      edit:
+        title: Edit preferences
+        account: Account
+        hint_password: leave blank if you don't want to change it
+        hint_current_password: we need your current password to confirm your changes
+        avatar: Avatar
+        notifications: E-mail notifications
+
+    confirmations:
+      new:
+        title: Resend confirmation
+        resend: Resend
+
+    passwords:
+      new:
+        title: Forgot password
+        send: Send      
+      edit:
+        title: Reset password
+        change: Change
+
+  registrations:
+    new:
+      password: Password
+      title: Create an account
+      account: Account
+      notifications: E-mail notifications
+      password: Password
+

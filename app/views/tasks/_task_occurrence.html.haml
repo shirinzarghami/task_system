@@ -1,0 +1,18 @@
+- show_comment_button = true if show_comment_button.nil?
+%tr{:class => (task_occurrence.too_late? ? 'error' : '')}
+  %td
+    - if task_occurrence.user
+      = task_occurrence.user.name
+    - else
+      = t('activerecord.attributes.task_occurrence.allocated_user.nobody') 
+      %br
+      %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
+
+  %td= l task_occurrence.deadline, format: :long
+  %td= task_occurrence_status task_occurrence
+  %td.span6
+    %small= task_occurrence.remarks
+  %td
+    - if show_comment_button
+      =image_button 'iconic/comment_stroke_12x11.png', community_task_occurrence_path(@community, task_occurrence), data: {title: t('.comments')}, class: 'tooltip-link'
+      %small= number_of_comments(task_occurrence)

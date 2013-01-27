@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  invitor_id: 1
+  invitee: 1
+  community_id: 1
+  invitee_email: MyString
+
+two:
+  invitor_id: 1
+  invitee: 1
+  community_id: 1
+  invitee_email: MyString

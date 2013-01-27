@@ -1,4 +1,48 @@
 TaskSystem::Application.routes.draw do
+  get "errors/error_404"
+
+  get "errors/error_500"
+
+  get "registrations/new"
+
+  get "registrations/create"
+
+  devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
+  devise_scope :user do
+    get "logout", :to => "devise/sessions#destroy"
+  end
+  namespace :admin do
+    root to: 'Communities#index'
+    resources :communities
+    resources :users
+  end
+
+  get "dashboard/index"
+  resources :invitations, except: [:index]
+  resources :communities, path: '', except: [:edit, :upgrade] do
+    resources :tasks do
+      resources :task_occurrences, only: [:new, :create]
+    end
+    resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
+      resources :comments
+      member do
+        get :reassign
+        get :complete
+      end
+      collection do
+        get :todo
+        get :open
+        get :completed
+      end
+    end
+  end
+  resources :community_users, only: [:update, :destroy]
+
+  root :to => 'Communities#index'
+
+  unless Rails.application.config.consider_all_requests_local
+     match '*not_found', to: 'errors#error_404'
+   end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +92,6 @@ TaskSystem::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

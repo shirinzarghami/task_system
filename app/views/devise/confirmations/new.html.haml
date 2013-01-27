@@ -1,0 +1,12 @@
+%h2= t('.title')
+= simple_form_for(resource, url: confirmation_path(resource_name), html: {class: 'form-horizontal'}) do |f|
+  %fieldset
+    %legend= t('.account')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    %div.control-group
+      =f.input :email
+    %div.control-group
+      %div.controls= render "devise/shared/links"
+
+  %div.form-actions
+    = f.submit t('.resend'), class: 'btn btn-primary'

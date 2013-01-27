@@ -1,0 +1,9 @@
+= form_tag({},{method: :get, remote: true, class: 'form-search'}) do
+  = text_field_tag :query,'', class: 'search-query search input-medium'
+%ul.nav.nav-list
+  %li.nav-header= t('menu.filters')
+  =filter_button t('menu.filter_admin'), 'admin_only'
+  =filter_button t('menu.filter_unconfirmed'), 'unconfirmed_only'
+  =filter_button t('menu.filter_none'), 'no_filter'
+  
+=render partial: '/shared/admin_menu'

@@ -1,0 +1,21 @@
+%tr{:class => (open.too_late? ? 'error' : '')}
+  %td
+    - if open.task.present?
+      = link_to open.task_name.truncate(30), community_task_path(@community, open.task)
+    - else
+      = open.task_name.truncate(30)
+
+  %td
+    - if open.user
+      = open.user.name
+    - else
+      = t('activerecord.attributes.task_occurrence.allocated_user.nobody') 
+      %br
+      %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
+
+  %td= l open.time, format: :time_only
+  %td= l open.deadline, format: :long
+  %td
+    - if community_admin?
+      = image_button 'iconic/reload_12x14.png', reassign_community_task_occurrence_path(@community, open), remote: true, data: {title: t('.reassign')}, class: 'tooltip-link'
+      = image_button 'iconic/trash_fill_12x12.png', community_task_occurrence_path(@community, open), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link'

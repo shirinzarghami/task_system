@@ -1,0 +1,10 @@
+%p
+  %fieldset
+    =form_tag 'http://www.google.com'
+    =label_tag 'Naam'
+    =text_field_tag 'Naam', ''
+    =label_tag 'Password'
+    =password_field_tag 'Password'
+    =check_box_tag 'accept'
+    = label_tag "Accept that you are a dick", nil, class: 'checkbox'
+    =submit_button

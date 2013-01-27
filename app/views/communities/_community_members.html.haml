@@ -1,0 +1,11 @@
+%p
+  %h2= image_tag('iconic/user_12x16.png') + t('activerecord.attributes.community.members')
+  %table.table.table-striped
+    %tr
+      %th= t('activerecord.attributes.user.name')
+      %th= t('activerecord.attributes.user.email')
+      %th= t('activerecord.attributes.user.role')
+      %th
+    = render partial: 'community_member', collection: @community_users
+=will_paginate @community_users, class: 'pagination pagination-centered pagination-mini'
+=icon_button t('.invite'), new_invitation_path, link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true

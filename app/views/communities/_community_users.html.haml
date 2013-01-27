@@ -1,0 +1,13 @@
+%p
+  %h2= image_tag('iconic/cloud_24x15.png') + t('communities.index.memberships')
+  %table.table.table-striped
+    %tr
+      %th= t('communities.index.name')
+      %th= t('communities.index.role')
+      %th= t('communities.index.members')
+      %th
+    = render partial: 'community_user', collection: @community_users
+=will_paginate @community_users, class: 'pagination pagination-centered pagination-mini'
+
+%p
+  =icon_button t('.create'), new_community_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true

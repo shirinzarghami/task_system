@@ -1,0 +1,13 @@
+%tr
+  %td= community_member.user.name
+  %td= community_member.user.email
+  %td
+    - if community_admin? and community_member != @community_user
+      =simple_form_for(community_member, remote: true) do |f|
+        = f.input :role, collection: ['admin', 'normal'], include_blank: false, label: false, input_html: {class: 'input-small'}
+    - else
+      =role_name community_member.role
+
+  %td
+    - if community_admin?
+      = image_button 'iconic/trash_fill_12x12.png', community_user_path(community_member), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link'
