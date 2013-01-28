@@ -5,8 +5,9 @@ class ApplicationController < ActionController::Base
   
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: lambda { |exception| render_error 500, exception }
-    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
+    # rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
   end
+  rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
 
   def find_user
     @user = current_user
@@ -47,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def error_messages_for object, flash = ""
-    render_to_string('shared/errors.html', layout: false, formats: [:html], locals: {object: object, flash: flash}).html_safe
+    render_to_string('shared/errors', layout: false, formats: [:html], locals: {object: object, flash: flash}).html_safe
   end
 
   def after_sign_in_path_for(user)

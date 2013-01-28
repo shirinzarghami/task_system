@@ -104,7 +104,7 @@ FactoryGirl.define do
 
   factory :invitation do
     status 'requested'
-    association :community, factory: :community
+    association :community, factory: :community_with_users
     association :invitor, factory: :user
     invitee_email {generate :email}
     token "f2215de2764c983ae839f638c353ac"
@@ -113,6 +113,16 @@ FactoryGirl.define do
       association :invitee, factory: :user, email: mail
       invitee_email mail
     end
-
   end
+
+  factory :comment do
+    title 'Test'
+    body 'Blablablab'
+    subject 'Test'
+    association :user, factory: :user
+
+    factory :comment_with_task_occurrence do
+      association :commentable, factory: :task_occurrence
+    end
+  end 
 end

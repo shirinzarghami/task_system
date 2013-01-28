@@ -4,9 +4,6 @@ class CommentsController < ApplicationController
   before_filter :find_comment, only: [:destroy, :update]
   before_filter :check_destroy_allowed, only: [:destroy]
 
-  def index
-  end
-
   def create
     @comment = Comment.build_from(@commentable, current_user.id, params[:comment_body])
     if @comment.save
@@ -22,9 +19,6 @@ class CommentsController < ApplicationController
         format.html {redirect_to return_url}
       end
     end
-  end
-
-  def update
   end
 
   def destroy

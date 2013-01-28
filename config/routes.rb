@@ -1,12 +1,4 @@
 TaskSystem::Application.routes.draw do
-  get "errors/error_404"
-
-  get "errors/error_500"
-
-  get "registrations/new"
-
-  get "registrations/create"
-
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
   devise_scope :user do
     get "logout", :to => "devise/sessions#destroy"
@@ -24,7 +16,7 @@ TaskSystem::Application.routes.draw do
       resources :task_occurrences, only: [:new, :create]
     end
     resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
-      resources :comments
+      resources :comments, only: [:create, :destroy]
       member do
         get :reassign
         get :complete
