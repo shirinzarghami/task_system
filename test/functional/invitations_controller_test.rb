@@ -13,7 +13,7 @@ class InvitationsControllerTest < ActionController::TestCase
     put :update, params
 
     assert_redirected_to community_path(invitation.community)
-    assert flash[:notice].present? and flash[:error].nil?
+    assert_notice_flash
   end  
 
   test "Accept invitation: no user logged in but the user in the invitation exists" do
@@ -26,7 +26,7 @@ class InvitationsControllerTest < ActionController::TestCase
     put :update, params
 
     assert_response :success
-    assert flash[:error].present? and flash[:notice].nil?
+    assert_error_flash
     assert invitation.reload and invitation.status == 'requested'
   end
 
@@ -45,7 +45,7 @@ class InvitationsControllerTest < ActionController::TestCase
 
     put :update, params
     assert_redirected_to invitation_path(invitation.token)
-    assert flash[:error].nil? and flash[:notice].present?
+    assert_notice_flash
     assert invitation.reload and invitation.status == 'accepted'
   end
 
@@ -58,7 +58,7 @@ class InvitationsControllerTest < ActionController::TestCase
     sign_in :user, FactoryGirl.create(:user)
     put :update, params
     assert_response :success
-    assert flash[:error].present? and flash[:notice].nil?
+    assert_error_flash
     assert invitation.reload and invitation.status == 'requested'
   end
 
@@ -77,7 +77,7 @@ class InvitationsControllerTest < ActionController::TestCase
     sign_in :user, FactoryGirl.create(:user)
     put :update, params
     assert_redirected_to community_path(invitation.community)
-    assert flash[:error].nil? and flash[:notice].present?
+    assert_notice_flash
     assert invitation.reload and invitation.status == 'accepted'
   end
 

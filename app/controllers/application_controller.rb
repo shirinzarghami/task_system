@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_destroy_allowed
-    condition = @object.user == @user or community_admin?
+    condition = (@object.user == @user or community_admin?)
     check condition
   end
 

@@ -19,6 +19,14 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  def assert_notice_flash
+    assert flash[:error].nil? and flash[:notice].present?
+  end
+
+  def assert_error_flash
+    assert flash[:error].present? and flash[:notice].nil?
+  end
 end
 
 # Transactional fixtures do not work with Selenium tests, because Capybara
