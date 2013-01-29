@@ -30,7 +30,6 @@ class CommentsControllerTest < ActionController::TestCase
       @normal_user1 = FactoryGirl.create(:user) and @community.users << @normal_user1
       @normal_user2 = FactoryGirl.create(:user) and @community.users << @normal_user2
 
-
       @comment = FactoryGirl.create :comment_with_task_occurrence, user: @normal_user1
       @task_occurrence = @comment.commentable
       sign_in @normal_user1
