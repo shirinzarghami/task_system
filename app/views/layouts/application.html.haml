@@ -6,7 +6,6 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %div.header
     %div.navbar.navbar-inverse
       %div.navbar-inner
         = image_tag 'logo.png', class: 'brand'
@@ -29,6 +28,7 @@
             = tab_link t('.logout'), logout_path, icon_class: 'icon-off icon-white', class: 'pull-right'
           %small.pull-right#version-box
             %em= "#{t('.version')} #{Rails.application.config.necura_version}"
+    %div.header
 
 
     %div.container
@@ -36,4 +36,12 @@
         %div.span12
           %div#flash-container
             = render partial: 'shared/ajax_flash'
+        %div.span12
+          %ul.breadcrumb
+            %li
+              = link_to 'Communities', "#"
+            %li.divider
+            %li
+              = link_to 'Deepshit', "#"
+
           =yield
