@@ -40,6 +40,8 @@ en:
       turned_off: Registering on this server is not allowed
       success: Registration has succeeded. Please check your mail for confirmation instructions
 
+  breadcrumbs:
+    communities: My Communities
   activerecord:
       errors:
         attributes:
