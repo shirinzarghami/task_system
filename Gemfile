@@ -21,7 +21,7 @@ group :assets do
 end
 
 gem 'coffee-rails', '~> 3.2.1'
-
+gem "crummy", "~> 1.7.0"
 group :test do
   gem 'factory_girl_rails'
   gem 'timecop'

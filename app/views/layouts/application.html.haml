@@ -36,12 +36,5 @@
         %div.span12
           %div#flash-container
             = render partial: 'shared/ajax_flash'
-          %ul.breadcrumb
-            %li
-              = link_to 'Communities', "#"
-              %span.divider /
-            %li
-              = link_to 'Deepshit', "#"
-              %span.divider /
-            %li.active Blabla
+          =render_crumbs
           =yield

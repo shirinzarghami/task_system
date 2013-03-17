@@ -2,6 +2,9 @@
 class CommunitiesController < ApplicationController
   before_filter :find_community, only: [:show]
   before_filter :new_invitations_flash
+  comm = Proc.new {|instance| instance.t('communities.new.created')}
+  add_crumb(comm) { |instance| instance.send :communities_path }
+
   def index
     @community_users = @user.community_users.paginate(page: params[:page], per_page: 10)
     @invitations = current_user.invitations.paginate(page: params[:invitation_page], per_page: 10)
