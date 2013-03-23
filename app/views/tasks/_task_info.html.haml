@@ -16,7 +16,7 @@
         %small= t("times", count: @task.repeat) unless @task.repeat_infinite
     - else
       %td= link_to @task.instantiate_in_words, new_community_task_task_occurrence_path(@community, @task), remote: true, data: {title: t('.manual-tooltip')}, class: 'tooltip-link'
-  - unless @task.instantiate_automatically
+  - if @task.instantiate_automatically
     %tr
       %td
         %strong= Task.human_attribute_name(:repeat)

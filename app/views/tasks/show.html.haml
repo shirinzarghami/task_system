@@ -1,13 +1,13 @@
 - content_for :title do
   = @task.name
-%div.row
+%div.row-fluid
   %h2= image_tag('iconic/chart_alt_30x32.png') + @task.name
 
-%div.row
+%div.row-fluid
   %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
 %hr
 
-%div.row
+%div.row-fluid
   %div.span6
     %h2= image_tag('iconic/info_16x32.png') + t('.info')
     %p= render partial: 'task_info'
@@ -17,7 +17,7 @@
       %p= @task.description
 
 %hr
-%div.row
+%div.row-fluid
   %h2= image_tag('iconic/book_28x32.png') + t('.log')
   %table.table.table-striped
     %tr
