@@ -63,7 +63,7 @@ jQuery ->
     Morris.Donut
       element: 'task-donut',
       data: $('#task-donut').data('distribution'),
-      colors: ['#E0FA71', '#D6FA3F', '#C6F500', '#9DB82E', '#819F00'],
+      colors: ['#E0FA71', '#E7003E', '#560EAD', '#9DB82E', '#F33D6E', '#8643D6'],
       formatter: donut_formatter
 
 

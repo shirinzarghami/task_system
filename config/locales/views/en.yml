@@ -42,6 +42,12 @@ en:
 
   breadcrumbs:
     communities: My Communities
+    tasks: Tasks
+    todos: My todo's
+    open: All open
+    completed: Completed
+    schedule: Task schedule
+    new: New
   activerecord:
       errors:
         attributes:

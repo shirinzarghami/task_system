@@ -1,9 +1,8 @@
 
 class CommunitiesController < ApplicationController
+  add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community, only: [:show]
   before_filter :new_invitations_flash
-  # comm = Proc.new {|instance| instance.t('communities.new.created')}
-  add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
 
   def index
     @community_users = @user.community_users.paginate(page: params[:page], per_page: 10)
@@ -23,6 +22,7 @@ class CommunitiesController < ApplicationController
   end
 
   def show
+    add_crumb(@community.name, community_path(@community))
     @invitations = @community.invitations.paginate(page: params[:invitation_page], per_page: 10)
     @community_users = @community.community_users.paginate(page: params[:page], per_page: 20)
   end

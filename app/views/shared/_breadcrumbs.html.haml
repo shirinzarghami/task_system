@@ -1,0 +1,10 @@
+- if crumbs.any?
+  - render_crumbs do |crumbs|                                              
+    %ul.breadcrumb                                                        
+      - crumbs.each_with_index do |crumb, index|                                 
+        %li                                                                          
+          - if index < crumbs.size - 1                                        
+            = link_to *crumb                                                    
+            %span.divider= '/'
+          - else                                                                    
+            %li.active= crumb[0]                                 

@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
+  add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
+  before_filter :set_tasks_breadcrumb, only: [:index, :show, :new, :edit]
   before_filter :find_task, only: [:edit, :update, :destroy, :show]
   before_filter :check_destroy_allowed, only: [:destroy]
   before_filter :check_edit_allowed, only: [:edit, :update]
@@ -19,6 +21,7 @@ class TasksController < ApplicationController
   def new
     @task = @community.tasks.build
     @members = @community.members
+    add_crumb(t('breadcrumbs.new'), new_community_task_path(@community))
   end
 
   def create
@@ -58,6 +61,8 @@ class TasksController < ApplicationController
   private
     def find_task
       @object = @task = @community.tasks.find(params.has_key?(:task_id) ? params[:task_id] : params[:id]) 
+      # add_crumb(t('breadcrumbs.tasks'), community_tasks_path(@community))
+      add_crumb(@task.name, community_task_path(@community, @task))
     end
 
     def task_params
@@ -67,5 +72,9 @@ class TasksController < ApplicationController
     def check_edit_allowed
       edit_allowed = (community_admin? or @task.nil? or @task.user == @user)
       check edit_allowed, url: community_tasks_path(@community), flash: t('tasks.flash.save_not_allowed')
+    end
+
+    def set_tasks_breadcrumb
+      add_crumb t('breadcrumbs.tasks'), community_tasks_path(@community)
     end
 end
