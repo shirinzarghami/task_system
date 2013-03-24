@@ -17,6 +17,7 @@ FactoryGirl.define do
     confirmed_at Time.now
     receive_assign_mail true
     receive_reminder_mail true
+    receive_comment_mail true
   end
 
   factory :task do

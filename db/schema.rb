@@ -11,23 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117203949) do
+ActiveRecord::Schema.define(:version => 20130324093650) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "commentable_id",   :default => 0
-    t.string   "commentable_type", :default => ""
-    t.string   "title",            :default => ""
+    t.integer  "commentable_id",    :default => 0
+    t.string   "commentable_type",  :default => ""
+    t.string   "title",             :default => ""
     t.text     "body"
-    t.string   "subject",          :default => ""
-    t.integer  "user_id",          :default => 0,  :null => false
+    t.string   "subject",           :default => ""
+    t.integer  "user_id",           :default => 0,     :null => false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "notification_sent", :default => false
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["notification_sent"], :name => "index_comments_on_notification_sent"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "communities", :force => true do |t|

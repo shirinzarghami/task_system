@@ -23,4 +23,5 @@ every 1.hours do
   # runner "TaskOccurrence.send_reminders"
   rake "necura:schedule_upcoming_occurrences"
   rake "necura:send_reminders"
+  rake "necura:send_comment_notifications"
 end

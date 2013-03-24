@@ -11,7 +11,6 @@ class CommentsController < ApplicationController
         format.js {render 'create'}
         format.html {redirect_to return_url}
       end
-      send_emails
     else
       flash[:error] = t('messages.error')
       respond_to do |format|
@@ -47,9 +46,5 @@ class CommentsController < ApplicationController
 
     def find_comment
       @object = @comment = @commentable.comment_threads.find(params.has_key?(:comment_id) ? params[:comment_id] : params[:id]) 
-    end
-
-    def send_emails
-      @community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(user, @comment).deliver}
     end
 end

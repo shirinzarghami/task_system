@@ -4,6 +4,8 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
 
+  scope :no_notification_sent, where('notification_sent = FALSE OR notification_sent IS NULL')
+
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
   #acts_as_voteable
@@ -46,5 +48,16 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  def self.send_notifications
+    Comment.no_notification_sent.each do |comment|
+      commentable = comment.commentable
+      community = commentable.respond_to?(:community) && commentable.community
+      next unless community
+      community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(user, comment).deliver}
+      comment.notification_sent = true
+      comment.save
+    end
   end
 end
