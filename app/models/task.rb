@@ -94,7 +94,7 @@ class Task < ActiveRecord::Base
   end
 
   def ordered_members
-    ordered_member_ids = check_ordered_members_string
+    ordered_member_ids = check_ordered_members
     # Sort members based on the attribute 'user_order' (list of ids)
     self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
   end
@@ -116,14 +116,14 @@ class Task < ActiveRecord::Base
       self.repeat_infinite = true if self.repeat_infinite.nil?
     end
 
-    def check_ordered_members_string
+    def check_ordered_members
       ordered_member_ids = self.user_order.split(',').map(&:to_i)
       community_member_ids = self.community.members.map(&:id)
 
       unless ordered_member_ids.sort == community_member_ids.sort
         # Add new community members to the ordered list
         community_member_ids.each {|member_id| ordered_member_ids << member_id unless ordered_member_ids.include?(member_id)}
-        # Remove members from the order list that are no langer part of the community
+        # Remove members from the order list that are no longer part of the community
         ordered_member_ids = ordered_member_ids.map {|member_id| community_member_ids.include?(member_id)}
         self.update_attributes user_order: ordered_member_ids.join(',')
       end
@@ -131,10 +131,11 @@ class Task < ActiveRecord::Base
     end
 
     def allocate_in_turns
-      ordered_id_list = user_order.split(',')
+      # ordered_id_list = user_order.split(',')
+      ordered_id_list = check_ordered_members
       previous_occurrence = task_occurrences.latest.first
       previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
-      next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
+      next_user_id = ordered_id_list.include?(previous_user_id) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id) + 1).first : nil
 
       # allocate to creater of task when next user is not found
       community.members.find_by_id(next_user_id) || user
