@@ -99,6 +99,7 @@ class Task < ActiveRecord::Base
     self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
   end
 
+
   def time_in_minutes
     time.hour * 60 + time.min
   end
