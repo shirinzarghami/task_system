@@ -60,7 +60,7 @@ class TaskTest < ActiveSupport::TestCase
   test "update ordered_member string" do
     community = FactoryGirl.create(:community_with_users, users_count: 2)
     user1, user2 = community.members.first(2)
-    task = FactoryGirl.create :task, community: community, user_order: "#{user1.id}, #{user2.id}"
+    task = FactoryGirl.create :task, community: community, ordered_user_ids: "#{user1.id}, #{user2.id}"
     assert task.ordered_members == [user1, user2]
     
     user3 = FactoryGirl.create :user

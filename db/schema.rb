@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324210514) do
+ActiveRecord::Schema.define(:version => 20130331115859) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20130324210514) do
     t.integer  "allocated_user_id"
     t.boolean  "instantiate_automatically"
     t.boolean  "repeat_infinite"
-    t.string   "user_order"
+    t.string   "ordered_user_ids"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.string   "ignored_user_ids"

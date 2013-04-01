@@ -18,9 +18,9 @@ donut_formatter = (value) ->
   minutes = value % 60
   if (minutes < 10)
     minutes = '0' + minutes 
-
-
   return parseInt(value / 60) + ':' + minutes + 'h'
+
+ignored_user_updater = () ->
 
 jQuery ->
   #  ---- New task form dynamics
@@ -49,10 +49,23 @@ jQuery ->
 
   $('#user-sorter').sortable
     update: ->
-      text_box = $('#task_user_order')
-      text_box.val('')
-      $('.sort-item').each ->
-        text_box.val(text_box.val() + $(this).attr('user_id') + ',')
+      user_order = $('#task_ordered_user_ids')
+      user_order.val('')
+      ignored_users = $('#task_ignored_user_ids')
+      ignored_users.val('')
+
+      $('li.separator').nextAll('.sort-item').each ->
+        $(this).addClass('ignored-user')
+
+      $('li.separator').previousAll('.sort-item').each ->
+        $(this).removeClass('ignored-user')
+
+      $('.sort-item:not(.ignored-user)').each ->
+        user_order.val(user_order.val() + $(this).attr('user_id') + ',')
+
+      $('.ignored-user').each ->
+        ignored_users.val(ignored_users.val() + $(this).attr('user_id') + ',')
+
 
   # Global
   $('.tooltip-link').each ->

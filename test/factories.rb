@@ -25,16 +25,18 @@ FactoryGirl.define do
     description 'Do something'
     deadline 1
     deadline_unit 'weeks'
-    user_order '1,2,3'
+    ordered_user_ids '1,2,3'
     interval 3
     interval_unit 'weeks'
     repeat_infinite true
     user_id 1
     community_id 1
     repeat 1
+    time 30
     allocation_mode 'in_turns'
     allocated_user_id 1
     next_occurrence Date.today
+    instantiate_automatically true
     factory :task_single_allocation do
       allocation_mode 'user'
       association :allocated_user, factory: :user

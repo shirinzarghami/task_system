@@ -29,10 +29,10 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
   test "allocate in turns" do
     community = FactoryGirl.create(:community_with_users)
   
-    user_order = community.members.map(&:id).join(',')
+    ordered_user_ids = community.members.map(&:id).join(',')
     task = FactoryGirl.create(:task_with_occurrences, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community,
       occurrences_user: community.members.second
     )
@@ -46,10 +46,10 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
   test "allocate turns without a previous task occurrence" do
     community = FactoryGirl.create(:community_with_users)
     
-    user_order = community.members.map(&:id).join(',')
+    ordered_user_ids = community.members.map(&:id).join(',')
     task = FactoryGirl.create(:task, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community
     )
 
@@ -59,13 +59,13 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task_occurrence.user == community.members.first
   end
 
-  test "allocate turns with an invalid user_order string" do
+  test "allocate turns with an invalid ordered_user_ids string" do
     community = FactoryGirl.create(:community_with_users)
     
-    user_order = '2,9389,34,344,434,324,455,A,f,ed,e'
+    ordered_user_ids = '2,9389,34,344,434,324,455,A,f,ed,e'
     task = FactoryGirl.create(:task, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community,
       user: community.members.first
     )

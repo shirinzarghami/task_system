@@ -20,7 +20,7 @@ class Task < ActiveRecord::Base
   validates :time, presence: true, :numericality => {:greater_than => 0}
   validates :interval, :numericality => {:greater_than => 0}
   validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
-  validates :user_order, format: {with: /(\d+)(,\d+)*/} 
+  validates :ordered_user_ids, format: {with: /(\d+)(,\d+)*/} 
   validates :repeat, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
@@ -93,12 +93,23 @@ class Task < ActiveRecord::Base
     eval "#{deadline}.#{deadline_unit}" if TIME_UNITS.keys.include?(deadline_unit.to_sym)
   end
 
-  def ordered_members
-    ordered_member_ids = check_ordered_members
+  def ordered_users
+    # ordered_member_ids = check_ordered_members
     # Sort members based on the attribute 'user_order' (list of ids)
-    self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
+    self.community.members.sort {|a,b| ordered_user_ids.index(a.id) <=> ordered_user_ids.index(b.id) }
   end
 
+  def ignored_users
+    self.community.members.find(ignored_user_ids)
+  end
+
+  def ordered_user_ids
+    self[:ordered_user_ids].split(',').map(&:to_i).uniq unless self[:ordered_user_ids].nil?
+  end
+
+  def ignored_user_ids
+    self[:ignored_user_ids].split(',').map(&:to_i).uniq unless self[:ignored_user_ids].nil?
+  end
 
   def time_in_minutes
     time.hour * 60 + time.min
@@ -108,7 +119,7 @@ class Task < ActiveRecord::Base
   private
     def set_default_values
       self.instantiate_automatically = true if self.instantiate_automatically.nil?
-      self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
+      self.ordered_user_ids ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 1
       self.deadline ||= 1
       self.time ||= Time.at(0) + 30.minutes
@@ -117,19 +128,34 @@ class Task < ActiveRecord::Base
       self.repeat_infinite = true if self.repeat_infinite.nil?
     end
 
-    def check_ordered_members
-      ordered_member_ids = self.user_order.split(',').map(&:to_i)
-      community_member_ids = self.community.members.map(&:id)
+    # Update order and ignore user list in case users are added / removed from community
+    def update_user_lists
+      total_user_ids = ordered_user_ids + ignored_user_ids
+      community_user_ids = self.community.members.map(&:id)
 
-      unless ordered_member_ids.sort == community_member_ids.sort
+      unless  total_user_ids == community_member_ids.sort
         # Add new community members to the ordered list
-        community_member_ids.each {|member_id| ordered_member_ids << member_id unless ordered_member_ids.include?(member_id)}
-        # Remove members from the order list that are no longer part of the community
-        ordered_member_ids = ordered_member_ids.map {|member_id| community_member_ids.include?(member_id)}
-        self.update_attributes user_order: ordered_member_ids.join(',')
+        community_user_ids.each {|member_id| ordered_user_ids << member_id unless total_user_ids.include?(member_id)}
+        # Remove members from the list that are no longer part of the community
+        ordered_user_ids = ordered_user_ids.select {|member_id| community_user_ids.include?(member_id)}.join(',')
+        ignored_user_ids= ignored_user_ids.select {|member_id| community_user_ids.include?(member_id)}.join(',')
+
       end
-      ordered_member_ids
     end
+
+    # def check_ordered_members
+      
+    #   total_user_ids = ordered_member_ids.sort + ignored_user_ids
+
+    #   community_member_ids = self.community.members.map(&:id)
+
+    #   unless  total_user_ids == community_member_ids.sort
+
+    #     self.update_attributes ordered_user_ids: ordered_member_ids.join(',')
+    #     self.update_attributes ignored_user_ids: ignored_user_ids.join(',')
+    #   end
+    #   ordered_member_ids
+    # end
 
     def allocate_in_turns
       # ordered_id_list = user_order.split(',')
