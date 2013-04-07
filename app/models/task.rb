@@ -94,27 +94,48 @@ class Task < ActiveRecord::Base
   end
 
   def ordered_users
-    # ordered_member_ids = check_ordered_members
-    # Sort members based on the attribute 'user_order' (list of ids)
-    self.community.members.sort {|a,b| ordered_user_ids.index(a.id) <=> ordered_user_ids.index(b.id) }
+    update_user_lists
+    # Sort members based on the attribute 'ordered_user_ids' (list of ids)
+    self.community.members.sort {|a,b| self.ordered_user_ids_array.index(a.id) <=> self.ordered_user_ids_array.index(b.id) } rescue self.community.members
   end
 
   def ignored_users
-    self.community.members.find(ignored_user_ids)
+    self.community.members.find(ignored_user_ids_array) rescue []
   end
 
-  def ordered_user_ids
-    self[:ordered_user_ids].split(',').map(&:to_i).uniq unless self[:ordered_user_ids].nil?
+  def ordered_user_ids_array
+    self.ordered_user_ids.nil? ? [] : self.ordered_user_ids.split(',').map(&:to_i).uniq
   end
 
-  def ignored_user_ids
-    self[:ignored_user_ids].split(',').map(&:to_i).uniq unless self[:ignored_user_ids].nil?
+  def ignored_user_ids_array
+    self.ignored_user_ids.nil? ? [] : self.ignored_user_ids.split(',').map(&:to_i).uniq
   end
 
   def time_in_minutes
     time.hour * 60 + time.min
   end
 
+  # Update order and ignore user list in case users are added / removed from community
+  def update_user_lists
+    total_user_ids = self.ordered_user_ids_array + self.ignored_user_ids_array
+    community_user_ids = self.community.members.map(&:id)
+
+     
+    unless  total_user_ids.sort == community_user_ids.sort
+
+      ordered_user_ids_new = self.ordered_user_ids_array
+      ignored_user_ids_new = self.ignored_user_ids_array
+      # Add new community members to the ordered list
+      community_user_ids.each {|member_id| ordered_user_ids_new << member_id unless total_user_ids.include?(member_id)}
+      # Remove members from the list that are no longer part of the community
+      ordered_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
+      ignored_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
+
+      self.ordered_user_ids = ordered_user_ids_new.join(',')
+      self.ignored_user_ids = ignored_user_ids_new.join(',')
+      save
+    end
+  end
   
   private
     def set_default_values
@@ -128,38 +149,11 @@ class Task < ActiveRecord::Base
       self.repeat_infinite = true if self.repeat_infinite.nil?
     end
 
-    # Update order and ignore user list in case users are added / removed from community
-    def update_user_lists
-      total_user_ids = ordered_user_ids + ignored_user_ids
-      community_user_ids = self.community.members.map(&:id)
-
-      unless  total_user_ids == community_member_ids.sort
-        # Add new community members to the ordered list
-        community_user_ids.each {|member_id| ordered_user_ids << member_id unless total_user_ids.include?(member_id)}
-        # Remove members from the list that are no longer part of the community
-        ordered_user_ids = ordered_user_ids.select {|member_id| community_user_ids.include?(member_id)}.join(',')
-        ignored_user_ids= ignored_user_ids.select {|member_id| community_user_ids.include?(member_id)}.join(',')
-
-      end
-    end
-
-    # def check_ordered_members
-      
-    #   total_user_ids = ordered_member_ids.sort + ignored_user_ids
-
-    #   community_member_ids = self.community.members.map(&:id)
-
-    #   unless  total_user_ids == community_member_ids.sort
-
-    #     self.update_attributes ordered_user_ids: ordered_member_ids.join(',')
-    #     self.update_attributes ignored_user_ids: ignored_user_ids.join(',')
-    #   end
-    #   ordered_member_ids
-    # end
 
     def allocate_in_turns
+      # update_user_lists
       # ordered_id_list = user_order.split(',')
-      ordered_id_list = check_ordered_members
+      ordered_id_list = ordered_user_ids_array
       previous_occurrence = task_occurrences.latest.first
       previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
       next_user_id = ordered_id_list.include?(previous_user_id) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id) + 1).first : nil
