@@ -70,7 +70,6 @@ class TaskTest < ActiveSupport::TestCase
 
     CommunityUser.find_by_community_id_and_user_id!(community, user2).destroy
     community.reload
-    debugger
     assert task.ordered_users == [user1, user3]
   end
 

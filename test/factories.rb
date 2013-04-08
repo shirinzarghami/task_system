@@ -32,7 +32,7 @@ FactoryGirl.define do
     user_id 1
     community_id 1
     repeat 1
-    time 30
+    time Time.new(0) + 1.hour + 30.minutes
     allocation_mode 'in_turns'
     allocated_user_id 1
     next_occurrence Date.today

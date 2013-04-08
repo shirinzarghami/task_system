@@ -17,7 +17,7 @@ class Task < ActiveRecord::Base
   has_many :task_occurrences
   
   validates :name, presence: true, length: {maximum: 50, minimum: 3}
-  validates :time, presence: true, :numericality => {:greater_than => 0}
+  # validates :time, presence: true, :numericality => {:greater_than => 0}
   validates :interval, :numericality => {:greater_than => 0}
   validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :ordered_user_ids, format: {with: /(\d+)(,\d+)*/} 
@@ -28,7 +28,6 @@ class Task < ActiveRecord::Base
   validates :user_id, presence: true
 
   after_initialize :set_default_values
-
   scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence <= UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
 
   class << self
