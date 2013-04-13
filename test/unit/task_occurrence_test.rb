@@ -43,6 +43,25 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task_occurrence.user == community.members.third
   end
 
+  # test "allocate in turns with ignored user" do
+  #   community = FactoryGirl.create(:community_with_users)
+  
+  #   ordered_user_ids = community.members.first(4).map(&:id).join(',')
+  #   ignored_user_ids = [community.members.last]
+  #   task = FactoryGirl.create(:task_with_occurrences, 
+  #     allocation_mode: 'in_turns', 
+  #     ordered_user_ids: ordered_user_ids,
+  #     ignored_user_ids: ignored_user_ids,
+  #     community: community,
+  #     occurrences_user: community.members.fourth
+  #   )
+    
+  #   task_occurrence = task.task_occurrences.first
+  #   task_occurrence.allocate
+  #   task_occurrence.save
+  #   assert task_occurrence.user == community.members.first
+  end
+
   test "allocate turns without a previous task occurrence" do
     community = FactoryGirl.create(:community_with_users)
     

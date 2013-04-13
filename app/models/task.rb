@@ -150,7 +150,7 @@ class Task < ActiveRecord::Base
 
 
     def allocate_in_turns
-      # update_user_lists
+      update_user_lists
       # ordered_id_list = user_order.split(',')
       ordered_id_list = ordered_user_ids_array
       previous_occurrence = task_occurrences.latest.first
