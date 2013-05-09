@@ -23,7 +23,7 @@ end
 gem 'coffee-rails', '~> 3.2.1'
 gem "crummy", "~> 1.7.0"
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'timecop'
   gem 'capybara'
   gem 'database_cleaner'

@@ -99,15 +99,16 @@ class Task < ActiveRecord::Base
   end
 
   def ignored_users
+    update_user_lists
     self.community.members.find(ignored_user_ids_array) rescue []
   end
 
   def ordered_user_ids_array
-    self.ordered_user_ids.nil? ? [] : self.ordered_user_ids.split(',').map(&:to_i).uniq
+    self.ordered_user_ids.nil? ? [] : self.ordered_user_ids.split(',').map {|u| Integer(u) rescue nil}.compact.uniq
   end
 
   def ignored_user_ids_array
-    self.ignored_user_ids.nil? ? [] : self.ignored_user_ids.split(',').map(&:to_i).uniq
+    self.ignored_user_ids.nil? ? [] : self.ignored_user_ids.split(',').map {|u| Integer(u) rescue nil}.compact.uniq
   end
 
   def time_in_minutes
@@ -119,7 +120,6 @@ class Task < ActiveRecord::Base
     total_user_ids = self.ordered_user_ids_array + self.ignored_user_ids_array
     community_user_ids = self.community.members.map(&:id)
 
-     
     unless  total_user_ids.sort == community_user_ids.sort
 
       ordered_user_ids_new = self.ordered_user_ids_array
@@ -130,8 +130,11 @@ class Task < ActiveRecord::Base
       ordered_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
       ignored_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
 
+      # remove double users between ignored and ordered
+      ordered_user_ids_new.select! {|member_id| !ignored_user_ids_new.include?(member_id)}
+
       self.ordered_user_ids = ordered_user_ids_new.join(',')
-      self.ignored_user_ids = ignored_user_ids_new.join(',')
+      # self.ignored_user_ids = ignored_user_ids_new.join(',')
       save
     end
   end
