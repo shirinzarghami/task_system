@@ -77,12 +77,12 @@ class TaskTest < ActiveSupport::TestCase
     user4 = FactoryGirl.create :user
     community.members << user4
     task.ignored_user_ids = user4.id.to_s
-    debugger  
-    assert task.ordered_users == [user1, user3] 
+    assert task.ordered_users == [user1, user3]
     assert task.ignored_users == [user4] 
     CommunityUser.find_by_community_id_and_user_id!(community, user4).destroy
     community.reload
-    assert task.ignored_users == [user4]
+    assert task.ordered_users == [user1, user3]
+    assert task.ignored_users == []
 
 
   end

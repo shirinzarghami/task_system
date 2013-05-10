@@ -95,7 +95,8 @@ class Task < ActiveRecord::Base
   def ordered_users
     update_user_lists
     # Sort members based on the attribute 'ordered_user_ids' (list of ids)
-    self.community.members.sort {|a,b| self.ordered_user_ids_array.index(a.id) <=> self.ordered_user_ids_array.index(b.id) } rescue self.community.members
+    self.community.members.find(self.ordered_user_ids_array).sort {|a,b| self.ordered_user_ids_array.index(a.id) <=> self.ordered_user_ids_array.index(b.id) }
+
   end
 
   def ignored_users
