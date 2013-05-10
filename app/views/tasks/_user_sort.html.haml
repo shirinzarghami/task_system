@@ -8,5 +8,5 @@
         =link_to member.name, '#'
     %li.separator= t('.ignore_users')
 
-    %li.sort-item= link_to 'Test', '#'
-    %li.sort-item= link_to 'Test 2', '#'
+    - @task.ignored_users.each do |member|
+      %li.sort-item{:user_id => member.id}= link_to member.name, '#'

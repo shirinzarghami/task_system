@@ -66,7 +66,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :ordered_user_ids, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit).merge(user: @user)
+      params.require(:task).permit(:allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :ordered_user_ids, :ignored_user_ids, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit).merge(user: @user)
     end
 
     def check_edit_allowed

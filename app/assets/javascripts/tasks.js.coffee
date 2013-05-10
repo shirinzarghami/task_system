@@ -20,7 +20,7 @@ donut_formatter = (value) ->
     minutes = '0' + minutes 
   return parseInt(value / 60) + ':' + minutes + 'h'
 
-ignored_user_updater = () ->
+ignored_user_updater = (value) ->
 
 jQuery ->
   #  ---- New task form dynamics
@@ -57,7 +57,7 @@ jQuery ->
       $('li.separator').nextAll('.sort-item').each ->
         $(this).addClass('ignored-user')
 
-      $('li.separator').previousAll('.sort-item').each ->
+      $('li.separator').prevAll('.sort-item').each ->
         $(this).removeClass('ignored-user')
 
       $('.sort-item:not(.ignored-user)').each ->
@@ -65,7 +65,6 @@ jQuery ->
 
       $('.ignored-user').each ->
         ignored_users.val(ignored_users.val() + $(this).attr('user_id') + ',')
-
 
   # Global
   $('.tooltip-link').each ->
