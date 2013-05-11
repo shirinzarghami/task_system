@@ -11,20 +11,7 @@ class TaskOccurrencesController < ApplicationController
     @comments = @task_occurrence.root_comments.paginate(page: params[:page], per_page: 10)
   end
 
-  def todo
-    add_crumb t('breadcrumbs.todos'), todo_community_task_occurrences_path(@community)
-    @task_occurrences = @community.task_occurrences.for_user_or_open(@user).todo.paginate(page: params[:page],per_page: 20)
-  end
 
-  def open
-    add_crumb t('breadcrumbs.open'), todo_community_task_occurrences_path(@community)
-    @task_occurrences = @community.task_occurrences.todo.paginate(page: params[:page],per_page: 20)
-  end
-
-  def completed
-    add_crumb t('breadcrumbs.completed'), todo_community_task_occurrences_path(@community)
-    @task_occurrences = @community.task_occurrences.completed.paginate(page: params[:page], per_page: 20)
-  end
 
   def new
     add_crumb t('breadcrumbs.new'), new_community_task_occurrence_path(@community)
@@ -99,7 +86,7 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def set_tasks_breadcrumbs
-      add_crumb t('breadcrumbs.schedule'), community_tasks_path(@community)
+      # add_crumb t('breadcrumbs.schedule'), community_tasks_path(@community)
     end
 
     def redirect_error

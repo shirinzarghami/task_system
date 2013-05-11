@@ -15,17 +15,18 @@ TaskSystem::Application.routes.draw do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end
-    resources :task_occurrences, path: 'schedule', except: [:index] do
-      resources :comments, only: [:create, :destroy]
+    resources :task_occurrences, only: [:update, :create, :new, :edit, :destroy] do
       member do
         get :reassign
         get :complete
       end
-      collection do
-        get :todo
-        get :open
-        get :completed
-      end
+    end
+    # resources :task_occurrences, path: 'schedule', except: [:index] do
+    namespace :schedule do
+      resources :comments, only: [:create, :destroy]
+      get 'todo' => 'schedule#todo'
+      get 'open' => 'schedule#open'
+      get 'completed' => 'schedule#completed'
     end
   end
   resources :community_users, only: [:update, :destroy]

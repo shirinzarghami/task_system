@@ -20,5 +20,5 @@
     %ul.dropdown-menu
       %li= link_to t('.recurring-task'), new_community_task_path(@community)
       %li= link_to t('.single-task'), new_community_task_occurrence_path(@community)
-  = icon_button t('.schedule'), todo_community_task_occurrences_path(@community), icon_class: 'icon-calendar'
+  = icon_button t('.schedule'), community_schedule_todo_path(@community), icon_class: 'icon-calendar'
 

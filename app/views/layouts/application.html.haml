@@ -23,7 +23,7 @@
               = tab_link t('.tasks'), '#', icon_class: 'icon-tasks icon-white', controller_list: [:tasks, :task_occurrences], dropdown: true do
                 %ul.dropdown-menu
                   %li= link_to t('.overview'), community_tasks_path(@community)
-                  %li= link_to t('.schedule'), todo_community_task_occurrences_path(@community)
+                  %li= link_to t('.schedule'), community_schedule_todo_path(@community)
             = tab_link t('.settings'), edit_user_registration_path, icon_class: 'icon-cog icon-white', controller_list: [:registrations]
             = tab_link t('.logout'), logout_path, icon_class: 'icon-off icon-white', class: 'pull-right'
           %small.pull-right#version-box
