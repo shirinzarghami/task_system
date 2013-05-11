@@ -20,5 +20,6 @@
 //= require morris
 //= require bootstrap
 //= require common
+//= require tinymce-jquery
 //= require_tree .
 

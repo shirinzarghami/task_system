@@ -12,4 +12,4 @@
       - if can_edit_object? comment
         = image_button 'iconic/trash_fill_12x12.png', community_task_occurrence_comment_path(@community, comment.commentable, comment), method: :delete, remote: true, confirm: t('messages.confirm'), data: {title: t('actions.delete')}, class: 'tooltip-link'
 
-  %div.comment-body= comment.body
+  %div.comment-body= comment.body.html_safe
