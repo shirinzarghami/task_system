@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331115859) do
+ActiveRecord::Schema.define(:version => 20130511212153) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130331115859) do
     t.boolean  "should_send_assign_mail", :default => false
     t.boolean  "reminder_mail_sent",      :default => false
     t.integer  "community_id"
+    t.text     "task_description"
   end
 
   create_table "tasks", :force => true do |t|

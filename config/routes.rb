@@ -15,7 +15,7 @@ TaskSystem::Application.routes.draw do
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end
-    resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
+    resources :task_occurrences, path: 'schedule', except: [:index] do
       resources :comments, only: [:create, :destroy]
       member do
         get :reassign

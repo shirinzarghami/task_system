@@ -73,7 +73,7 @@ en:
         schedule: Schedule
         next_allocated_user: Next user
         instantiate:
-          manual: Manual
+          manual: Schedule now
           every: Every %{number} %{unit}
           weeks:
             one: Every week

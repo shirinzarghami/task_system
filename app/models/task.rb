@@ -50,6 +50,7 @@ class Task < ActiveRecord::Base
       task_occurrence.time_in_minutes = self.time_in_minutes
       task_occurrence.allocate if task_occurrence.user.nil?
       task_occurrence.task_name = self.name
+      task_occurrence.task_description = self.description
       task_occurrence.should_be_checked = self.should_be_checked
       task_occurrence.community = self.community
 

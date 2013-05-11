@@ -1,6 +1,6 @@
 class TaskOccurrence < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  attr_accessible :checked, :completed_at, :deadline, :remarks, :task_id, :user_id
+  attr_accessible :checked, :completed_at, :deadline, :remarks, :task_id, :user_id, :time_in_minutes, :should_be_checked, :task_name
 
   belongs_to :task
   belongs_to :user

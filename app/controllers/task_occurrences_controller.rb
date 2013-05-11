@@ -4,7 +4,7 @@ class TaskOccurrencesController < ApplicationController
   before_filter :find_task, only: [:create, :new]
   before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete, :show]
   before_filter :check_community_admin, only: [:destroy]
-  before_filter :set_tasks_breadcrumbs, only: [:show, :todo, :open, :completed]
+  before_filter :set_tasks_breadcrumbs, only: [:show, :todo, :open, :completed, :new]
 
   def show
     @comment = Comment.new
@@ -27,29 +27,33 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def new
+    add_crumb t('breadcrumbs.new'), new_community_task_occurrence_path(@community)
+
     @task_occurrence = TaskOccurrence.new
-    @task_occurrence.user = @task.allocated_user if @task.allocation_mode == 'user'
-    show_modal :form
+    if @task.present?
+      @task_occurrence.user = @task.allocated_user if @task.allocation_mode == 'user'
+      show_modal :form_modal
+    else
+      render 'new'
+    end
   end
 
   def create
-    if @task.schedule task_occurrence_create_params
-      flash[:notice] = t('messages.save_success')
-      redirect_to todo_community_task_occurrences_path @community
-    else
-      flash[:error] = t('messages.save_fail')
-      redirect_to todo_community_task_occurrences_path @community
+    if @task
+      @task.schedule(task_occurrence_create_params) ? redirect_success : redirect_error
+    else 
+      @task_occurrence = @community.task_occurrences.create single_task_occurrence_params
+      if @task_occurrence.save
+        redirect_success
+      else 
+        flash[:error] = t('messages.save_fail')
+        render 'new'
+      end
     end
   end
 
   def update
-    if @task_occurrence.update_attributes task_occurrence_params
-      flash[:notice] = t('messages.save_success')
-      redirect_to todo_community_task_occurrences_path @community
-    else
-      flash[:error] = t('messages.save_fail')
-      redirect_to todo_community_task_occurrences_path @community
-    end
+    @task_occurrence.update_attributes(task_occurrence_params) ? redirect_success : redirect_error
   end
 
   # Both reassign and complete route to update via PUT
@@ -62,18 +66,12 @@ class TaskOccurrencesController < ApplicationController
   end
 
   def destroy
-    if @task_occurrence.destroy
-      flash[:notice] = t('messages.save_success')
-      redirect_to todo_community_task_occurrences_path @community
-    else
-      flash[:error] = t('messages.save_fail')
-      redirect_to todo_community_task_occurrences_path @community
-    end
+    @task_occurrence.destroy ? redirect_success : redirect_error
   end
 
   private
     def find_task
-      @task = @community.tasks.find(params[:task_id])
+      @task = @community.tasks.find_by_id params[:task_id]
     end
 
     def find_task_occurrence
@@ -89,6 +87,10 @@ class TaskOccurrencesController < ApplicationController
       end
     end
 
+    def single_task_occurrence_params
+      params.require(:task_occurrence).permit(:task_name, :deadline, :time_in_minutes, :should_be_checked, :user_id)
+    end
+
     def task_occurrence_create_params
       # The allocation user may only be set when the allocation mode is set to user, or the current user is admin
       if params.has_key?(:task_occurrence) and (@task.allocation_mode == 'user' or community_admin?)
@@ -98,5 +100,15 @@ class TaskOccurrencesController < ApplicationController
 
     def set_tasks_breadcrumbs
       add_crumb t('breadcrumbs.schedule'), community_tasks_path(@community)
+    end
+
+    def redirect_error
+      flash[:error] = t('messages.save_fail')
+      redirect_to todo_community_task_occurrences_path @community
+    end
+
+    def redirect_success
+      flash[:notice] = t('messages.save_success')
+      redirect_to todo_community_task_occurrences_path @community
     end
 end

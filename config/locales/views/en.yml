@@ -43,8 +43,8 @@ en:
   breadcrumbs:
     communities: My Communities
     tasks: Tasks
-    todos: My todo's
-    open: All open
+    todos: My todos
+    open: All todos
     completed: Completed
     schedule: Task schedule
     new: New
@@ -144,7 +144,7 @@ en:
 
   tasks:
     new:
-      title: Create a new task
+      title: Create a recurring task
       man_instantiate: This task will be instantiated manually
       auto_instantiate: This task will be instantiated automatically
       repeat_infinite: Repeat infinite times
@@ -158,6 +158,8 @@ en:
       occurrences: Occurrences
       next_occurrence: Next occurrence
       create: Create
+      single-task: One-time task
+      recurring-task: Recurring task
     edit:
       title: Edit task
     task:
@@ -202,9 +204,9 @@ en:
     navigation:
       title: Schedule
       todo: My todos
-      open: All open
+      open: All todos
       completed: Completed
-    form:
+    form_modal:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
       explanation: 
@@ -220,6 +222,9 @@ en:
       modal_body: "I have completed the task '<i>%{task_name}</i>'"
       complete: Complete
     show:
+
+    new:
+      title: Create one-time task
 
 
 
