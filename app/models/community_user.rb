@@ -12,6 +12,10 @@ class CommunityUser < ActiveRecord::Base
 
   scope :administrators, where(role: 'admin')
   scope :exclude, lambda {|community_user| where(['community_users.id != ?', community_user.id]) unless community_user.new_record?}
+
+  def role_in_words
+    I18n.t("activerecord.values.#{self.role}")
+  end
   protected
     def validate_at_least_one_admin
       community_users = community.present? ? community.community_users.administrators.exclude(self) : []

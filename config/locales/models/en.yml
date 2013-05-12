@@ -33,6 +33,8 @@ en:
         subdomain: Subdomain
         max_users: Max users
         members: Members
+      community_user:
+        role: Role
       user:
         name: Name
         password: Password
@@ -47,6 +49,7 @@ en:
         receive_comment_mail: Send me an e-mail when a comment is posted
         receive_assign_mail: Send me an e-mail when a task is assigned to me 
         receive_reminder_mail: "Send me an reminder e-mail when a task, assigned to me, approaches the deadline for completion"
+        last_sign_in_at: Last sign in
       invitation:
         invitor: Invitor
         invitee: Invitee

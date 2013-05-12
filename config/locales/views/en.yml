@@ -48,6 +48,7 @@ en:
     completed: Completed
     schedule: Task schedule
     new: New
+    user_info: User info
   activerecord:
       errors:
         attributes:
@@ -123,6 +124,15 @@ en:
       unsubscribed: Successfully unsubscribed
     not_found: Couldn't find a user membership for this community
 
+    show:
+      title: Community statistics for %{username}
+
+    user_info:
+      receive_comment_mail: New comment
+      receive_assign_mail: Task assignment
+      receive_reminder_mail: Task deadline reminders
+      notifications:  E-mail notifications
+      general: General
   invitations:
     flashes:
       select_error: Please whether you wish to accept or deny the invitation
@@ -175,6 +185,7 @@ en:
       info: Info
     task_occurrence:
       comments: Comments
+      edit: Edit this task
 
     user_sort:
       ignore_users: The following users are excluded

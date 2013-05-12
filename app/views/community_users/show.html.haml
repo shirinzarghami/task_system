@@ -1,0 +1,11 @@
+%div.row-fluid
+  %h2= image_tag('iconic/calendar_alt_stroke_32x32.png') + t('.title', username: @show_user.name)
+
+%div.row-fluid
+  %div.user-info
+    %div.span6.well
+      %div.user-avatar= image_tag @show_user.avatar.url(:thumb), class: 'img-rounded' if @show_user.avatar.exists?
+
+    %div.span6.well= render partial: 'user_info', object: @show_user
+
+%hr

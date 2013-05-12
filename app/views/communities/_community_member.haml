@@ -1,5 +1,5 @@
 %tr
-  %td= community_member.user.name
+  %td= link_to community_member.user.name, community_community_user_path(@community, community_member)
   %td= community_member.user.email
   %td
     - if community_admin? and community_member != @community_user

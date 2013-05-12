@@ -1,0 +1,37 @@
+- user = user_info
+%h3= t('.general')
+%table.table-full-width
+  %tr
+    %td
+      %strong= User.human_attribute_name(:name)
+    %td= user.name    
+  %tr
+    %td
+      %strong= User.human_attribute_name(:email)
+    %td= user.email
+  %tr
+    %td
+      %strong= CommunityUser.human_attribute_name(:role)
+    %td= @community_user.role_in_words
+  %tr
+    %td
+      %strong= User.human_attribute_name(:last_sign_in_at)
+    %td= l user.last_sign_in_at.localtime, format: :long
+
+%hr
+
+%h3= t('.notifications')
+%table.table-full-width
+  %tr
+    %td
+      %strong= t('receive_comment_mail')
+    %td= t(".#{user.receive_comment_mail.to_s}")
+  %tr
+    %td
+      %strong= t('receive_assign_mail')
+    %td= t(".#{user.receive_assign_mail.to_s}")
+  %tr
+    %td
+      %strong= t('receive_reminder_mail')
+    %td= t(".#{user.receive_reminder_mail.to_s}")
+
