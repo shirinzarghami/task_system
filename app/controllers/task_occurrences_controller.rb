@@ -68,7 +68,9 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def task_occurrence_params
-      if community_admin?
+      if @task_occurrence.task.nil?
+        single_task_occurrence_params
+      elsif community_admin?
         {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks, :user_id)
       elsif @task_occurrence.user == @user or @task_occurrence.user.nil?
         {"user_id" => @user.id}.merge params.require(:task_occurrence).permit(:checked, :remarks)

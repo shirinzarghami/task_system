@@ -208,12 +208,12 @@ en:
       modal_header: Complete task
       modal_body: "I have completed the task '<i>%{task_name}</i>'"
       complete: Complete
-
   schedule:
     open:
       title: Open tasks
       reassign: Re-assign this task
       delete: Dispensate this task
+      edit: Edit this task
 
     todo:
       title: My todos
