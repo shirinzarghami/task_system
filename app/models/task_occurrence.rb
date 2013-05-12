@@ -1,6 +1,6 @@
 class TaskOccurrence < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  attr_accessible :checked, :completed_at, :deadline, :remarks, :task_id, :user_id, :time_in_minutes, :should_be_checked, :task_name
+  attr_accessible :checked, :completed_at, :deadline, :remarks, :task_id, :user_id, :time_in_minutes, :should_be_checked, :task_name, :task_description
 
   belongs_to :task
   belongs_to :user
@@ -83,8 +83,10 @@ class TaskOccurrence < ActiveRecord::Base
   def too_late?
     if completed?
       completed_at.present? and completed_at.localtime.to_date > deadline
-    else
+    elsif deadline.present?
       Date.today > deadline
+    else
+      false
     end
   end
 

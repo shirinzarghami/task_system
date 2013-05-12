@@ -2,7 +2,7 @@ class TaskOccurrencesController < ApplicationController
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :find_task, only: [:create, :new]
-  before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete, :show]
+  before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete, :show, :edit, :update]
   before_filter :check_community_admin, only: [:destroy]
   before_filter :set_tasks_breadcrumbs, only: [:show, :todo, :open, :completed, :new]
 
@@ -10,8 +10,6 @@ class TaskOccurrencesController < ApplicationController
     @comment = Comment.new
     @comments = @task_occurrence.root_comments.paginate(page: params[:page], per_page: 10)
   end
-
-
 
   def new
     add_crumb t('breadcrumbs.new'), new_community_task_occurrence_path(@community)
@@ -23,6 +21,9 @@ class TaskOccurrencesController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def edit
   end
 
   def create
@@ -75,7 +76,7 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def single_task_occurrence_params
-      params.require(:task_occurrence).permit(:task_name, :deadline, :time_in_minutes, :should_be_checked, :user_id)
+      params.require(:task_occurrence).permit(:task_name, :task_description, :deadline, :time_in_minutes, :should_be_checked, :user_id)
     end
 
     def task_occurrence_create_params
@@ -86,16 +87,16 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def set_tasks_breadcrumbs
-      # add_crumb t('breadcrumbs.schedule'), community_tasks_path(@community)
+      add_crumb t('breadcrumbs.tasks'), community_tasks_path(@community)
     end
 
     def redirect_error
       flash[:error] = t('messages.save_fail')
-      redirect_to todo_community_task_occurrences_path @community
+      redirect_to community_schedule_todo_path @community
     end
 
     def redirect_success
       flash[:notice] = t('messages.save_success')
-      redirect_to todo_community_task_occurrences_path @community
+      redirect_to community_schedule_todo_path @community
     end
 end

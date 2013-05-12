@@ -6,7 +6,7 @@
   %button.btn.modal-destroy{:type => "button", 'data-dismiss' => "modal", 'aria-hidden' => "true"}= t('cancel')
 
 - content_for :modal_body do
-  %p= t('.modal_body', task_name: @task.name).html_safe
+  %p= t('.modal_body', task_name: @task_occurrence.task_name).html_safe
   =simple_form_for [@community, @task_occurrence], html: {class: 'form-horizontal'} do |f|
     = f.input :remarks, input_html: {rows: 5, class: 'span4'}
     = f.hidden_field :checked, value: :true

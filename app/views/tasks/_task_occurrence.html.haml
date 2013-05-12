@@ -8,7 +8,7 @@
       %br
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
 
-  %td= l task_occurrence.deadline, format: :long
+  %td= l task_occurrence.deadline, format: :long if task_occurrence.deadline
   %td= task_occurrence_status task_occurrence
   %td.span6
     %small= task_occurrence.remarks

@@ -189,6 +189,27 @@ en:
       home: Home
 
   task_occurrences:
+    new:
+      title: Create one-time task
+    edit:
+      title: Edit one-time task
+    form_modal:
+      modal_header: Schedule task
+      modal_body: Do you wish to schedule this task?
+      explanation: 
+        "You should only schedule a task when you think it necessary that this task is performed. 
+        When you click 'yes', an occurrence will be scheduled and allocated to a person within the community.
+        This person will have to complete the task before the deadline."
+    reassign:
+      modal_header: Re-assign task
+      modal_body: Choose to which user the task should be re-assigned
+      reassign: Re-assign
+    complete:
+      modal_header: Complete task
+      modal_body: "I have completed the task '<i>%{task_name}</i>'"
+      complete: Complete
+
+  schedule:
     open:
       title: Open tasks
       reassign: Re-assign this task
@@ -206,25 +227,8 @@ en:
       todo: My todos
       open: All todos
       completed: Completed
-    form_modal:
-      modal_header: Schedule task
-      modal_body: Do you wish to schedule this task?
-      explanation: 
-        "You should only schedule a task when you think it necessary that this task is performed. 
-        When you click 'yes', an occurrence will be scheduled and allocated to a person within the community.
-        This person will have to complete the task before the deadline."
-    reassign:
-      modal_header: Re-assign task
-      modal_body: Choose to which user the task should be re-assigned
-      reassign: Re-assign
-    complete:
-      modal_header: Complete task
-      modal_body: "I have completed the task '<i>%{task_name}</i>'"
-      complete: Complete
     show:
 
-    new:
-      title: Create one-time task
 
 
 

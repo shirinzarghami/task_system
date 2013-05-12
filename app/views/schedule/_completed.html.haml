@@ -3,10 +3,10 @@
     - if completed.task.present?
       = link_to completed.task_name.truncate(30), community_task_path(@community, completed.task)
     - else
-      = completed.task_name.truncate(30)  
+      = link_to completed.task_name.truncate(30), community_task_occurrence_path(@community, completed) 
   %td= completed.user.name
   %td= l completed.time, format: :time_only
   - if completed.should_be_checked
     %td= l completed.completed_at, format: :date_only
-  - else
-    %td= l completed.deadline, format: :long
+  - elsif completed.deadline
+    %td= l completed.deadline, format: :long 

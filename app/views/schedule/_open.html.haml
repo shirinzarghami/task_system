@@ -3,7 +3,7 @@
     - if open.task.present?
       = link_to open.task_name.truncate(30), community_task_path(@community, open.task)
     - else
-      = open.task_name.truncate(30)
+      = link_to open.task_name.truncate(30), community_task_occurrence_path(@community, open)
 
   %td
     - if open.user
@@ -14,7 +14,7 @@
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
 
   %td= l open.time, format: :time_only
-  %td= l open.deadline, format: :long
+  %td= l open.deadline, format: :long if open.deadline
   %td
     - if community_admin?
       = image_button 'iconic/reload_12x14.png', reassign_community_task_occurrence_path(@community, open), remote: true, data: {title: t('.reassign')}, class: 'tooltip-link'
