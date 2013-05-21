@@ -32,7 +32,7 @@ class CommunityUsersController < ApplicationController
   end
 
   def show
-    add_crumb(t('breadcrumbs.user_info'), community_community_user_path(@community, @community_user))
+    add_crumb(@community_user.user.name, community_community_user_path(@community, @community_user))
     @show_user = @community_user.user
   end
 

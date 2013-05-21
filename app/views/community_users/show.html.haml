@@ -9,3 +9,6 @@
     %div.span6.well= render partial: 'user_info', object: @show_user
 
 %hr
+%div.row
+  %div.span12
+    %div#user-timeline{data: {distribution: user_activity_distribution(@community_user)}}

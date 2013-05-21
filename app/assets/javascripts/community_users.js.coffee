@@ -6,3 +6,12 @@ jQuery ->
   $('form.edit_community_user').each ->
     $(this).change ->
       $(this).submit()
+
+
+  if ($('#user-timeline').length)
+    Morris.Area
+      element: 'user-timeline',
+      data: $('#user-timeline').data('distribution'),
+      xkey: 'y',
+      ykeys: ['a', 'b'],
+      labels: ['Series A', 'Series B']
