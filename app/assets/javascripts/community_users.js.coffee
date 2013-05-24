@@ -12,6 +12,6 @@ jQuery ->
     Morris.Area
       element: 'user-timeline',
       data: $('#user-timeline').data('distribution'),
-      xkey: 'y',
-      ykeys: ['a', 'b'],
-      labels: ['Series A', 'Series B']
+      xkey: 'date',
+      ykeys: ['value'],
+      labels: $('#user-timeline').data('labels')

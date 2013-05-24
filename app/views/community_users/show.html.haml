@@ -11,4 +11,4 @@
 %hr
 %div.row
   %div.span12
-    %div#user-timeline{data: {distribution: user_activity_distribution(@community_user)}}
+    %div#user-timeline{data: {distribution: user_activity_distribution(@community_user)}, labels: @community.members.map {|m| m.name}.to_json }
