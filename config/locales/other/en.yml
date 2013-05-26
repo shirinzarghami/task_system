@@ -193,6 +193,10 @@ en:
       two_words_connector: ! ' and '
       words_connector: ! ', '
   time:
+    units:
+      minutes:
+        one: minute
+        other: minutes
     am: am
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'

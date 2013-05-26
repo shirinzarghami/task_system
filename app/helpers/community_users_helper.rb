@@ -1,19 +1,15 @@
 module CommunityUsersHelper
 
-  def user_activity_distribution(community_user)
-     # start_date = community_user.user.task_occurrences.where(community_id: community_user.community.id).order(:created_at).first
-     # end_date = community_user.user.task_occurrences.where(community_id: community_user.community.id).order(:created_at).last
+  def user_activity_distribution(community)
+    start_date = community.created_at
+    end_date = community.task_occurrences.order(:created_at).last.created_at
+    time_range = (start_date.to_i..end_date.to_i).step(1.month.to_i).map {|i| Time.at(i).to_date.beginning_of_month}
+    query_result = community.task_occurrences.select('user_id, created_at as date, sum(time_in_minutes) as total').group('YEAR(created_at), MONTH(created_at), user_id')
 
-     # interval = determine_interval_for start_date, end_date
-     # result = cu.user.task_occurrences.where(community_id: cu.community.id).order(:created_at).select('sum(time_in_minutes) as total').group('week(created_at)')
-     # Created more task occurrences
-     # 20.times {|i| t = TaskOccurrence.new(to.attributes.symbolize_keys.except(:id, :created_at, :updated_at, :should_send_assign_mail, :reminder_mail_sent, :community_id)) ; t.created_at = i.weeks.ago ; t.community = to.community ; t.save}
-
-     # SELECT MONTHNAME(o_date), SUM(total) 
-     # FROM theTable
-     # GROUP BY YEAR(o_date), MONTH(o_date)
-     result = community_user.user.task_occurrences.where(community_id: community_user.community.id).select('created_at as date, sum(time_in_minutes) as total').group('YEAR(created_at), MONTH(created_at)')
-     result.map {|i| {date: i.date.strftime("%Y-%m-01"), value: i.total}}.to_json
+    time_range.map do |date|
+      date_occurrences = query_result.select {|o| o.date.beginning_of_month == date}
+      {date: date}.merge date_occurrences.map {|task_occurrence| {task_occurrence.user.name => task_occurrence.total}}.inject {|all, h| all.merge h}
+    end.to_json
   end
 
   private

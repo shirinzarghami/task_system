@@ -112,6 +112,7 @@ en:
           uncompleted: Uncompleted
           completed_at: Completed at %{date}
         remarks: Remarks by executor
+        time_in_minutes: Time in minutes
 
 
     values:
