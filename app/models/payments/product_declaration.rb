@@ -1,0 +1,3 @@
+class ProductDeclaration < Payment
+
+end

@@ -5,6 +5,9 @@ class CommunityUser < ActiveRecord::Base
   belongs_to :user
   belongs_to :community
 
+  has_many :payments, dependent: :destroy
+  has_many :user_saldo_modifications, dependent: :destroy
+
   validates :community_id, uniqueness: {scope: :user_id}
   validate :validate_at_least_one_admin
   

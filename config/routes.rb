@@ -11,6 +11,7 @@ TaskSystem::Application.routes.draw do
 
   resources :invitations, except: [:index]
   resources :communities, path: '', except: [:edit, :upgrade] do
+    resources :payments
     resources :community_users, only: [:show]
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
