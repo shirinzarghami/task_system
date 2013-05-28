@@ -7,5 +7,7 @@ class Payment < ActiveRecord::Base
   has_one :community, through: :community_user
 
   has_many :user_saldo_modifications, dependent: :destroy
+  accepts_nested_attributes_for :user_saldo_modifications
 
+  
 end

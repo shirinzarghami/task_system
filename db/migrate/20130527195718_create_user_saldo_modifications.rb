@@ -4,7 +4,7 @@ class CreateUserSaldoModifications < ActiveRecord::Migration
       t.decimal :price, :precision => 8, :scale => 2
       t.integer :payment_id
       t.integer :community_user_id
-
+      t.decimal :percentage, :precision => 2, :scale => 2
       t.timestamps
     end
   end

@@ -49,6 +49,7 @@ en:
     schedule: Task schedule
     new: New
     user_info: User info
+    payments: Payments
   activerecord:
       errors:
         attributes:
@@ -240,6 +241,13 @@ en:
       completed: Completed
     show:
 
+  payments:
+    new:
+      title: New payment declaration
+    form:
+      categories:
+        payment: Payment
+        distribution: Distribution
 
 
 

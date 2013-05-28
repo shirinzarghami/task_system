@@ -1,0 +1,28 @@
+= simple_form_for @payment, url: community_payments_path(@community),html: {class: 'form-horizontal'} do |f|
+  %fieldset
+    %legend= t('.categories.payment')
+    = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
+    %div.control-group
+      = f.input :title
+      = f.input :date, as: :string, input_html: {class: 'datepicker'}
+      = f.input :price
+      = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
+      = tinymce
+  %fieldset
+    %legend= t('.categories.distribution')
+    = image_tag 'iconic/chart_32x32.png', class: 'logo'
+
+    %table.table
+      %tr
+        %th= User.model_name.human
+        %th= UserSaldoModification.human_attribute_name(:percentage)
+        %th= UserSaldoModification.human_attribute_name(:price)
+      = f.fields_for :user_saldo_modifications do |builder|
+        %tr
+          %td
+            .control-group
+              %label.checkbox
+                = check_box_tag :active
+                = builder.object.user.name
+          %td= builder.input_field :price, class: 'input-mini'
+          %td= builder.input_field :percentage, class: 'input-mini'

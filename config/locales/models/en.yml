@@ -25,7 +25,16 @@ en:
       community: Community
       user: User
       invitation: Invitation
+      payment: payment
     attributes:
+      payment:
+        title: Titel
+        date: Payment date
+        description: Description
+        price: Price
+      user_saldo_modification:
+        percentage: Percentage
+        price: Price
       community:
         user_tokens: Normal members
         admin_user_tokens: Administrators
