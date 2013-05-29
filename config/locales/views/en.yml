@@ -248,6 +248,9 @@ en:
       categories:
         payment: Payment
         distribution: Distribution
+      costs: Costs
+      paid: Paid
+
 
 
 

@@ -5,7 +5,10 @@
     %div.control-group
       = f.input :title
       = f.input :date, as: :string, input_html: {class: 'datepicker'}
-      = f.input :price
+      = f.input :price , :wrapper => :append do
+        %span.add-on= "€"
+        = f.input_field :price, class: 'input-mini'
+
       = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
       = tinymce
   %fieldset
@@ -16,13 +19,26 @@
       %tr
         %th= User.model_name.human
         %th= UserSaldoModification.human_attribute_name(:percentage)
-        %th= UserSaldoModification.human_attribute_name(:price)
+        %th= t('.cost')
+        %th= t('.paid')
+        %th= UserSaldoModification.human_attribute_name(:price)  
       = f.fields_for :user_saldo_modifications do |builder|
-        %tr
+        %tr{class: ('current-user info' if @user == builder.object.user), data: {user: builder.object.id}}
           %td
             .control-group
               %label.checkbox
-                = check_box_tag :active
+                = check_box_tag :active, '',false, class: 'user-select'
                 = builder.object.user.name
-          %td= builder.input_field :price, class: 'input-mini'
-          %td= builder.input_field :percentage, class: 'input-mini'
+          %td
+            .input-append
+              = builder.input_field :percentage, class: 'input-mini percentage'
+              %span.add-on= "%"
+
+          %td.cost.error-text= '€ 0'
+          %td.paid.valid-text= '€ 0'
+          %td
+            .input-append
+              %span.add-on= "€"
+              = builder.input_field :price, class: 'input-mini total' 
+
+  = f.button :submit, class: 'btn btn-primary'
