@@ -69,11 +69,14 @@ en:
       manage_communities: Manage communities
       users: Users
       tasks: Tasks
-      overview: Manage tasks
+      manage_tasks: Manage tasks
+      manage_payments: Manage Payments
       schedule: Schedule
       settings: Settings
       logout: Logout
       version: Version
+      payments: Payments
+
 
 
   admin:
