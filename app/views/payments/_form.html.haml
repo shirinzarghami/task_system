@@ -23,14 +23,14 @@
         %th= t('.paid')
         %th= UserSaldoModification.human_attribute_name(:price)  
       = f.fields_for :user_saldo_modifications do |builder|
-        %tr{class: ('current-user info' if @user == builder.object.user), data: {user: builder.object.id}}
+        %tr.user-saldo-modification{class: ('current-user info' if @user == builder.object.user), data: {user: builder.object.id}}
           %td
             .control-group
               %label.checkbox
-                = check_box_tag :active, '',false, class: 'user-select'
+                = builder.check_box :checked, class: 'user-select'
                 = builder.object.user.name
           %td
-            .input-append
+            .input-append.control-group
               = builder.input_field :percentage, class: 'input-mini percentage'
               %span.add-on= "%"
 
@@ -39,6 +39,6 @@
           %td
             .input-append
               %span.add-on= "€"
-              = builder.input_field :price, class: 'input-mini total' 
+              = builder.input_field :price, class: 'input-mini user-price' 
 
   = f.button :submit, class: 'btn btn-primary'

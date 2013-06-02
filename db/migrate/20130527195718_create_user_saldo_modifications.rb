@@ -5,6 +5,7 @@ class CreateUserSaldoModifications < ActiveRecord::Migration
       t.integer :payment_id
       t.integer :community_user_id
       t.decimal :percentage, :precision => 2, :scale => 2
+      t.boolean :checked
       t.timestamps
     end
   end

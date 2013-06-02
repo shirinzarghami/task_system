@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20130527195718) do
     t.integer  "payment_id"
     t.integer  "community_user_id"
     t.decimal  "percentage",        :precision => 2, :scale => 2
+    t.boolean  "checked"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
   end

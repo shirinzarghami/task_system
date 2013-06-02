@@ -1,66 +1,92 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+# ------- Action listeners
 
-set_initial_values = () ->
-  $('.percentage').each ->
-    $(this).attr('disabled', true)
-
-  $('.update_user_total').each ->
-    $(this).attr('disabled', true)
-
-user_select = () ->
-  number_selected = $('input.user-select:checked').size()
-  price = ts.parse_number_input($('#product_declaration_price'))
+select_user = () ->
+  equal_percentage = get_equal_percentage()
 
   $('input.user-select:checked').each ->
-    row = $(this).parents('tr') 
-    percentage_input = row.find('td div input.percentage')
-    price_input = row.find('td div input.total')
-    percentage_input.attr("disabled", false)
-    price_input.attr("disabled", false)
-    row.find('td.cost').html('€ ' + (-1 * price / number_selected).toFixed(2))
-    percentage_input.val((100 / number_selected).toFixed(2))
-    if row.hasClass('current-user')
-      row.find('td.paid').html('€ ' + price)
-    update_user_total(row)
+    calculate_user_total($(this).parents('tr'), equal_percentage)
 
   $('input.user-select:not(:checked)').each ->
-    row = $(this).parents('tr') 
-    percentage_input = row.find('td div input.percentage')
-    price_input = row.find('td div input.total')
-    percentage_input.attr("disabled", true)
+    calculate_user_total($(this).parents('tr'), 0)
 
-    price_input.attr("disabled", true)
-    row.find('td.cost').html('€ 0')
-    row.find('td div input.percentage').val('0')
-    row.find('td.paid').val('€ 0')
-    update_user_total(row)
 
-update_user_total = (row) ->
-  cost = parseFloat(row.find('td.cost').html().replace('€', ''))
-  paid = parseFloat(row.find('td.paid').html().replace('€', ''))
-  row.find('td div input.total').val(cost + paid)
 
-percentage_update = (changed_input_box) ->
-  percentage = ts.parse_number_input(changed_input_box)
-  number_selected = $('input.user-select:checked').size()
-  remaining_percentage = ((100 - percentage) / (number_selected - 1)).toFixed(2)
-  $('.percentage:not(#' + changed_input_box.attr('id') + '):not([disabled])').each ->
-    $(this).val(remaining_percentage)
+update_percentage = (tb) ->
+  percentage = ts.parse_number_input(tb)
+  tb.val(get_equal_percentage()) unless (0 <= percentage <= 100) 
+  
 
-calculate_totals = () ->
+  row = tb.parents('tr')
+  calculate_user_total(row, percentage)
+  check_percentage()    
+
+# --------- Helpers
+get_user_hash = (row_obj) ->
+  result = 
+    total_price_tb: row_obj.find('td div input.user-price'),
+    percentage_tb: row_obj.find('td div input.percentage'),
+    cost_field: row_obj.find('td.cost'),
+    paid_field: row_obj.find('td.paid')
+  return result
+
+get_user_values = (user_hash) ->
+  result = 
+    total_price: parseFloat(ts.parse_number_input(user_hash['total_price_tb'])),
+    percentage: parseFloat(ts.parse_number_input(user_hash['percentage_tb'])),
+    cost: parseFloat(ts.parse_number_input(user_hash['cost_field'])),
+    paid: parseFloat(ts.parse_number_input(user_hash['paid_field']))
+  return result
+
+get_total_price = () ->
+  ts.parse_number_input($('#product_declaration_price'))
+
+get_equal_percentage = () ->
+  number_selected_users = $('input.user-select:checked').size()
+  return parseFloat(100 / number_selected_users).toFixed(2)
+
+update_tb_state = (tb) ->
+  user_object_hash = get_user_hash(tb.parents('tr'))
+  if tb.is(':checked')
+    user_object_hash['percentage_tb'].attr('disabled', false)
+  else
+    user_object_hash['percentage_tb'].attr('disabled', true)
+
+calculate_user_total = (row, percentage) ->
+  uh = get_user_hash(row)
+  uh['percentage_tb'].val(percentage)
+  if row.hasClass('current-user')
+    uh['paid_field'].html('€ ' + get_total_price())
+  else 
+    uh['paid_field'].html('€ 0')
+  uh['cost_field'].html('€ ' + (get_total_price() * (percentage / 100)).toFixed(2))
+  vh = get_user_values(uh)
+  uh['total_price_tb'].val(parseFloat(vh['paid'] - vh['cost']))
+
+check_percentage = () ->
+  sum = 0
+  $('.user-price').each ->
+    sum = sum + parseFloat(ts.parse_number_input($(this)))
+  
+  amount_is_zero = (-0.01 < sum.toFixed(2) < 0.01)
+  $('input[type=submit]').attr('disabled', !amount_is_zero)
+
+  $('input.user-select').parents('tr').find('.percentage').parents('div.control-group').each ->
+    $(this).removeClass('error')
+
+  unless amount_is_zero
+    $('input.user-select:checked').parents('tr').find('.percentage').parents('div.control-group').each ->
+      $(this).addClass('error')
+
 
 
 jQuery ->
-  set_initial_values()
+  $('.user-price').each ->
+    $(this).attr('disabled', true)
   $('.user-select').each ->
+    update_tb_state($(this))
     $(this).click ->
-      user_select()
-
-  $('#product_declaration_price').bind 'input', ->
-    user_select()
-
-  $('.percentage').each ->
-    $(this).bind 'input', ->
-      percentage_update($(this))
+      update_tb_state($(this))
+      select_user()
+      check_percentage()
+  $('.percentage').bind 'input', ->
+    update_percentage($(this))

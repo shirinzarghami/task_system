@@ -9,5 +9,12 @@ class Payment < ActiveRecord::Base
   has_many :user_saldo_modifications, dependent: :destroy
   accepts_nested_attributes_for :user_saldo_modifications
 
+  after_initialize :set_initial_values
+
+  private
+    def set_initial_values
+      self.price ||= 0
+
+    end
   
 end
