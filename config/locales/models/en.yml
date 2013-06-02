@@ -21,6 +21,8 @@ en:
           attributes:
             base:
               at_least_one_admin: There should be at least one admin in the community
+        payment:
+          result_should_be_zero: The sum of the user saldo modifications should be 0
     models:
       community: Community
       user: User

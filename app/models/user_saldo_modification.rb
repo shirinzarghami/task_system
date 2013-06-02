@@ -7,6 +7,10 @@ class UserSaldoModification < ActiveRecord::Base
 
   after_initialize :set_initial_values
 
+  validates :payment_id, presence: true
+  validates :price, presence: true
+  validates :percentage, presence: true, :numericality => {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100}
+
 
   private
     def set_initial_values

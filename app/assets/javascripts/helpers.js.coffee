@@ -16,8 +16,7 @@
     return number
 
 
-ts.payment_precision = 3
-ts.payment_max_deviation = 1 / (10^ts.payment_precision)
+
 
 
   # disable_object: (object, condition) ->

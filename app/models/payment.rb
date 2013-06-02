@@ -11,6 +11,10 @@ class Payment < ActiveRecord::Base
 
   after_initialize :set_initial_values
 
+  validates :title, presence: true
+  validates :date, presence: true
+  validates :price, presence: true, :numericality => {:greater_than_or_equal_to => 0}
+
   private
     def set_initial_values
       self.price ||= 0
