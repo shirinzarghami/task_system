@@ -23,6 +23,9 @@ en:
               at_least_one_admin: There should be at least one admin in the community
         payment:
           result_should_be_zero: The sum of the user saldo modifications should be 0
+        user_saldo_modification:
+          base:
+            invalid_user: You are trying create a payment for an user outside the current community
     models:
       community: Community
       user: User

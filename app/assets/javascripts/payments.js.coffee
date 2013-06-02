@@ -38,11 +38,11 @@ get_user_values = (user_hash) ->
   return result
 
 get_total_price = () ->
-  ts.parse_number_input($('#product_declaration_price'))
+  ts.parse_number_input($('.total-price'))
 
 get_equal_percentage = () ->
   number_selected_users = $('input.user-select:checked').size()
-  return parseFloat(100 / number_selected_users).toFixed(ts.payment_precision)
+  return parseFloat(100 / number_selected_users).toFixed(window.payment_precision)
 
 update_tb_state = (tb) ->
   user_object_hash = get_user_hash(tb.parents('tr'))
@@ -58,7 +58,7 @@ calculate_user_total = (row, percentage) ->
     uh['paid_field'].html('€ ' + get_total_price())
   else 
     uh['paid_field'].html('€ 0')
-  uh['cost_field'].html('€ ' + (get_total_price() * (percentage / 100)).toFixed(ts.payment_precision))
+  uh['cost_field'].html('€ ' + (get_total_price() * (percentage / 100)).toFixed(window.payment_precision))
   vh = get_user_values(uh)
   uh['total_price_tb'].val(parseFloat(vh['paid'] - vh['cost']))
 
@@ -67,7 +67,7 @@ check_percentage = () ->
   $('.user-price').each ->
     sum = sum + parseFloat(ts.parse_number_input($(this)))
   
-  amount_is_zero = (-ts.payment_max_deviation < sum.toFixed(ts.payment_precision) < ts.payment_max_deviation)
+  amount_is_zero = (-window.payment_max_deviation < sum.toFixed(window.payment_precision) < window.payment_max_deviation)
   $('input[type=submit]').attr('disabled', !amount_is_zero)
 
   $('input.user-select').parents('tr').find('.percentage').parents('div.control-group').each ->
@@ -81,7 +81,7 @@ check_percentage = () ->
 
 jQuery ->
   $('.user-price').each ->
-    $(this).attr('disabled', true)
+    $(this).attr('readonly', true)
   $('.user-select').each ->
     update_tb_state($(this))
     $(this).click ->

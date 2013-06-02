@@ -48,6 +48,7 @@ en:
     completed: Completed
     schedule: Task schedule
     new: New
+    edit: Edit
     user_info: User info
     payments: Payments
   activerecord:

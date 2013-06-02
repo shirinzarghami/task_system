@@ -10,6 +10,8 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    add_crumb(t('breadcrumbs.edit'), new_community_task_path(@community))
+    @payment = Payment.find(params[:id])
   end
 
   def new
@@ -22,6 +24,14 @@ class PaymentsController < ApplicationController
   end
 
   def create
+    @payment = ProductDeclaration.new payment_params.merge community_user_id: @community_user.id
+    if @payment.save
+      flash[:notice] = t('messages.save_success')
+      redirect_to community_payments_path @community
+    else
+      flash[:error] = t('messages.save_fail')
+      render 'new'
+    end
   end
 
   def destroy
@@ -30,5 +40,13 @@ class PaymentsController < ApplicationController
   private
     def set_payment_breadcrumb
       add_crumb t('breadcrumbs.payments'), community_payments_path(@community)
+    end
+
+    def payment_params
+      if params.has_key? :payment
+        params.require(:payment).permit(:date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
+      elsif params.has_key? :product_declaration
+        params.require(:product_declaration).permit(:date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
+      end
     end
 end

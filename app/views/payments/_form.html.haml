@@ -7,7 +7,7 @@
       = f.input :date, as: :string, input_html: {class: 'datepicker'}
       = f.input :price , :wrapper => :append do
         %span.add-on= "€"
-        = f.input_field :price, class: 'input-mini'
+        = f.input_field :price, class: 'input-mini total-price'
 
       = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
       = tinymce
@@ -28,6 +28,8 @@
             .control-group
               %label.checkbox
                 = builder.check_box :checked, class: 'user-select'
+                = builder.hidden_field :community_user_id 
+                / = builder.hidden_field :payment_id 
                 = builder.object.user.name
           %td
             .input-append.control-group

@@ -1,5 +1,4 @@
-@ts =
-  bla =() ->
-    alert('snikkel')
-ts.payment_precision = <%= CONFIG[:price_precision] %>
-ts.payment_max_deviation = 1 / (10^ts.payment_precision)
+
+window.payment_precision = <%= CONFIG[:price_precision] %>
+
+window.payment_max_deviation = parseFloat(1 / (Math.pow(10, window.payment_precision)))
