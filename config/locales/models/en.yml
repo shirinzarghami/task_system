@@ -37,6 +37,8 @@ en:
         date: Payment date
         description: Description
         price: Price
+        user: Creator
+        my_result: My result
       user_saldo_modification:
         percentage: Percentage
         price: Price

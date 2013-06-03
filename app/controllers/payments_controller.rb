@@ -1,7 +1,9 @@
 class PaymentsController < ApplicationController
+  load_and_authorize_resource
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :set_payment_breadcrumb, except: [:update, :create, :destroy]
+
   def index
     @payments = @community.payments.paginate(page: params[:page], per_page: 20)
   end

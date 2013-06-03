@@ -254,6 +254,8 @@ en:
         distribution: Distribution
       costs: Costs
       paid: Paid
+    index:
+      title: Overview of payments
 
 
 

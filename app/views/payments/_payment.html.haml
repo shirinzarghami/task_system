@@ -1,0 +1,8 @@
+%tr
+  %td= payment.title
+  %td= payment.community_user.user.name
+  %td= number_to_currency payment.price, unit: '€'
+  - result = payment.user_saldo_modifications.find_by_community_user_id(@community_user.id).try(:price) || 0
+  %td{class: (result < 0 ? 'error-text' : 'valid-text')}
+    = number_to_currency result, unit: '€'
+    
