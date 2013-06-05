@@ -22,6 +22,7 @@ class CommunitiesController < ApplicationController
   end
 
   def show
+    set_community_breadcrumb
     @invitations = @community.invitations.paginate(page: params[:invitation_page], per_page: 10)
     @community_users = @community.community_users.paginate(page: params[:page], per_page: 20)
   end

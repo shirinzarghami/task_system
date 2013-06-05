@@ -18,12 +18,15 @@ class ApplicationController < ActionController::Base
   def find_community
     @community ||= @user.communities.find_by_subdomain! params.has_key?(:community_id) ? params[:community_id] : params[:id] if @user
     @community_user ||= CommunityUser.find_by_community_id_and_user_id!(@community, @user)
+  end
+
+  def set_community_breadcrumb
     add_crumb(@community.name, community_path(@community))
   end
 
-  def current_ability
+  def current_ability(object = nil)
     find_community
-    @current_ability ||= Ability.new(current_user, @community_user)
+    @current_ability ||= Ability.new(current_user, @community_user, object)
   end
 
   # Redirect if confition does not hold
@@ -42,9 +45,9 @@ class ApplicationController < ActionController::Base
 
   def community_admin? community=nil
     if community.nil?
-      @community_user and @community_user.role == 'admin'
+      @community_user and @community_user.admin?
     else
-      CommunityUser.find_by_community_id_and_user_id!(community, @user).role == 'admin'
+      CommunityUser.find_by_community_id_and_user_id!(community, @user).try(:admin?)
     end
   end
 

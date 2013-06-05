@@ -2,8 +2,8 @@ class PaymentsController < ApplicationController
   load_and_authorize_resource
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
-  before_filter :set_payment_breadcrumb, except: [:update, :create, :destroy]
-
+  before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
+  before_filter :find_payment, except: [:index, :new, :create]
   def index
     @payments = @community.payments.paginate(page: params[:page], per_page: 20)
   end
@@ -39,8 +39,13 @@ class PaymentsController < ApplicationController
   def destroy
   end
 
+  def current_abillity
+    super(find_payment)
+  end
+
   private
-    def set_payment_breadcrumb
+    def set_breadcrumbs
+      set_community_breadcrumb
       add_crumb t('breadcrumbs.payments'), community_payments_path(@community)
     end
 
@@ -50,5 +55,9 @@ class PaymentsController < ApplicationController
       elsif params.has_key? :product_declaration
         params.require(:product_declaration).permit(:date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
       end
+    end
+
+    def find_payment
+      @object ||= @payment ||= Payment.find(params.has_key?(:payment_id) ? params[:payment_id] : params[:id])
     end
 end
