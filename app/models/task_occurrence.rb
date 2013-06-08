@@ -21,19 +21,19 @@ class TaskOccurrence < ActiveRecord::Base
   scope :approaching_deadline, where(['task_occurrences.deadline < (UTC_TIMESTAMP() + INTERVAL 1 DAY)'])
   scope :no_reminder_sent, where(reminder_mail_sent: false)
 
-  scope :todo, order('deadline ASC').where('
+  scope :todo, order('task_occurrences.deadline ASC').where('
                                   (should_be_checked = true AND checked = false)
                                   OR 
                                   (should_be_checked = false AND UTC_TIMESTAMP() < deadline)')
 
 
 
-  scope :completed, order('updated_at DESC').where('
+  scope :completed, order('task_occurrences.updated_at DESC').where('
                                   (should_be_checked = true AND checked = true)
                                   OR 
                                   (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')  
 
-  scope :uncompleted, order('updated_at DESC').where('
+  scope :uncompleted, order('task_occurrences.updated_at DESC').where('
                                   (should_be_checked = true AND checked = false)
                                   OR 
                                   (should_be_checked = false AND UTC_TIMESTAMP() <= deadline)')
@@ -42,12 +42,14 @@ class TaskOccurrence < ActiveRecord::Base
   after_initialize :set_default_values
 
   def self.send_reminders
-    uncompleted.approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |result|
+    # uncompleted.approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).each do |result|
+    joins(:user).uncompleted.approaching_deadline.no_reminder_sent.select(:user_id).group(:user_id).where('users.receive_reminder_mail IS true').each do |result|
       ActiveRecord::Base.transaction do 
         task_occurrences = approaching_deadline.no_reminder_sent.where(user_id: result.user_id)
         user = User.find result.user_id
-        TaskOccurrenceMailer.reminder(user, task_occurrences).deliver
         task_occurrences.update_all reminder_mail_sent: true
+        # next unless user.receive_reminder_mail
+        TaskOccurrenceMailer.reminder(user, task_occurrences).deliver
       end
     end
   end

@@ -66,7 +66,7 @@ check_percentage = () ->
   sum = 0
   $('.user-price').each ->
     sum = sum + parseFloat(ts.parse_number_input($(this)))
-  
+  console.log(sum.toFixed(window.payment_precision))
   amount_is_zero = (-window.payment_max_deviation < sum.toFixed(window.payment_precision) < window.payment_max_deviation)
   $('input[type=submit]').attr('disabled', !amount_is_zero)
 
