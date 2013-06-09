@@ -54,7 +54,7 @@ class TasksController < ApplicationController
       redirect_to community_tasks_path @community
     else
       flash[:error] = t('messages.task_destroy_fails')
-      render action: 'edit'
+      redirect_to community_tasks_path @community
     end
   end
 

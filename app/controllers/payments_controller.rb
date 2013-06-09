@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
-  before_filter :find_payment, except: [:index, :new, :create]
+  before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
   def index
     @payments = @community.payments.paginate(page: params[:page], per_page: 20)
   end
@@ -13,7 +13,7 @@ class PaymentsController < ApplicationController
 
   def edit
     add_crumb(t('breadcrumbs.edit'), new_community_task_path(@community))
-    @payment = Payment.find(params[:id])
+    # @payment = Payment.find(params[:id])
   end
 
   def new
@@ -23,6 +23,13 @@ class PaymentsController < ApplicationController
   end
 
   def update
+    if @payment.update_attributes payment_params
+      flash[:notice] = t('messages.save_success')
+      redirect_to community_payments_path @community
+    else
+      flash[:error] = t('messages.save_fail')
+      render action: 'edit'
+    end
   end
 
   def create
@@ -37,6 +44,13 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
+    if @payment.destroy
+      flash[:notice] = t('messages.task_destroy_success')
+      redirect_to community_payments_path @community
+    else
+      flash[:error] = t('messages.task_destroy_fails')
+      redirect_to community_payments_path @community
+    end
   end
 
   def current_abillity
@@ -51,9 +65,9 @@ class PaymentsController < ApplicationController
 
     def payment_params
       if params.has_key? :payment
-        params.require(:payment).permit(:date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:payment).permit(:price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
       elsif params.has_key? :product_declaration
-        params.require(:product_declaration).permit(:date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:product_declaration).permit(:price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:checked, :percentage, :price, :community_user_id, :payment_id]})
       end
     end
 

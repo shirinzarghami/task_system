@@ -246,6 +246,9 @@ en:
     show:
 
   payments:
+    payment:
+      delete: Delete this payment
+      edit: Edit this payment
     new:
       title: New payment declaration
     form:
