@@ -4,9 +4,11 @@
 
 update_create_user_tab = (optionbox) ->
   if $('#user-form') && optionbox.attr('value') == 'accept' && optionbox.attr('checked')
-    tasksystem.show($('#user-form'))
+    # tasksystem.show($('#user-form'))
+    $('#user-form').slideDown()
   else
-    tasksystem.hide($('#user-form'))
+    # tasksystem.hide($('#user-form'))
+    $('#user-form').slideUp()
 
 jQuery ->
   $('#user-form').hide()
