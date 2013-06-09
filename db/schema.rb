@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20130527195718) do
   create_table "payments", :force => true do |t|
     t.string   "title"
     t.integer  "community_user_id"
-    t.datetime "date"
+    t.date     "date"
     t.text     "description"
     t.text     "dynamic_attributes"
     t.string   "type"
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20130527195718) do
     t.decimal  "price",             :precision => 8, :scale => 2
     t.integer  "payment_id"
     t.integer  "community_user_id"
-    t.decimal  "percentage",        :precision => 2, :scale => 2
+    t.decimal  "percentage",        :precision => 8, :scale => 2
     t.boolean  "checked"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
