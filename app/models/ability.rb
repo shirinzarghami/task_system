@@ -21,7 +21,7 @@ class Ability
 
     end
   end
-  
+
   def object_creator?
     @bject && @object.try(:user) == @user
   end

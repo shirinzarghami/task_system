@@ -13,8 +13,8 @@ select_user = () ->
 
 update_percentage = (tb) ->
   percentage = ts.parse_number_input(tb)
+  tb.prev().val(percentage)
   tb.val(get_equal_percentage()) unless (0 <= percentage <= 100) 
-  
 
   row = tb.parents('tr')
   calculate_user_total(row, percentage)
@@ -33,8 +33,8 @@ get_user_values = (user_hash) ->
   result = 
     total_price: parseFloat(ts.parse_number_input(user_hash['total_price_tb'])),
     percentage: parseFloat(ts.parse_number_input(user_hash['percentage_tb'])),
-    cost: parseFloat(ts.parse_number_input(user_hash['cost_field'])),
-    paid: parseFloat(ts.parse_number_input(user_hash['paid_field']))
+    cost: parseFloat(user_hash['cost_field'].data('cost')),
+    paid: parseFloat(user_hash['paid_field'].data('paid'))
   return result
 
 get_total_price = () ->
@@ -55,12 +55,13 @@ calculate_user_total = (row, percentage) ->
   uh = get_user_hash(row)
   uh['percentage_tb'].val(percentage)
   if row.hasClass('current-user')
-    uh['paid_field'].html('€ ' + get_total_price())
+    uh['paid_field'].data('paid', get_total_price())
   else 
-    uh['paid_field'].html('€ 0')
-  uh['cost_field'].html('€ ' + (get_total_price() * (percentage / 100)).toFixed(window.payment_precision))
+    uh['paid_field'].data('paid', '0')
+  uh['cost_field'].data('cost', (get_total_price() * (percentage / 100)).toFixed(window.payment_precision))
   vh = get_user_values(uh)
   uh['total_price_tb'].val(parseFloat(vh['paid'] - vh['cost']))
+  update_visible_fields()
 
 check_percentage = () ->
   sum = 0
@@ -77,10 +78,23 @@ check_percentage = () ->
     $('input.user-select:checked').parents('tr').find('.percentage').parents('div.control-group').each ->
       $(this).addClass('error')
 
+update_visible_fields = () ->
+  $('.user-saldo-modification').each ->
+    $(this).find('.percentage-input:not(:focus)').val(parseFloat($(this).find('.percentage').val()).toFixed(2))
+    $(this).find('.price-input').val(parseFloat($(this).find('.user-price').val()).toFixed(2))
+    $(this).find('.cost').html('€ ' + parseFloat($(this).find('.cost').data('cost')).toFixed(2))
+    $(this).find('.paid').html('€ ' + parseFloat($(this).find('.paid').data('paid')).toFixed(2))
+
+update_invisible_fields = () ->
+  $('.user-saldo-modification').each ->
+    $(this).find('.percentage').val(parseFloat($(this).find('.percentage-input').val()).toFixed(2))
+    $(this).find('.user-price').val(parseFloat($(this).find('.price-input').val()).toFixed(2))
+    $(this).find('.cost').data('cost', parseFloat($(this).find('.cost').html()).toFixed(2))
+    $(this).find('.paid').data('paid', parseFloat($(this).find('.paid').html()).toFixed(2))
 
 
 jQuery ->
-  $('.user-price').each ->
+  $('.price-input').each ->
     $(this).attr('readonly', true)
   $('.user-select').each ->
     update_tb_state($(this))
@@ -88,5 +102,5 @@ jQuery ->
       update_tb_state($(this))
       select_user()
       check_percentage()
-  $('.percentage').bind 'input', ->
+  $('.percentage-input').bind 'input', ->
     update_percentage($(this))

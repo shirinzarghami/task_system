@@ -33,14 +33,16 @@
                 = builder.object.user.name
           %td
             .input-append.control-group
-              = builder.input_field :percentage, class: 'input-mini percentage'
+              = text_field_tag :percentage, '', class: 'input-mini percentage-input'
+              = builder.hidden_field :percentage, class: 'percentage'
               %span.add-on= "%"
 
-          %td.cost.error-text= '€ 0'
-          %td.paid.valid-text= '€ 0'
+          %td.cost.error-text{:data => {:cost => 0}}= '€ 0'
+          %td.paid.valid-text{:data => {:paid => 0}}= '€ 0'
           %td
             .input-append
               %span.add-on= "€"
-              = builder.input_field :price, class: 'input-mini user-price' 
+              = text_field_tag :price, '', class: 'input-mini price-input'
+              = builder.hidden_field :price, class: 'user-price' 
 
   = f.button :submit, class: 'btn btn-primary'
