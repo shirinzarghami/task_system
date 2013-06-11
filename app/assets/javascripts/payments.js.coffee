@@ -44,12 +44,13 @@ get_equal_percentage = () ->
   number_selected_users = $('input.user-select:checked').size()
   return parseFloat(100 / number_selected_users).toFixed(window.payment_precision)
 
-update_tb_state = (tb) ->
-  user_object_hash = get_user_hash(tb.parents('tr'))
-  if tb.is(':checked')
-    user_object_hash['percentage_tb'].attr('disabled', false)
+update_tb_state = (cb) ->
+  # user_object_hash = get_user_hash(cb.parents('tr'))
+  tb = cb.parents('tr').find('.percentage-input')
+  if cb.is(':checked')
+    tb.attr('readonly', false)
   else
-    user_object_hash['percentage_tb'].attr('disabled', true)
+    tb.attr('readonly', true)
 
 calculate_user_total = (row, percentage) ->
   uh = get_user_hash(row)
@@ -67,7 +68,6 @@ check_percentage = () ->
   sum = 0
   $('.user-price').each ->
     sum = sum + parseFloat(ts.parse_number_input($(this)))
-  console.log(sum.toFixed(window.payment_precision))
   amount_is_zero = (-window.payment_max_deviation < sum.toFixed(window.payment_precision) < window.payment_max_deviation)
   $('input[type=submit]').attr('disabled', !amount_is_zero)
 
@@ -104,3 +104,6 @@ jQuery ->
       check_percentage()
   $('.percentage-input').bind 'input', ->
     update_percentage($(this))
+  $('.percentage').each ->
+    update_percentage($(this))
+  update_visible_fields()

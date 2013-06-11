@@ -29,11 +29,11 @@
               %label.checkbox
                 = builder.check_box :checked, class: 'user-select'
                 = builder.hidden_field :community_user_id 
-                / = builder.hidden_field :payment_id 
+                = builder.hidden_field :id
                 = builder.object.user.name
           %td
             .input-append.control-group
-              = text_field_tag :percentage, '', class: 'input-mini percentage-input'
+              = text_field_tag :percentagecc, '', class: 'input-mini percentage-input'
               = builder.hidden_field :percentage, class: 'percentage'
               %span.add-on= "%"
 
@@ -42,7 +42,7 @@
           %td
             .input-append
               %span.add-on= "€"
-              = text_field_tag :price, '', class: 'input-mini price-input'
+              = text_field_tag :pricecc, '', class: 'input-mini price-input'
               = builder.hidden_field :price, class: 'user-price' 
 
   = f.button :submit, class: 'btn btn-primary'
