@@ -24,9 +24,9 @@ class ApplicationController < ActionController::Base
     add_crumb(@community.name, community_path(@community))
   end
 
-  def current_ability(object = nil)
+  def current_ability
     find_community
-    @current_ability ||= Ability.new(current_user, @community_user, object)
+    @current_ability ||= Ability.new(@community_user)
   end
 
   # Redirect if confition does not hold

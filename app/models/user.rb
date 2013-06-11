@@ -40,4 +40,8 @@ class User < ActiveRecord::Base
     confirmed_at.present?
   end
 
+  def global_admin?
+    global_role == 'admin'
+  end
+
 end

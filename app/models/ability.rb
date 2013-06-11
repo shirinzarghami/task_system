@@ -1,29 +1,38 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user, community_user, object = nil)
-    # Define abilities for the passed in user here. For example:
-    #
+  def initialize(community_user)
+    @community_user = community_user
+
     alias_action :create, :read, :update, :destroy, :to => :crud
-    @object = object
-    user ||= User.new # guest user (not logged in)
-    can :create, [Task, Payment]
-    if user.try(:global_role) == 'admin'
+    if community_user.try(:user).try(:global_admin?)
       can :manage, :all
-    elsif community_user.try(:admin?)
-      can :manage, :all
-    elsif community_user.try(:normal?)
-      can :read, :all
-      if object_creator?
-        can :crud, [User, CommunityUser, Task, TaskOccurrence, Payment]
-      end
     else
-
+      if community_user.try(:admin?)
+        limit_by_community_for_action :crud
+      else
+        limit_by_community_for_action :read
+        can [:update, :destroy], [Task, Payment, CommunityUser, Comment], user_id: community_user.user_id
+        can [:update, :destroy], TaskOccurrence, task: {user_id: community_user.user_id}
+        can [:update, :destroy], Invitation, invitor_id: community_user.user_id
+        can [:update, :destroy], UserSaldoModification, payment: {user_id: community_user.user_id}
+        can :create, [Task, TaskOccurrence, Payment, CommunityUser, Comment, Invitation, UserSaldoModification]
+      end
     end
+
+
   end
 
-  def object_creator?
-    @bject && @object.try(:user) == @user
+  def limit_by_community_for_action actions
+    can actions, [Task, TaskOccurrence, Invitation, CommunityUser], :community_id => @community_user.community.id
+    can actions, Payment, community_user: {community_id: @community_user.community.id}
+    can actions, Comment, commentable: {community_id: @community_user.id}
+    can actions, UserSaldoModification, payment: {community_user: {community_id: @community_user.id}}
   end
-  #
+
+  # can :manage, [Task, TaskOccurrence, Invitation, CommunityUser], :community_id => community_user.community.id
+  # can :manage, Payment, community_user: {community_id: community_user.community.id}
+  # can :manage, Comment, commentable: {community_id: community_user.id}
+  # can :manage, UserSaldoModification, payment: {community_user: {community_id: community_user.id}}
+  
 end

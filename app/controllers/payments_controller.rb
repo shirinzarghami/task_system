@@ -53,10 +53,6 @@ class PaymentsController < ApplicationController
     end
   end
 
-  def current_abillity
-    super(find_payment)
-  end
-
   private
     def set_breadcrumbs
       set_community_breadcrumb

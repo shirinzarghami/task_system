@@ -17,6 +17,8 @@ class Payment < ActiveRecord::Base
   validates :date, presence: true
   validates :price, presence: true, :numericality => {:greater_than => 0}
   validate :invalid_user
+
+  default_scope order('created_at DESC')
   private
     def set_initial_values
       self.price ||= 0
