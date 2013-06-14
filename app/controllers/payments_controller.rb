@@ -6,6 +6,11 @@ class PaymentsController < ApplicationController
   before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
   def index
     @payments = @community.payments.paginate(page: params[:page], per_page: 20)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show

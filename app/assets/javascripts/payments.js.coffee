@@ -96,14 +96,23 @@ update_invisible_fields = () ->
 jQuery ->
   $('.price-input').each ->
     $(this).attr('readonly', true)
+
   $('.user-select').each ->
     update_tb_state($(this))
     $(this).click ->
       update_tb_state($(this))
       select_user()
       check_percentage()
+
   $('.percentage-input').bind 'input', ->
     update_percentage($(this))
+    
   $('.percentage').each ->
     update_percentage($(this))
   update_visible_fields()
+
+
+  $('.categories-token-input').first().tokenInput users_url,
+    theme: 'facebook'
+    propertyToSearch: 'email'
+    preventDuplicates: true

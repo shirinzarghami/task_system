@@ -8,7 +8,9 @@
       = f.input :price , :wrapper => :append do
         %span.add-on= "€"
         = f.input_field :price, class: 'input-mini total-price'
-
+      .control-group
+        .controls
+          = f.text_field :categories, class: 'categories-token-input'
       = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
       = tinymce
   %fieldset
