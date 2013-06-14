@@ -9,13 +9,16 @@ class Ability
       can :manage, :all
     else
       if community_user.try(:admin?)
-        limit_by_community_for_action :crud
+        limit_by_community_for_action [:read, :update, :destroy]
+        can :create, [Task, TaskOccurrence, Payment, Comment, Invitation, UserSaldoModification]
       else
         limit_by_community_for_action :read
-        can [:update, :destroy], [Task, Payment, CommunityUser, Comment], user_id: community_user.user_id
+        can [:update, :destroy], [Task, CommunityUser, Comment], user_id: community_user.user_id
         can [:update, :destroy], TaskOccurrence, task: {user_id: community_user.user_id}
         can [:update, :destroy], Invitation, invitor_id: community_user.user_id
-        can [:update, :destroy], UserSaldoModification, payment: {user_id: community_user.user_id}
+        can [:update, :destroy], UserSaldoModification, payment: {community_user_id: community_user.id}
+        can [:update, :destroy], Payment, community_user_id: @community_user.id
+
         can :create, [Task, TaskOccurrence, Payment, CommunityUser, Comment, Invitation, UserSaldoModification]
       end
     end
