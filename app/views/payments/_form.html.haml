@@ -8,9 +8,8 @@
       = f.input :price , :wrapper => :append do
         %span.add-on= "€"
         = f.input_field :price, class: 'input-mini total-price'
-      .control-group
-        .controls
-          = f.text_area :categories, class: 'categories-token-input span7', rows: 5, data: {checkpath: community_payments_tags_path(@community) + '.json'}
+ 
+      = f.input :categories, input_html: {class: 'categories-token-input span7', rows: 5, data: {checkpath: community_payments_tags_path(@community) + '.json', pre: f.object.categories_from(@community).map {|n| {name: n}}.to_json}}
       = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
       = tinymce
   %fieldset

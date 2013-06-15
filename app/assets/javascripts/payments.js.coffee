@@ -115,4 +115,5 @@ jQuery ->
   token_input.tokenInput token_input.data('checkpath'),
     theme: 'facebook'
     propertyToSearch: 'name'
-    preventDuplicates: true
+    tokenValue: 'name'
+    prePopulate: token_input.data('pre')

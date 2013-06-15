@@ -39,6 +39,7 @@ en:
         price: Price
         user: Creator
         my_result: My result
+        categories: Categories
       user_saldo_modification:
         percentage: Percentage
         price: Price

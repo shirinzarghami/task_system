@@ -3,7 +3,7 @@ class Payment < ActiveRecord::Base
   # require 'include/dynamic_attributes'
   # PERSIST_DYNAMIC_ATTRIBUTES = []
   # include DynamicAttributes
-  attr_accessible :community_user_id, :date, :description, :dynamic_attributes, :title, :type, :user_saldo_modifications_attributes, :price
+  attr_accessible :community_user_id, :date, :description, :dynamic_attributes, :title, :type, :user_saldo_modifications_attributes, :price, :categories
   attr_accessor :categories
   acts_as_taggable_on :categories
 
@@ -22,9 +22,17 @@ class Payment < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-  def categories=
-    
+  # def categories= tag_list
+  #   self.community.tag(self, :with => tag_list.split(','), :on => :categories)
+  # end
+  
+  def save_category_tags
+    if @categories.present?
+      ActsAsTaggableOn::Tagging.where(taggable_id: self.id, taggable_type: 'Payment', tagger_type: 'Community', tagger_id: community.id).destroy_all
+      self.community.tag(self, :with => @categories.split(','), :on => :categories)
+    end
   end
+
   private
     def set_initial_values
       self.price ||= 0
@@ -33,5 +41,6 @@ class Payment < ActiveRecord::Base
     def invalid_user
       errors.add(:base, :invalid_user) unless self.user_saldo_modifications.reject {|usm| self.community.id == usm.community.id}.size == 0
     end
+
   
 end

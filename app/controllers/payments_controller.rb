@@ -29,6 +29,7 @@ class PaymentsController < ApplicationController
 
   def update
     if @payment.update_attributes payment_params
+      @payment.save_category_tags
       flash[:notice] = t('messages.save_success')
       redirect_to community_payments_path @community
     else
@@ -38,13 +39,15 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = ProductDeclaration.new payment_params.merge community_user_id: @community_user.id
+    @payment = @community_user.payments.build payment_params
+    @payment.becomes(ProductDeclaration)
     if @payment.save
+      @payment.save_category_tags
       flash[:notice] = t('messages.save_success')
       redirect_to community_payments_path @community
     else
       flash[:error] = t('messages.save_fail')
-      render 'new'
+      render 'edit'
     end
   end
 
@@ -66,9 +69,9 @@ class PaymentsController < ApplicationController
 
     def payment_params
       if params.has_key? :payment
-        params.require(:payment).permit(:price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:payment).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
       elsif params.has_key? :product_declaration
-        params.require(:product_declaration).permit(:price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:product_declaration).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
       end
     end
 
