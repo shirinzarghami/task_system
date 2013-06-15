@@ -6,7 +6,8 @@ class Community < ActiveRecord::Base
   attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :invitation_emails, :creator, :max_users
   attr_reader :user_tokens, :admin_user_tokens
   attr_accessor :invitation_emails
-
+  acts_as_tagger
+  
   has_many :community_users, dependent: :destroy
   has_many :invitations, dependent: :destroy
   has_many :task_occurrences, dependent: :destroy

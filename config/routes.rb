@@ -1,4 +1,6 @@
 TaskSystem::Application.routes.draw do
+  get "tags/index"
+
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
   devise_scope :user do
     get "logout", :to => "devise/sessions#destroy"
@@ -11,6 +13,7 @@ TaskSystem::Application.routes.draw do
 
   resources :invitations, except: [:index]
   resources :communities, path: '', except: [:edit, :upgrade] do
+    match 'payments/tags' => 'tags#index'
     resources :payments
     resources :community_users, only: [:show]
     resources :tasks do

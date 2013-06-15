@@ -111,8 +111,8 @@ jQuery ->
     update_percentage($(this))
   update_visible_fields()
 
-
-  $('.categories-token-input').first().tokenInput users_url,
+  token_input = $('.categories-token-input').first()
+  token_input.tokenInput token_input.data('checkpath'),
     theme: 'facebook'
-    propertyToSearch: 'email'
+    propertyToSearch: 'name'
     preventDuplicates: true
