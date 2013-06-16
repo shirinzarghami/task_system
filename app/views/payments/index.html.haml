@@ -1,5 +1,9 @@
 - content_for :title do
   = t('.title')
+
+
+- content_for :search do
+  = render partial: 'search'
 %p
   %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
   %table.table.table-striped

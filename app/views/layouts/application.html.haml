@@ -34,6 +34,8 @@
             = tab_link t('.logout'), logout_path, icon_class: 'icon-off icon-white', class: 'pull-right'
           %small.pull-right#version-box
             %em= "#{t('.version')} #{Rails.application.config.necura_version}"
+          = yield :search
+
     %div.header
 
 

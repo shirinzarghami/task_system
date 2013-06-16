@@ -261,12 +261,19 @@ en:
     index:
       title: Overview of payments
       new_product_declaration: Product declaration
+    search: 
+      search-payments: "Search payments"
 
   saldo:
     show:
       title: Saldo overview
       saldo: Saldo
-
+      lost-money: Lost money
+      error: Error
+      error-percentage: "%{perc} of total expenses"
+      error-tooltip: 
+        "Due to rounding of prices, the total sum of payments may contain a small error. Ideally, all cost and 
+        expenses should add up to zero. The lost money is the factual sum."
 
   form:
     categories:

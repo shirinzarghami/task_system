@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
   before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
   def index
-    @payments = @community.payments.paginate(page: params[:page], per_page: 20)
+    @payments = @community.payments.where(search_conditions).paginate(page: params[:page], per_page: 20)
 
     respond_to do |format|
       format.html
@@ -77,5 +77,12 @@ class PaymentsController < ApplicationController
 
     def find_payment
       @object ||= @payment ||= Payment.find(params.has_key?(:payment_id) ? params[:payment_id] : params[:id])
+    end
+
+    def search_conditions
+      if params.has_key?(:q) && params[:q].present?
+        search = "%#{params[:q]}%"
+        ['title LIKE ? OR description LIKE ?', search, search]
+      end
     end
 end

@@ -1,5 +1,6 @@
 - content_for :title do
   = t('.title')
+
 %p
   %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
   %table.table.table-striped
@@ -12,3 +13,8 @@
         %td= CommunityUser.find(k).user.name
         %td{class: (v < 0 ? 'error-text' : 'valid-text')}= number_to_currency v, unit: '€'
         %td
+
+%p
+  = image_tag('iconic/info_8x16.png', data: {title: t('.error-tooltip')}, class: 'tooltip-link')
+  %strong= t('.error')
+  = @error 
