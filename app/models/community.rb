@@ -12,6 +12,7 @@ class Community < ActiveRecord::Base
   has_many :invitations, dependent: :destroy
   has_many :task_occurrences, dependent: :destroy
   has_many :payments, through: :community_users, dependent: :destroy
+  has_many :user_saldo_modifications, through: :community_users, dependent: :destroy
 
   # All users
   has_many :members, through: :community_users, class_name: 'User', source: :user

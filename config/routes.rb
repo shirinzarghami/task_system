@@ -15,6 +15,7 @@ TaskSystem::Application.routes.draw do
   resources :communities, path: '', except: [:edit, :upgrade] do
     match 'payments/tags' => 'tags#index'
     resources :payments
+    resource :saldo, only: [:show], controller: 'saldo'
     resources :community_users, only: [:show]
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]

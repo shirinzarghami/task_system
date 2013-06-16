@@ -77,6 +77,7 @@ en:
       logout: Logout
       version: Version
       payments: Payments
+      saldos: Saldos
 
 
 
@@ -261,7 +262,10 @@ en:
       title: Overview of payments
       new_product_declaration: Product declaration
 
-
+  saldo:
+    show:
+      title: Saldo overview
+      saldo: Saldo
 
 
   form:
