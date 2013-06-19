@@ -12,4 +12,8 @@ module PaymentsHelper
       content_tag :span, category, class: 'badge'
     end.join.html_safe
   end
+
+  def payment_distribution
+    @payment.user_saldo_modifications.map {|sm| {label: sm.user.name, value: sm.percentage.to_i}}.to_json
+  end
 end

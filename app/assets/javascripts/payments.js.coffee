@@ -117,3 +117,10 @@ jQuery ->
     propertyToSearch: 'name'
     tokenValue: 'name'
     prePopulate: token_input.data('pre')
+
+  # Donut graph task#show
+  if $('#payment-donut').length > null
+    Morris.Donut
+      element: 'payment-donut',
+      data: $('#payment-donut').data('distribution'),
+      colors: ['#E0FA71', '#E7003E', '#560EAD', '#9DB82E', '#F33D6E', '#8643D6'],
