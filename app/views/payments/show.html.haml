@@ -2,11 +2,10 @@
   %h2= image_tag('iconic/calendar_alt_stroke_32x32.png') + t('.title')
 
 %div.row-fluid
-  %div.user-info
-    %div.span6.well.object-info
-      %div#payment-donut{data: {distribution: payment_distribution}}
+  %div.span6.well.object-info
+    %div#payment-donut{data: {distribution: payment_distribution}}
 
-    %div.span6.well.object-info= render partial: 'payment_info'
+  %div.span6.well.object-info= render partial: 'payment_info'
 %hr
 %h2= image_tag('iconic/comment_stroke_32x28.png') + 'Comments'
 %div.comments= render partial: 'comments/comment', collection: @comments

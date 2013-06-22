@@ -92,6 +92,8 @@ update_invisible_fields = () ->
     $(this).find('.cost').data('cost', parseFloat($(this).find('.cost').html()).toFixed(2))
     $(this).find('.paid').data('paid', parseFloat($(this).find('.paid').html()).toFixed(2))
 
+payment_donut_formatter = (value) ->
+  return value + ' %'
 
 jQuery ->
   $('.price-input').each ->
@@ -124,3 +126,4 @@ jQuery ->
       element: 'payment-donut',
       data: $('#payment-donut').data('distribution'),
       colors: ['#E0FA71', '#E7003E', '#560EAD', '#9DB82E', '#F33D6E', '#8643D6'],
+      formatter: payment_donut_formatter
