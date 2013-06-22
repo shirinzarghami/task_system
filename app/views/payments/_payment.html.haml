@@ -1,6 +1,6 @@
 %tr
   %td
-    = payment.title
+    = link_to payment.title, community_payment_path(@community, payment)
     %br
     = payment_categories_for payment
   %td= payment.community_user.user.name

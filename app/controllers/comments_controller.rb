@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
   before_filter :load_commentable
   before_filter :find_community
   before_filter :find_comment, only: [:destroy, :update]

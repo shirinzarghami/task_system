@@ -29,7 +29,7 @@ class Ability
   def limit_by_community_for_action actions
     can actions, [Task, TaskOccurrence, Invitation, CommunityUser], :community_id => @community_user.community.id
     can actions, Payment, community_user: {community_id: @community_user.community.id}
-    can actions, Comment, commentable: {community_id: @community_user.id}
+    can actions, Comment, commentable: {community: @community_user.community}
     can actions, UserSaldoModification, payment: {community_user: {community_id: @community_user.id}}
   end
 
