@@ -37,8 +37,10 @@ class CommentsController < ApplicationController
 
   private
     def return_url
-      if @commentable.class == TaskOccurrence
+      if @commentable.is_a? TaskOccurrence
         community_task_occurrence_path(@community, @commentable)
+      elsif @commentable.is_a? Payment
+        community_payment_path(@community, @commentable)
       else
         community_path(@community)
       end

@@ -21,11 +21,9 @@ class Payment < ActiveRecord::Base
   validate :invalid_user
 
   default_scope order('created_at DESC')
-
-  # def categories= tag_list
-  #   self.community.tag(self, :with => tag_list.split(','), :on => :categories)
-  # end
   
+  acts_as_commentable
+
   def save_category_tags
     if @categories.present?
       ActsAsTaggableOn::Tagging.where(taggable_id: self.id, taggable_type: 'Payment', tagger_type: 'Community', tagger_id: community.id).destroy_all

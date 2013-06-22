@@ -14,7 +14,9 @@ TaskSystem::Application.routes.draw do
   resources :invitations, except: [:index]
   resources :communities, path: '', except: [:edit, :upgrade] do
     match 'payments/tags' => 'tags#index'
-    resources :payments
+    resources :payments do
+      resources :comments, only: [:create, :destroy]
+    end
     resource :saldo, only: [:show], controller: 'saldo'
     resources :community_users, only: [:show]
     resources :tasks do
