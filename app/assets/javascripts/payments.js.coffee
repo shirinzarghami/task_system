@@ -70,7 +70,7 @@ check_percentage = () ->
     sum = sum + parseFloat(ts.parse_number_input($(this)))
   amount_is_zero = (-window.payment_max_deviation < sum.toFixed(window.payment_precision) < window.payment_max_deviation)
   $('input[type=submit]').attr('disabled', !amount_is_zero)
-
+  console.log('Payment deviation: ' + sum.toFixed(window.payment_precision))
   $('input.user-select').parents('tr').find('.percentage').parents('div.control-group').each ->
     $(this).removeClass('error')
 
@@ -112,6 +112,10 @@ jQuery ->
   $('.percentage').each ->
     update_percentage($(this))
   update_visible_fields()
+
+  $('.total-price').bind 'input', ->
+    select_user()
+    check_percentage()    
 
   token_input = $('.categories-token-input').first()
   token_input.tokenInput token_input.data('checkpath'),

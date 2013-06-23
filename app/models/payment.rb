@@ -34,6 +34,7 @@ class Payment < ActiveRecord::Base
   private
     def set_initial_values
       self.price ||= 0
+      self.date ||= Date.today
     end
 
     def invalid_user

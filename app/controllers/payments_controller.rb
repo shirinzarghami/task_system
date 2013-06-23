@@ -79,6 +79,7 @@ class PaymentsController < ApplicationController
 
     def find_payment
       @object ||= @payment ||= Payment.find(params.has_key?(:payment_id) ? params[:payment_id] : params[:id])
+      add_crumb(@payment.title.truncate(10), community_payment_path(@community, @payment))
     end
 
     def search_conditions
