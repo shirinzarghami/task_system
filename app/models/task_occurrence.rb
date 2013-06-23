@@ -96,6 +96,10 @@ class TaskOccurrence < ActiveRecord::Base
     Time.mktime(0) + (time_in_minutes * 60)
   end
 
+  def title
+    task_name
+  end
+
   private
     def set_default_values
       checked = false if checked.nil?

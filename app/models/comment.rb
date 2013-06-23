@@ -15,6 +15,8 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
+  after_save :send_notifications
+
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
@@ -50,14 +52,22 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
-  def self.send_notifications
-    Comment.no_notification_sent.each do |comment|
-      commentable = comment.commentable
-      community = commentable.respond_to?(:community) && commentable.community
-      next unless community
-      community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(user, comment).deliver}
-      comment.notification_sent = true
-      comment.save
-    end
+  def send_notifications
+
+    community = commentable.try(:community) || commentable.community_user.community 
+    community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(community, user, self).deliver}
   end
+
+  # def self.send_notifications
+  #   Comment.no_notification_sent.each do |comment|
+  #     commentable = comment.commentable
+  #     community = commentable.respond_to?(:community) && commentable.community
+  #     next unless community
+  #     community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(user, comment).deliver}
+  #     comment.notification_sent = true
+  #     comment.save
+  #   end
+  # end
 end
+
+

@@ -127,3 +127,4 @@ jQuery ->
       data: $('#payment-donut').data('distribution'),
       colors: ['#E0FA71', '#E7003E', '#560EAD', '#9DB82E', '#F33D6E', '#8643D6'],
       formatter: payment_donut_formatter
+
