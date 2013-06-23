@@ -70,6 +70,8 @@ module TaskSystem
     config.max_created_communities = 5
     config.max_members = 10
     
+    config.assets.precompile += %w(sessions.css token-input-facebook.css)
+
     config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
 
     config.to_prepare do

@@ -63,7 +63,7 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def find_task_occurrence
-      @object = @task_occurrence = TaskOccurrence.find params[:id]
+      @object = @task_occurrence = TaskOccurrence.find(params[:id])
       @task = @task_occurrence.task
     end
 

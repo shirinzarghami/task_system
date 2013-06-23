@@ -1,0 +1,3 @@
+:javascript
+  window.payment_precision = #{CONFIG[:price_precision]}
+  window.payment_max_deviation = parseFloat(1 / (Math.pow(10, window.payment_precision)))

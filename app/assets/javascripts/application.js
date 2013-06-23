@@ -19,7 +19,6 @@
 //= require raphael
 //= require morris
 //= require bootstrap
-//= require variables
 //= require helpers
 //= require tinymce-jquery
 //= require_tree .
