@@ -1,6 +1,6 @@
 FactoryGirl.define do
   sequence :email do |n|
-    "person#{n}@example.com"
+    "person#{n}@exaample.com"
   end
 
   sequence :community_name do |n|
@@ -81,6 +81,12 @@ FactoryGirl.define do
     role 'normal'
     association :user, factory: :user
     association :community, factory: :community
+  end  
+
+  factory :community_user_with_community, class: CommunityUser do
+    role 'normal'
+    association :user, factory: :user
+    association :community, factory: :community_with_users
   end
 
   factory :task_occurrence do
@@ -128,4 +134,42 @@ FactoryGirl.define do
       association :commentable, factory: :task_occurrence
     end
   end 
+
+  factory :user_saldo_modification do
+    price 25
+    percentage 25
+    checked true
+  end
+
+  factory :product_declaration do
+    title 'Test'
+    description 'Test'
+    date '2013-06-23'
+    type 'ProductDeclaration'
+    price 100
+    association :community_user, factory: :community_user_with_community
+
+
+    factory :product_declaration_with_saldos do
+      ignore do
+        community_users_set_1 []
+        saldo_price_1 0
+        community_users_set_2 []
+        saldo_price_2 0
+      end
+      after(:create) do |payment, evaluator|
+        if evaluator.community_users_set_1.any?
+          evaluator.community_users_set_1.each do |cu|
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, payment: payment
+          end
+        end       
+        if evaluator.community_users_set_2.any?
+          evaluator.community_users_set_2.each do |cu|
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, payment: payment
+          end
+        end
+      end
+    end
+  end
+
 end
