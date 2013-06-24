@@ -1,7 +1,8 @@
 class CommentMailer < ActionMailer::Base
   include CommentsHelper
+  extend MailerHelper
+  default from: default_from
   helper :comments
-  default from: "administrator@tasksystem.com"
 
   def posted community, user, comment
     @user = user
