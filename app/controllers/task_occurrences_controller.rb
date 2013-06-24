@@ -78,7 +78,7 @@ class TaskOccurrencesController < ApplicationController
     end
 
     def single_task_occurrence_params
-      params.require(:task_occurrence).permit(:task_name, :task_description, :deadline, :time_in_minutes, :should_be_checked, :user_id)
+      params.require(:task_occurrence).permit(:task_name, :task_description, :deadline, :time_in_minutes, :should_be_checked, :user_id, :checked)
     end
 
     def task_occurrence_create_params

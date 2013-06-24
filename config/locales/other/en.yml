@@ -11,6 +11,7 @@ en:
     - Fri
     - Sat
     abbr_month_names:
+    -
     - Jan
     - Feb
     - Mar
@@ -37,7 +38,7 @@ en:
       short: ! '%b %d'
       date_only: '%d %b, %Y'
     month_names:
-    - 
+    -
     - January
     - February
     - March

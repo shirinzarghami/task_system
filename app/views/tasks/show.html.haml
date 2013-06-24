@@ -14,7 +14,7 @@
   %div.span6
     - if @task.description.present?      
       %h2= image_tag('iconic/list_32x28.png') + Task.human_attribute_name(:description)
-      %p= @task.description
+      %p= raw @task.description
 
 %hr
 %div.row-fluid
