@@ -53,10 +53,8 @@ class Comment < ActiveRecord::Base
   end
 
   def send_notifications
-
-    community = commentable.try(:community) || commentable.community_user.community 
-    community.members.where(receive_comment_mail: true).each do |user| 
-        CommentMailer.posted(community, user, self).deliver
+    commentable.community.members.where(receive_comment_mail: true).each do |user| 
+      CommentMailer.posted(community, user, self).deliver
     end
   end
 
