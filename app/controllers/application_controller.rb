@@ -1,4 +1,7 @@
+require Rails.root.join('lib','sortable.rb')
 class ApplicationController < ActionController::Base
+  include Sortable::Controller
+
   protect_from_forgery
   before_filter :authenticate_user!
   before_filter :find_user
@@ -78,6 +81,12 @@ class ApplicationController < ActionController::Base
   def load_commentable
     klass = [TaskOccurrence, Payment].detect {|c| params["#{c.name.underscore}_id"]}
     @commentable = klass.find params["#{klass.name.underscore}_id"]
+  end
+
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
+    link_to title, :sort => column, :direction => direction
   end
 
   private

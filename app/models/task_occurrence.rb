@@ -21,10 +21,9 @@ class TaskOccurrence < ActiveRecord::Base
   scope :approaching_deadline, where(['task_occurrences.deadline < (UTC_TIMESTAMP() + INTERVAL 1 DAY)'])
   scope :no_reminder_sent, where(reminder_mail_sent: false)
 
-  scope :todo, order('task_occurrences.deadline ASC').where('
-                                  (should_be_checked = true AND checked = false)
-                                  OR 
-                                  (should_be_checked = false AND UTC_TIMESTAMP() < deadline)')
+  scope :todo,  where('(should_be_checked = true AND checked = false)
+                        OR 
+                       (should_be_checked = false AND UTC_TIMESTAMP() < deadline)')
 
 
 

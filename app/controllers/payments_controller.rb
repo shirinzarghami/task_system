@@ -4,6 +4,8 @@ class PaymentsController < ApplicationController
   before_filter :find_community
   before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
   before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
+
+  sort :payment
   def index
     @payments = @community.payments.where(search_conditions).paginate(page: params[:page], per_page: 20)
 
