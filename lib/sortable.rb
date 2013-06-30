@@ -2,16 +2,16 @@ module Sortable
   module Controller
     module ClassMethods
       def sort model_name, options={}
-        @@sort_class = model_name.to_s.camelize.constantize
-        @@sort_options = options
+        @sort_class = model_name.to_s.camelize.constantize
+        @sort_options = options
       end
 
       def get_sort
-        @@sort_class
+        @sort_class
       end
 
       def get_sort_options
-        @@sort_options
+        @sort_options
       end
     end
     def self.included(base)
