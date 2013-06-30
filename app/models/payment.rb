@@ -31,6 +31,11 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  # Makes url_for work with STI
+  def self.model_name
+    self == Payment ? ActiveModel::Name.new(Payment, nil, 'Payment') : Payment.model_name
+  end
+
   private
     def set_initial_values
       self.price ||= 0

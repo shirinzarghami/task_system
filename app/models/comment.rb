@@ -1,4 +1,5 @@
 class Comment < ActiveRecord::Base
+  COMMENTABLES = [TaskOccurrence, Payment]
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   validates_presence_of :body
@@ -54,7 +55,7 @@ class Comment < ActiveRecord::Base
 
   def send_notifications
     commentable.community.members.where(receive_comment_mail: true).each do |user| 
-      CommentMailer.posted(community, user, self).deliver
+      CommentMailer.posted(commentable.community, user, self).deliver
     end
   end
 

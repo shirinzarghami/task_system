@@ -18,7 +18,8 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.new
+    # @comment = Comment.new
+    @comment = Comment.build_from(@payment, current_user.id, '')
     @comments = @payment.root_comments.paginate(page: params[:page], per_page: 10)
   end
 
