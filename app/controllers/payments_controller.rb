@@ -5,9 +5,11 @@ class PaymentsController < ApplicationController
   before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
   before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
 
-  sort :payment
+  include Sortable::Controller
+  sort :payment, default_column: :date, default_direction: :asc
+
   def index
-    @payments = @community.payments.where(search_conditions).paginate(page: params[:page], per_page: 20)
+    @payments = @community.payments.where(search_conditions).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 20)
 
     respond_to do |format|
       format.html

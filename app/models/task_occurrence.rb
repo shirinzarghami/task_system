@@ -27,15 +27,13 @@ class TaskOccurrence < ActiveRecord::Base
 
 
 
-  scope :completed, order('task_occurrences.updated_at DESC').where('
-                                  (should_be_checked = true AND checked = true)
-                                  OR 
-                                  (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')  
+  scope :completed, where('(should_be_checked = true AND checked = true)
+                            OR 
+                           (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')  
 
-  scope :uncompleted, order('task_occurrences.updated_at DESC').where('
-                                  (should_be_checked = true AND checked = false)
-                                  OR 
-                                  (should_be_checked = false AND UTC_TIMESTAMP() <= deadline)')
+  scope :uncompleted, where('(should_be_checked = true AND checked = false)
+                              OR 
+                             (should_be_checked = false AND UTC_TIMESTAMP() <= deadline)')
 
 
   after_initialize :set_default_values

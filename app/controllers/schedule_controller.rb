@@ -1,23 +1,27 @@
 class ScheduleController < ApplicationController
+
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :set_breadcrumbs
 
-  sort :task_occurrence, default_column: lambda {|i| i.action_name == "todo" ? :time_in_minutes : :updated_at}
+  include Sortable::Controller
+  sort :task_occurrence, default_column: :deadline, default_direction: :asc
 
   def todo
+    # sort :task_occurrence, default_column: :deadline, default_direction: :desc
     add_crumb t('breadcrumbs.todos'), community_schedule_todo_path(@community)
     @task_occurrences = @community.task_occurrences.for_user_or_open(@user).todo.order(sort_column + ' ' + sort_direction).paginate(page: params[:page],per_page: 20)
   end
 
   def open
+    # sort :task_occurrence, default_column: :deadline, default_direction: :desc
     add_crumb t('breadcrumbs.open'), community_schedule_todo_path(@community)
-    @task_occurrences = @community.task_occurrences.todo.paginate(page: params[:page],per_page: 20)
+    @task_occurrences = @community.task_occurrences.todo.order(sort_column + ' ' + sort_direction).paginate(page: params[:page],per_page: 20)
   end
 
   def completed
     add_crumb t('breadcrumbs.completed'), community_schedule_todo_path(@community)
-    @task_occurrences = @community.task_occurrences.completed.paginate(page: params[:page], per_page: 20)
+    @task_occurrences = @community.task_occurrences.completed.order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 20)
   end
 
   private

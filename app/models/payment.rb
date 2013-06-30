@@ -20,7 +20,7 @@ class Payment < ActiveRecord::Base
   validates :price, presence: true, :numericality => {:greater_than => 0}
   validate :invalid_user
 
-  default_scope order('created_at DESC')
+  # default_scope order('created_at DESC')
   
   acts_as_commentable
 

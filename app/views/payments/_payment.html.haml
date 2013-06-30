@@ -3,7 +3,8 @@
     = link_to payment.title, community_payment_path(@community, payment)
     %br
     = payment_categories_for payment
-  %td= payment.community_user.user.name
+  %td= link_to payment.community_user.user.name, community_community_user_path(@community, payment.community_user)
+  %td= l payment.date, format: :long
   %td= number_to_currency payment.price, unit: '€'
   - result = payment.user_saldo_modifications.find_by_community_user_id(@community_user.id).try(:price) || 0
   %td{class: (result < 0 ? 'error-text' : 'valid-text')}

@@ -8,9 +8,10 @@
   %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
   %table.table.table-striped
     %tr
-      %th= Payment.human_attribute_name(:title)
-      %th= Payment.human_attribute_name(:user)
-      %th= Payment.human_attribute_name(:price)
+      %th= sortable :title, Payment.human_attribute_name(:title)
+      %th= sortable :user_id, Payment.human_attribute_name(:user)
+      %th= sortable :date, Payment.human_attribute_name(:date)
+      %th= sortable :price, Payment.human_attribute_name(:price)
       %th= Payment.human_attribute_name(:my_result)
       %th
     = render partial: 'payment', collection: @payments

@@ -1,6 +1,6 @@
-require Rails.root.join('lib','sortable.rb')
+# require Rails.root.join('lib','sortable.rb')
 class ApplicationController < ActionController::Base
-  include Sortable::Controller
+  # include Sortable::Controller
 
   protect_from_forgery
   before_filter :authenticate_user!
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def find_user
     @user = current_user
   end
-
+  
   def find_community
     @community ||= @user.communities.find_by_subdomain! params.has_key?(:community_id) ? params[:community_id] : params[:id] if @user
     @community_user ||= CommunityUser.find_by_community_id_and_user_id!(@community, @user)
