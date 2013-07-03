@@ -6,12 +6,15 @@ class TasksController < ApplicationController
   before_filter :check_destroy_allowed, only: [:destroy]
   before_filter :check_edit_allowed, only: [:edit, :update]
 
+  include Sortable::Controller
+  sort :task, default_column: :name, default_direction: :asc
+  
   rescue_from ActiveRecord::RecordNotFound do
     flash[:error] = t('messages.task_not_found')
     redirect_to (@community.present? ? community_tasks_path(@community) : communities_path)
   end
   def index
-    @tasks = @community.tasks.paginate(page: params[:page], per_page: 20)
+    @tasks = @community.tasks.where(search_conditions).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -77,5 +80,12 @@ class TasksController < ApplicationController
     def set_breadcrumbs
       set_community_breadcrumb
       add_crumb t('breadcrumbs.tasks'), community_tasks_path(@community)
+    end
+
+    def search_conditions
+      if params.has_key?(:q) && params[:q].present?
+        search = "%#{params[:q]}%"
+        ['name LIKE ? OR description LIKE ?', search, search]
+      end
     end
 end

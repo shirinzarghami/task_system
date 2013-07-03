@@ -261,8 +261,7 @@ en:
     index:
       title: Overview of payments
       new_product_declaration: Product declaration
-    search: 
-      search-payments: "Search payments"
+ 
     show:
       title: "Payment details"
 
