@@ -14,7 +14,12 @@
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
 
   %td= l open.time, format: :time_only
-  %td= l open.deadline, format: :long if open.deadline
+  %td{:class => ('error-text' if open.too_late?)}
+    = l open.deadline, format: :long if open.deadline
+    - if open.too_late?
+      %br
+      %small= "(#{t('activerecord.attributes.task_occurrence.statuses.too_late')})"
+
   %td
     - if open.task.nil?
       = image_button 'iconic/pen_12x12.png', edit_community_task_occurrence_path(@community, open), data: {title: t('.edit')}, class: 'tooltip-link'
