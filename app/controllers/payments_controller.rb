@@ -10,7 +10,11 @@ class PaymentsController < ApplicationController
 
   def index
     @payments = @community.payments.where(search_conditions).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 20)
-
+    # if params[:q].present?
+    #   @tagged_payment = @community.payments.tagged_with(params[:q].split(' '), any: true, wild: true) 
+    #   @payments << @tagged_payment
+    # end
+    # debugger
     respond_to do |format|
       format.html
       format.js
@@ -18,14 +22,12 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    # @comment = Comment.new
     @comment = Comment.build_from(@payment, current_user.id, '')
     @comments = @payment.root_comments.paginate(page: params[:page], per_page: 10)
   end
 
   def edit
     add_crumb(t('breadcrumbs.edit'), new_community_task_path(@community))
-    # @payment = Payment.find(params[:id])
   end
 
   def new
