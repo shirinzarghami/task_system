@@ -8,4 +8,4 @@ $('.modal-destroy').each ->
 
 $('.submit').each ->
   $(this).click ->
-    $('form').first().submit()
+    $('.modal-body form').first().submit()

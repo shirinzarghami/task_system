@@ -13,7 +13,6 @@ class TaskOccurrencesController < ApplicationController
 
   def new
     add_crumb t('breadcrumbs.new'), new_community_task_occurrence_path(@community)
-
     @task_occurrence = TaskOccurrence.new
     if @task.present?
       @task_occurrence.user = @task.allocated_user if @task.allocation_mode == 'user'
