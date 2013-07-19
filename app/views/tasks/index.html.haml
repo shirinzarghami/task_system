@@ -6,14 +6,25 @@
 
 %p
   %h2= image_tag('iconic/wrench_24x24.png') + t('tasks.index.tasks')
-  %table.table.table-striped
-    %tr
-      %th= sortable :name, t('tasks.index.name')
-      %th= t('tasks.index.schedule')
-      %th= sortable :next_occurrence, t('.next_occurrence')
-      %th
-    = render partial: 'task', collection: @tasks
-= will_paginate @tasks, class: 'pagination pagination-centered pagination-mini'
+  - if @tasks.any?
+    - if params[:q].present?
+      %p.search-result
+        = image_tag('iconic/magnifying_glass_16x16.png')
+        = t('.search-results', query: params[:q]) 
+        = link_to t('.showall'), params.except(:q)
+    %table.table.table-striped
+      %tr
+        %th= sortable :name, t('tasks.index.name')
+        %th= t('tasks.index.schedule')
+        %th= sortable :next_occurrence, t('.next_occurrence')
+        %th
+      = render partial: 'task', collection: @tasks
+    = will_paginate @tasks, class: 'pagination pagination-centered pagination-mini'
+  - else
+    %p
+      = t('.non-found')
+      = link_to t('.showall'), params.except(:q) if params[:q].present?
+
 
 %p
   = #icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true

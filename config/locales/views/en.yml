@@ -177,6 +177,8 @@ en:
       single-task: One-time task
       recurring-task: Recurring task
       non-found: No tasks were found
+      search-results: Search results for '%{query}'.
+      showall: Show all tasks
     edit:
       title: Edit task
     task:
@@ -262,8 +264,9 @@ en:
     index:
       title: Overview of payments
       new_product_declaration: Product declaration
-      non-found: No paymentss were found
-      search-results: Search results for '%{query}'
+      non-found: No payments were found
+      search-results: Search results for '%{query}'.
+      showall: Show all payments
     show:
       title: "Payment details"
 

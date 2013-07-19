@@ -9,12 +9,8 @@ class PaymentsController < ApplicationController
   sort :payment, default_column: :date, default_direction: :asc
 
   def index
-    @payments = @community.payments.where(search_conditions).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 20)
-    # if params[:q].present?
-    #   @tagged_payment = @community.payments.tagged_with(params[:q].split(' '), any: true, wild: true) 
-    #   @payments << @tagged_payment
-    # end
-    # debugger
+    @payments = @community.payments.joins("RIGHT JOIN taggings ON taggings.taggable_id = payments.id AND taggings.taggable_type = 'Payment'").where(search_conditions).order(sort_column + ' ' + sort_direction).group('payments.id').paginate(page: params[:page], per_page: 20)
+
     respond_to do |format|
       format.html
       format.js
@@ -91,8 +87,13 @@ class PaymentsController < ApplicationController
 
     def search_conditions
       if params.has_key?(:q) && params[:q].present?
+        @search_tag = ActsAsTaggableOn::Tag.find_by_name params[:q]
+
         search = "%#{params[:q]}%"
-        ['title LIKE ? OR description LIKE ?', search, search]
+        # conidtions = ['title LIKE ? OR description LIKE ?', search, search]
+        conditions = ['title LIKE ?', 'description LIKE ?', ("taggings.tag_id = ?" if @search_tag)].compact.join(' OR ')
+        values = [search, search, (@search_tag.id if @search_tag)].compact
+        [conditions, values].flatten
       end
     end
 end

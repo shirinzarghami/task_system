@@ -8,7 +8,10 @@
   %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
   - if @payments.any?
     - if params[:q].present?
-      %p= t('.search-results', query: params[:q])
+      %p.search-result
+        = image_tag('iconic/magnifying_glass_16x16.png')
+        = t('.search-results', query: params[:q]) 
+        = link_to t('.showall'), params.except(:q)
     %table.table.table-striped
       %tr
         %th= sortable :title, Payment.human_attribute_name(:title)
@@ -20,7 +23,9 @@
       = render partial: 'payment', collection: @payments
     = will_paginate @payments, class: 'pagination pagination-centered pagination-mini'
   - else
-    %p= t('.non-found')
+    %p
+      = t('.non-found')
+      = link_to t('.showall'), params.except(:q) if params[:q].present?
 
 %p
   = #icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true
