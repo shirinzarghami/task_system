@@ -3,6 +3,6 @@
 
 %p
   %ul.nav.nav-pills
-    =action_tab t('.todo'), :todo
-    =action_tab t('.open'), :open
-    =action_tab t('.completed'), :completed
+    =action_tab t('.todo'), :todo, icon_file: 'user.svg'
+    =action_tab t('.open'), :open, icon_file: 'group.svg'
+    =action_tab t('.completed'), :completed, icon_file: 'check.svg'
