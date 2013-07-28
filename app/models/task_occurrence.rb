@@ -18,22 +18,22 @@ class TaskOccurrence < ActiveRecord::Base
   scope :for_user_or_open, lambda {|user| where(['task_occurrences.user_id = ? OR task_occurrences.user_id IS NULL', user.id])}
   scope :for_task, lambda {|task| where(task_id: task.id)}
   scope :to_email, where(should_send_assign_mail: true)
-  scope :approaching_deadline, where(['task_occurrences.deadline < (UTC_TIMESTAMP() + INTERVAL 1 DAY)'])
+  scope :approaching_deadline, where(['task_occurrences.deadline <= ?', (Date.today + 1.day)])
   scope :no_reminder_sent, where(reminder_mail_sent: false)
 
-  scope :todo,  where('(should_be_checked = true AND checked = false)
-                        OR 
-                       (should_be_checked = false AND UTC_TIMESTAMP() < deadline)')
+  scope :todo,  where(['(should_be_checked = true AND checked = false)
+                          OR 
+                         (should_be_checked = false AND ? < deadline)', Date.today])
 
 
 
-  scope :completed, where('(should_be_checked = true AND checked = true)
+  scope :completed, where(['(should_be_checked = true AND checked = true)
                             OR 
-                           (should_be_checked = false AND UTC_TIMESTAMP() >= deadline)')  
+                           (should_be_checked = false AND ? >= deadline AND user_id IS NOT NULL)', Date.today])  
 
-  scope :uncompleted, where('(should_be_checked = true AND checked = false)
+  scope :uncompleted, where(['(should_be_checked = true AND checked = false)
                               OR 
-                             (should_be_checked = false AND UTC_TIMESTAMP() <= deadline)')
+                             (should_be_checked = false AND ? <= deadline)', Date.today])
 
 
   after_initialize :set_default_values

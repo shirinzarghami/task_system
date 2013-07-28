@@ -28,7 +28,7 @@ class Task < ActiveRecord::Base
   validates :user_id, presence: true
 
   after_initialize :set_default_values
-  scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence <= UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
+  scope :to_schedule, where(instantiate_automatically: true).where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR tasks.repeat > ?", true, 0])
 
   class << self
     def schedule_upcoming_occurrences
