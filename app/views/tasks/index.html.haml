@@ -14,8 +14,7 @@
         = link_to t('.showall'), params.except(:q)
     %table.table.table-striped
       %tr
-        %th= sortable :name, t('tasks.index.name')
-        %th= t('tasks.index.schedule')
+        %th= sortable :name, Task.human_attribute_name(:name)
         %th= sortable :next_occurrence, t('.next_occurrence')
         %th
       = render partial: 'task', collection: @tasks
