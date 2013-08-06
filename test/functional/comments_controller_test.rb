@@ -62,7 +62,7 @@ class CommentsControllerTest < ActionController::TestCase
       end
 
       should "be allowed to destroy when the user did not create the comment" do
-        sign_in @admin_user
+        # sign_in @admin_user
         delete :destroy, community_id: @community.subdomain, task_occurrence_id: @task_occurrence.id, id: @comment.id
         assert_redirected_to community_task_occurrence_path(@community, @task_occurrence)
         assert_notice_flash
