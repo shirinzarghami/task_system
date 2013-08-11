@@ -32,6 +32,8 @@ class CommentsControllerTest < ActionController::TestCase
 
       @comment = FactoryGirl.create :comment_with_task_occurrence, user: @normal_user1
       @task_occurrence = @comment.commentable
+      @task_occurrence.community = @community
+      @task_occurrence.save
       sign_in @normal_user1
     end
 
@@ -50,9 +52,11 @@ class CommentsControllerTest < ActionController::TestCase
 
       should "NOT be allowed to destroy when the user did not create the comment" do
         sign_in @normal_user2
-        delete :destroy, community_id: @community.subdomain, task_occurrence_id: @task_occurrence.id, id: @comment.id
-        assert_redirected_to communities_path
-        assert_error_flash
+        assert_raises CanCan::AccessDenied do
+          delete :destroy, community_id: @community.subdomain, task_occurrence_id: @task_occurrence.id, id: @comment.id
+        end
+        # assert_redirected_to communities_path
+        # assert_error_flash
       end
     end
 

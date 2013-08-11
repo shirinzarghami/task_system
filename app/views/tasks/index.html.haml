@@ -15,6 +15,7 @@
     %table.table.table-striped
       %tr
         %th= sortable :name, Task.human_attribute_name(:name)
+        %th= Task.human_attribute_name(:interval_number) 
         %th= sortable :next_occurrence, t('.next_occurrence')
         %th
       = render partial: 'task', collection: @tasks
@@ -26,7 +27,6 @@
 
 
 %p
-  = #icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true
   %div.btn-group
     %a.btn.btn-primary.dropdown-toggle{'data-toggle' => 'dropdown', 'href' => '#'}
       = t('.create')
