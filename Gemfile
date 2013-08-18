@@ -6,8 +6,8 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-
-
+gem 'cancan'
+gem 'tinymce-rails'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -21,10 +21,12 @@ group :assets do
 end
 
 gem 'coffee-rails', '~> 3.2.1'
-
+gem "crummy", "~> 1.7.0"
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'timecop'
+  gem 'capybara'
+  gem 'database_cleaner'
 end
 gem 'jquery-rails'
 gem 'acts_as_commentable_with_threading'
@@ -33,6 +35,7 @@ gem "paperclip"
 
 gem 'execjs'
 gem 'therubyracer'
+gem 'acts-as-taggable-on'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

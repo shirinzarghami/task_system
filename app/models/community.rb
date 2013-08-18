@@ -6,10 +6,14 @@ class Community < ActiveRecord::Base
   attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :invitation_emails, :creator, :max_users
   attr_reader :user_tokens, :admin_user_tokens
   attr_accessor :invitation_emails
-
+  acts_as_tagger
+  
   has_many :community_users, dependent: :destroy
   has_many :invitations, dependent: :destroy
-  has_many :task_occurrences
+  has_many :task_occurrences, dependent: :destroy
+  has_many :payments, through: :community_users, dependent: :destroy
+  has_many :user_saldo_modifications, through: :community_users, dependent: :destroy
+
   # All users
   has_many :members, through: :community_users, class_name: 'User', source: :user
   # Only normal user

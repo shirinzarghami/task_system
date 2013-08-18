@@ -1,0 +1,3 @@
+class MoneyTransfer < Payment
+
+end

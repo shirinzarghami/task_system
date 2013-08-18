@@ -21,11 +21,28 @@ en:
           attributes:
             base:
               at_least_one_admin: There should be at least one admin in the community
+        payment:
+          result_should_be_zero: The sum of the user saldo modifications should be 0
+        user_saldo_modification:
+          base:
+            invalid_user: You are trying create a payment for an user outside the current community
     models:
       community: Community
       user: User
       invitation: Invitation
+      payment: payment
     attributes:
+      payment:
+        title: Titel
+        date: Payment date
+        description: Description
+        price: Price
+        user: Creator
+        my_result: My result
+        categories: Categories
+      user_saldo_modification:
+        percentage: Percentage
+        price: Price
       community:
         user_tokens: Normal members
         admin_user_tokens: Administrators
@@ -33,6 +50,8 @@ en:
         subdomain: Subdomain
         max_users: Max users
         members: Members
+      community_user:
+        role: Role
       user:
         name: Name
         password: Password
@@ -47,6 +66,7 @@ en:
         receive_comment_mail: Send me an e-mail when a comment is posted
         receive_assign_mail: Send me an e-mail when a task is assigned to me 
         receive_reminder_mail: "Send me an reminder e-mail when a task, assigned to me, approaches the deadline for completion"
+        last_sign_in_at: Last sign in
       invitation:
         invitor: Invitor
         invitee: Invitee
@@ -61,7 +81,7 @@ en:
         description: Description
         should_be_checked: The executor of this task has to report when the task is completed
         instantiate_automatically: Schedule occurrences for this task automatically
-        next_occurrence: Start on
+        next_occurrence: Start on / Next occurrence
         allocation_modes:
           in_turns: Allocate in turns
           time: Assign to the user who spend the least amount of time for this task
@@ -73,7 +93,7 @@ en:
         schedule: Schedule
         next_allocated_user: Next user
         instantiate:
-          manual: Manual
+          manual: Schedule now
           every: Every %{number} %{unit}
           weeks:
             one: Every week
@@ -108,7 +128,9 @@ en:
         statuses:
           uncompleted: Uncompleted
           completed_at: Completed at %{date}
+          too_late: too late
         remarks: Remarks by executor
+        time_in_minutes: Time in minutes
 
 
     values:

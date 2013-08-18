@@ -1,0 +1,49 @@
+= simple_form_for @payment, url: form_url, html: {class: 'form-horizontal'} do |f|
+  %fieldset
+    %legend= t('.categories.payment')
+    = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
+    %div.control-group
+      = f.input :title
+      = f.input :date, as: :string, input_html: {class: 'datepicker'}
+      = f.input :price , :wrapper => :append do
+        %span.add-on= "€"
+        = f.input_field :price, class: 'input-mini total-price'
+ 
+      = f.input :categories, input_html: {class: 'categories-token-input span7', rows: 5, data: {checkpath: community_payments_tags_path(@community) + '.json', pre: f.object.categories_from(@community).map {|n| {name: n}}.to_json}}
+      = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
+      = tinymce
+  %fieldset
+    %legend= t('.categories.distribution')
+    = image_tag 'iconic/chart_32x32.png', class: 'logo'
+
+    %table.table
+      %tr
+        %th= User.model_name.human
+        %th= UserSaldoModification.human_attribute_name(:percentage)
+        %th= t('.cost')
+        %th= t('.paid')
+        %th= UserSaldoModification.human_attribute_name(:price)  
+      = f.fields_for :user_saldo_modifications do |builder|
+        %tr.user-saldo-modification{class: ('current-user info' if @user == builder.object.user), data: {user: builder.object.id}}
+          %td
+            .control-group
+              %label.checkbox
+                = builder.check_box :checked, class: 'user-select'
+                = builder.hidden_field :community_user_id 
+                = builder.hidden_field :id
+                = builder.object.user.name
+          %td
+            .input-append.control-group
+              = text_field_tag :percentagecc, '', class: 'input-mini percentage-input'
+              = builder.hidden_field :percentage, class: 'percentage'
+              %span.add-on= "%"
+
+          %td.cost.error-text{:data => {:cost => 0}}= '€ 0'
+          %td.paid.valid-text{:data => {:paid => 0}}= '€ 0'
+          %td
+            .input-append
+              %span.add-on= "€"
+              = text_field_tag :pricecc, '', class: 'input-mini price-input'
+              = builder.hidden_field :price, class: 'user-price' 
+
+  = f.button :submit, class: 'btn btn-primary'

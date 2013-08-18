@@ -1,5 +1,6 @@
-= form_tag community_task_occurrence_comments_path(@community, @task_occurrence), remote: true, class: 'form-horizontal' do
-  %div.control-group
-    = text_area_tag :comment_body, '', rows: 5, class: 'span8'
-  %div.control-group
-    = submit_tag t('actions.post'), class: 'btn btn-primary'
+= form_tag comment_path(@object), class: 'form-horizontal', id: 'comment-form' do
+  %div.control-group.comment-editor
+    = text_area_tag :comment_body, '', rows: 5, class: 'span8 tinymce'
+    = tinymce
+  %div.control-group.comment-editor
+    = submit_tag t('actions.submit'), class: 'btn btn-primary'

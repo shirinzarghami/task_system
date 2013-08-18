@@ -57,7 +57,7 @@ en:
       subject: "Task system: new comment posted"
       salutation: Hi %{user},
       body: |
-        A new comment was posted:
+        A new comment was posted for a %{obj} with title <i> %{title} </i>:
       view_link: View the discussion
       greet_html: >
         Best regards,<br>

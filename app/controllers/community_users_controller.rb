@@ -1,4 +1,6 @@
 class CommunityUsersController < ApplicationController
+  add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
+  before_filter :find_community, only: :show
   before_filter :find_community_user
   before_filter :check_community_admin, only: [:update]
   before_filter :check_destroy_allowed, only: [:destroy]
@@ -29,9 +31,19 @@ class CommunityUsersController < ApplicationController
     end
   end
 
+  def show
+    set_community_breadcrumb
+    add_crumb(@community_user.user.name, community_community_user_path(@community, @community_user))
+    @show_user = @community_user.user
+  end
+
   private
     def find_community_user
-      @community_user = CommunityUser.find(params[:id])
+      @community_user = if @community
+                          @community.community_users.find params[:id]
+                        else
+                           CommunityUser.find(params[:id])
+                        end
     end
 
     def check_community_admin

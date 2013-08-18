@@ -1,20 +1,18 @@
 class CommentMailer < ActionMailer::Base
-  default from: "administrator@tasksystem.com"
+  include CommentsHelper
+  extend MailerHelper
+  default from: default_from
+  helper :comments
 
-  def posted user, comment
+  def posted community, user, comment
     @user = user
     @comment = comment
-    @link = find_comment_link(@comment)
+    @community = community
+
     mail to: @user.email do |format|
       format.html { render :layout => 'email' }
       # format.text
     end
   end
 
-  def find_comment_link comment
-    if comment.commentable.class == TaskOccurrence
-      @community = comment.commentable.task.community
-      community_task_occurrence_url(@community, @comment.commentable)
-    end
-  end
 end

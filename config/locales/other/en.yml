@@ -1,4 +1,6 @@
 en:
+  "true": Yes
+  "false": No
   date:
     abbr_day_names:
     - Sun
@@ -9,7 +11,7 @@ en:
     - Fri
     - Sat
     abbr_month_names:
-    - 
+    -
     - Jan
     - Feb
     - Mar
@@ -34,8 +36,9 @@ en:
       default: ! '%Y-%m-%d'
       long: ! '%B %d, %Y'
       short: ! '%b %d'
+      date_only: '%d %b, %Y'
     month_names:
-    - 
+    -
     - January
     - February
     - March
@@ -191,6 +194,10 @@ en:
       two_words_connector: ! ' and '
       words_connector: ! ', '
   time:
+    units:
+      minutes:
+        one: minute
+        other: minutes
     am: am
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'

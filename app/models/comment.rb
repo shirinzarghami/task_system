@@ -1,8 +1,11 @@
 class Comment < ActiveRecord::Base
+  COMMENTABLES = [TaskOccurrence, Payment]
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   validates_presence_of :body
   validates_presence_of :user
+
+  scope :no_notification_sent, where('notification_sent = FALSE OR notification_sent IS NULL')
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -12,6 +15,8 @@ class Comment < ActiveRecord::Base
 
   # NOTE: Comments belong to a user
   belongs_to :user
+
+  after_save :send_notifications
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
@@ -47,4 +52,23 @@ class Comment < ActiveRecord::Base
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end
+
+  def send_notifications
+    commentable.community.members.where(receive_comment_mail: true).each do |user| 
+      CommentMailer.posted(commentable.community, user, self).deliver
+    end
+  end
+
+  # def self.send_notifications
+  #   Comment.no_notification_sent.each do |comment|
+  #     commentable = comment.commentable
+  #     community = commentable.respond_to?(:community) && commentable.community
+  #     next unless community
+  #     community.members.where(receive_comment_mail: true).each {|user| CommentMailer.posted(user, comment).deliver}
+  #     comment.notification_sent = true
+  #     comment.save
+  #   end
+  # end
 end
+
+

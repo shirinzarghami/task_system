@@ -1,12 +1,18 @@
 development:
   registration_allowed: true
+  price_precision: 4
+  secret_token:
   
 test:
   registration_allowed: true
+  price_precision: 4
+  secret_token:
 
 staging:
   domain: staging.necura.deepshit.8s.nl
   registration_allowed: false
+  price_precision: 4
+  secret_token:
   email_settings:
     address: "smtp.gmail.com"
     port: 587
@@ -17,4 +23,6 @@ staging:
 
 production:
   registration_allowed: false
+  price_precision: 4
+  secret_token:
 

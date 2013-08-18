@@ -1,4 +1,5 @@
 %h2= image_tag('iconic/info_16x32.png') + @task_occurrence.task_name
+%p= @task_occurrence.task_description.html_safe if @task_occurrence.task_description
 %p
   %table.table.table-striped
     %tr

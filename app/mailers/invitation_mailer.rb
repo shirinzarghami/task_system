@@ -1,5 +1,7 @@
 class InvitationMailer < ActionMailer::Base
-  default from: "administrator@tasksystem.com"
+  extend MailerHelper
+  default from: default_from
+  
 
   def invitation invitation
     @invitation = invitation

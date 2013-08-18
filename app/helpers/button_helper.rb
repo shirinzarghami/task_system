@@ -19,7 +19,15 @@ module ButtonHelper
       dropdown: false
     }
     options = default_options.merge options
-    icon_html = options[:icon_class].present? ? content_tag(:i, '', class: options[:icon_class]) : ''
+    icon_html = if options[:icon_class].present?
+                  content_tag(:i, '', class: options[:icon_class])
+                elsif options[:icon_file].present?
+                  image = image_tag options[:icon_file]
+                  content_tag(:i, image, class: options[:icon_class])
+                else
+                  ""
+                end
+                
     is_active = (options[:controller_list].select {|c| controller.controller_name == c.to_s}.any? or controller.controller_name == text.downcase)
 
     li_class = is_active ? 'active' : ''

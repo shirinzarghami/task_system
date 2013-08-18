@@ -1,11 +1,5 @@
 TaskSystem::Application.routes.draw do
-  get "errors/error_404"
-
-  get "errors/error_500"
-
-  get "registrations/new"
-
-  get "registrations/create"
+  get "tags/index"
 
   devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
   devise_scope :user do
@@ -17,24 +11,28 @@ TaskSystem::Application.routes.draw do
     resources :users
   end
 
-  get "dashboard/index"
   resources :invitations, except: [:index]
   resources :communities, path: '', except: [:edit, :upgrade] do
+    match 'payments/tags' => 'tags#index'
+    resources :payments do
+      resources :comments, only: [:create, :destroy]
+    end
+    resource :saldo, only: [:show], controller: 'saldo'
+    resources :community_users, only: [:show]
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end
-    resources :task_occurrences, path: 'schedule', except: [:new, :create, :index] do
-      resources :comments
+    resources :task_occurrences, only: [:update, :create, :new, :edit, :destroy, :show] do
+      resources :comments, only: [:create, :destroy]
       member do
         get :reassign
         get :complete
       end
-      collection do
-        get :todo
-        get :open
-        get :completed
-      end
     end
+    # resources :task_occurrences, path: 'schedule', except: [:index] do
+    get 'schedule/todo' => 'schedule#todo'
+    get 'schedule/open' => 'schedule#open'
+    get 'schedule/completed' => 'schedule#completed'
   end
   resources :community_users, only: [:update, :destroy]
 

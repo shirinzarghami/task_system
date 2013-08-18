@@ -1,0 +1,18 @@
+%tr
+  %td
+    = link_to payment.title, community_payment_path(@community, payment)
+    %br
+    = payment_categories_for payment
+  %td= link_to payment.community_user.user.name, community_community_user_path(@community, payment.community_user)
+  %td= l payment.date, format: :long
+  %td= number_to_currency payment.price, unit: '€'
+  - result = payment.user_saldo_modifications.find_by_community_user_id(@community_user.id).try(:price) || 0
+  %td{class: (result < 0 ? 'error-text' : 'valid-text')}
+    = number_to_currency result, unit: '€'
+  %td
+    - if can? :update, payment
+      = image_button 'iconic/pen_12x12.png', edit_community_payment_path(@community, payment), data: {title: t('.edit')}, class: 'tooltip-link'
+    
+    - if can? :destroy, payment
+      = image_button 'iconic/trash_fill_12x12.png', community_payment_path(@community, payment), method: :delete, confirm: t('messages.confirm'), data: {title: t('.delete')}, class: 'tooltip-link'
+    

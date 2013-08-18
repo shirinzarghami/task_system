@@ -1,0 +1,14 @@
+%div.row-fluid
+  %h2= image_tag('iconic/calendar_alt_stroke_32x32.png') + t('.title', username: @show_user.name)
+
+%div.row-fluid
+  %div.user-info
+    %div.span6.well
+      %div.user-avatar= image_tag @show_user.avatar.url(:thumb), class: 'img-rounded' if @show_user.avatar.exists?
+
+    %div.span6.well= render partial: 'user_info', object: @show_user
+
+%hr
+%div.row
+  %div.span12
+    %div#user-timeline{data: {distribution: user_activity_distribution(@community), labels: @community.members.map {|m| m.name}.to_json, translation: {minutes: t('time.units.minutes', count: 2)}.to_json}}

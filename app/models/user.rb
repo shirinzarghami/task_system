@@ -31,13 +31,17 @@ class User < ActiveRecord::Base
   has_many :task_occurrences, dependent: :destroy
   has_many :allocated_tasks, class_name: 'Task', foreign_key: 'allocated_user_id'
 
-  has_attached_file :avatar, styles: {small: "40x40>", thumb: "100x100>" }
+  has_attached_file :avatar, styles: {small: "40x40>", thumb: "100x100>", large: "300x300>" }
 
   scope :unconfirmed, where("confirmed_at IS NULL")
   USER_ROLES = [:normal, :admin]
 
   def confirmed?
     confirmed_at.present?
+  end
+
+  def global_admin?
+    global_role == 'admin'
   end
 
 end

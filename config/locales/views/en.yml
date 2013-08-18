@@ -16,7 +16,7 @@ en:
     unsubscribe: Unsubscribe
     login: Log in
     logout: Log out
-    post: Post
+    submit: Submit
   messages:
     save_success: Item was successfully saved
     save_fail: Item could not be saved
@@ -40,6 +40,17 @@ en:
       turned_off: Registering on this server is not allowed
       success: Registration has succeeded. Please check your mail for confirmation instructions
 
+  breadcrumbs:
+    communities: My Communities
+    tasks: Tasks
+    todos: My todos
+    open: All todos
+    completed: Completed
+    schedule: Task schedule
+    new: New
+    edit: Edit
+    user_info: User info
+    payments: Payments
   activerecord:
       errors:
         attributes:
@@ -59,11 +70,15 @@ en:
       manage_communities: Manage communities
       users: Users
       tasks: Tasks
-      overview: Manage tasks
+      manage_tasks: Manage tasks
+      manage_payments: Manage Payments
       schedule: Schedule
       settings: Settings
       logout: Logout
       version: Version
+      payments: Payments
+      saldos: Saldos
+
 
 
   admin:
@@ -115,6 +130,15 @@ en:
       unsubscribed: Successfully unsubscribed
     not_found: Couldn't find a user membership for this community
 
+    show:
+      title: Community statistics for %{username}
+
+    user_info:
+      receive_comment_mail: New comment
+      receive_assign_mail: Task assignment
+      receive_reminder_mail: Task deadline reminders
+      notifications:  E-mail notifications
+      general: General
   invitations:
     flashes:
       select_error: Please whether you wish to accept or deny the invitation
@@ -136,7 +160,7 @@ en:
 
   tasks:
     new:
-      title: Create a new task
+      title: Create a recurring task
       man_instantiate: This task will be instantiated manually
       auto_instantiate: This task will be instantiated automatically
       repeat_infinite: Repeat infinite times
@@ -150,6 +174,11 @@ en:
       occurrences: Occurrences
       next_occurrence: Next occurrence
       create: Create
+      single-task: One-time task
+      recurring-task: Recurring task
+      non-found: No tasks were found
+      search-results: Search results for '%{query}'.
+      showall: Show all tasks
     edit:
       title: Edit task
     task:
@@ -165,7 +194,10 @@ en:
       info: Info
     task_occurrence:
       comments: Comments
+      edit: Edit this task
 
+    user_sort:
+      ignore_users: The following users are excluded
   errors:
     error_404:
       title: Page not found
@@ -177,24 +209,11 @@ en:
       home: Home
 
   task_occurrences:
-    open:
-      title: Open tasks
-      reassign: Re-assign this task
-      delete: Dispensate this task
-
-    todo:
-      title: My todos
-      complete: Complete this task
-
-    completed:
-      title: Completed taks
-
-    navigation:
-      title: Schedule
-      todo: My todos
-      open: All open
-      completed: Completed
-    form:
+    new:
+      title: Create one-time task
+    edit:
+      title: Edit one-time task
+    form_modal:
       modal_header: Schedule task
       modal_body: Do you wish to schedule this task?
       explanation: 
@@ -209,9 +228,58 @@ en:
       modal_header: Complete task
       modal_body: "I have completed the task '<i>%{task_name}</i>'"
       complete: Complete
+  schedule:
+    open:
+      title: Open tasks
+      reassign: Re-assign this task
+      delete: Dispensate this task
+      edit: Edit this task
+
+    todo:
+      title: My todos
+      complete: Complete this task
+
+    completed:
+      title: Completed taks
+
+    navigation:
+      title: Schedule
+      todo: My todos
+      open: All todos
+      completed: Completed
     show:
 
+  payments:
+    payment:
+      delete: Delete this payment
+      edit: Edit this payment
+    new:
+      title: New payment declaration
+    form:
+      categories:
+        payment: Payment
+        distribution: Distribution
+      costs: Costs
+      paid: Paid
+    index:
+      title: Overview of payments
+      new_product_declaration: Product declaration
+      non-found: No payments were found
+      search-results: Search results for '%{query}'.
+      showall: Show all payments
+    show:
+      title: "Payment details"
 
+  saldo:
+    show:
+      title: Saldo overview
+      saldo: Saldo
+      lost-money: Lost money
+      error: Error
+      error-percentage: "%{perc} of total expenses"
+      error-tooltip: 
+        "Due to rounding of prices, the total sum of payments may contain a small error. Ideally, all cost and 
+        expenses should add up to zero. The lost money is the factual sum."
 
   form:
     categories:

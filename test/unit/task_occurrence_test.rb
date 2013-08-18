@@ -29,10 +29,10 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
   test "allocate in turns" do
     community = FactoryGirl.create(:community_with_users)
   
-    user_order = community.members.map(&:id).join(',')
+    ordered_user_ids = community.members.map(&:id).join(',')
     task = FactoryGirl.create(:task_with_occurrences, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community,
       occurrences_user: community.members.second
     )
@@ -43,13 +43,32 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task_occurrence.user == community.members.third
   end
 
+  test "allocate in turns with ignored user" do
+    community = FactoryGirl.create(:community_with_users) # 5 users
+  
+    ordered_user_ids = community.members.first(4).map(&:id).join(',')
+    ignored_user_ids = community.members.last.id.to_s # User number 5 is ignored
+    task = FactoryGirl.create(:task_with_occurrences, 
+      allocation_mode: 'in_turns', 
+      ordered_user_ids: ordered_user_ids,
+      ignored_user_ids: ignored_user_ids,
+      community: community,
+      occurrences_user: community.members.fourth
+    )
+    
+    task_occurrence = task.task_occurrences.first
+    task_occurrence.allocate
+    task_occurrence.save
+    assert task_occurrence.user == community.members.first #User 5 should not be scheduled, it should go back to one
+  end
+
   test "allocate turns without a previous task occurrence" do
     community = FactoryGirl.create(:community_with_users)
     
-    user_order = community.members.map(&:id).join(',')
+    ordered_user_ids = community.members.map(&:id).join(',')
     task = FactoryGirl.create(:task, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community
     )
 
@@ -59,13 +78,13 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     assert task_occurrence.user == community.members.first
   end
 
-  test "allocate turns with an invalid user_order string" do
+  test "allocate turns with an invalid ordered_user_ids string" do
     community = FactoryGirl.create(:community_with_users)
     
-    user_order = '2,9389,34,344,434,324,455,A,f,ed,e'
+    ordered_user_ids = '2,9389,34,344,434,324,455,A,f,ed,e'
     task = FactoryGirl.create(:task, 
       allocation_mode: 'in_turns', 
-      user_order: user_order,
+      ordered_user_ids: ordered_user_ids,
       community: community,
       user: community.members.first
     )

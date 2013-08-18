@@ -1,5 +1,7 @@
 module ApplicationHelper
-
+  require Rails.root.join('lib','sortable.rb')
+  include Sortable::View
+  
   def community_admin?
     @community_user.role == 'admin'
   end

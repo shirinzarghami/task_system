@@ -9,7 +9,7 @@ class Task < ActiveRecord::Base
     months: 1.month
   }
 
-  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :user_order, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit, :user
+  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :ordered_user_ids, :ignored_user_ids, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit, :user
 
   belongs_to :community
   belongs_to :user # Creator of the task
@@ -17,10 +17,10 @@ class Task < ActiveRecord::Base
   has_many :task_occurrences
   
   validates :name, presence: true, length: {maximum: 50, minimum: 3}
-  validates :time, presence: true, :numericality => {:greater_than => 0}
+  # validates :time, presence: true, :numericality => {:greater_than => 0}
   validates :interval, :numericality => {:greater_than => 0}
   validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
-  validates :user_order, format: {with: /(\d+)(,\d+)*/} 
+  validates :ordered_user_ids, format: {with: /(\d+)(,\d+)*/} 
   validates :repeat, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :deadline_unit, presence: true, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
   validates :interval_unit, :inclusion => { :in => Task::TIME_UNITS.keys.map(&:to_s) }
@@ -28,8 +28,7 @@ class Task < ActiveRecord::Base
   validates :user_id, presence: true
 
   after_initialize :set_default_values
-
-  scope :to_schedule, where(instantiate_automatically: true).where("tasks.next_occurrence <= UTC_TIMESTAMP()").where("tasks.repeat_infinite = true OR tasks.repeat > 0")
+  scope :to_schedule, where(instantiate_automatically: true).where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR tasks.repeat > ?", true, 0])
 
   class << self
     def schedule_upcoming_occurrences
@@ -51,6 +50,7 @@ class Task < ActiveRecord::Base
       task_occurrence.time_in_minutes = self.time_in_minutes
       task_occurrence.allocate if task_occurrence.user.nil?
       task_occurrence.task_name = self.name
+      task_occurrence.task_description = self.description
       task_occurrence.should_be_checked = self.should_be_checked
       task_occurrence.community = self.community
 
@@ -93,21 +93,58 @@ class Task < ActiveRecord::Base
     eval "#{deadline}.#{deadline_unit}" if TIME_UNITS.keys.include?(deadline_unit.to_sym)
   end
 
-  def ordered_members
-    ordered_member_ids = check_ordered_members_string
-    # Sort members based on the attribute 'user_order' (list of ids)
-    self.community.members.sort {|a,b| ordered_member_ids.index(a.id) <=> ordered_member_ids.index(b.id) }
+  def ordered_users
+    update_user_lists
+    # Sort members based on the attribute 'ordered_user_ids' (list of ids)
+    self.community.members.find(self.ordered_user_ids_array).sort {|a,b| self.ordered_user_ids_array.index(a.id) <=> self.ordered_user_ids_array.index(b.id) }
+
+  end
+
+  def ignored_users
+    update_user_lists
+    self.community.members.find(ignored_user_ids_array) rescue []
+  end
+
+  def ordered_user_ids_array
+    self.ordered_user_ids.nil? ? [] : self.ordered_user_ids.split(',').map {|u| Integer(u) rescue nil}.compact.uniq
+  end
+
+  def ignored_user_ids_array
+    self.ignored_user_ids.nil? ? [] : self.ignored_user_ids.split(',').map {|u| Integer(u) rescue nil}.compact.uniq
   end
 
   def time_in_minutes
     time.hour * 60 + time.min
   end
 
+  # Update order and ignore user list in case users are added / removed from community
+  def update_user_lists
+    total_user_ids = self.ordered_user_ids_array + self.ignored_user_ids_array
+    community_user_ids = self.community.members.map(&:id)
+
+    unless  total_user_ids.sort == community_user_ids.sort
+
+      ordered_user_ids_new = self.ordered_user_ids_array
+      ignored_user_ids_new = self.ignored_user_ids_array
+      # Add new community members to the ordered list
+      community_user_ids.each {|member_id| ordered_user_ids_new << member_id unless total_user_ids.include?(member_id)}
+      # Remove members from the list that are no longer part of the community
+      ordered_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
+      ignored_user_ids_new.select! {|member_id| community_user_ids.include?(member_id)}
+
+      # remove double users between ignored and ordered
+      ordered_user_ids_new.select! {|member_id| !ignored_user_ids_new.include?(member_id)}
+
+      self.ordered_user_ids = ordered_user_ids_new.join(',')
+      # self.ignored_user_ids = ignored_user_ids_new.join(',')
+      save
+    end
+  end
   
   private
     def set_default_values
       self.instantiate_automatically = true if self.instantiate_automatically.nil?
-      self.user_order ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
+      self.ordered_user_ids ||= self.community.members.map {|m| m.id}.compact.join(',') if self.community.present?
       self.interval ||= 1
       self.deadline ||= 1
       self.time ||= Time.at(0) + 30.minutes
@@ -116,25 +153,14 @@ class Task < ActiveRecord::Base
       self.repeat_infinite = true if self.repeat_infinite.nil?
     end
 
-    def check_ordered_members_string
-      ordered_member_ids = self.user_order.split(',').map(&:to_i)
-      community_member_ids = self.community.members.map(&:id)
-
-      unless ordered_member_ids.sort == community_member_ids.sort
-        # Add new community members to the ordered list
-        community_member_ids.each {|member_id| ordered_member_ids << member_id unless ordered_member_ids.include?(member_id)}
-        # Remove members from the order list that are no langer part of the community
-        ordered_member_ids = ordered_member_ids.map {|member_id| community_member_ids.include?(member_id)}
-        self.update_attributes user_order: ordered_member_ids.join(',')
-      end
-      ordered_member_ids
-    end
 
     def allocate_in_turns
-      ordered_id_list = user_order.split(',')
+      update_user_lists
+      # ordered_id_list = user_order.split(',')
+      ordered_id_list = ordered_user_ids_array
       previous_occurrence = task_occurrences.latest.first
       previous_user_id = (previous_occurrence.present? ? previous_occurrence.user.id : ordered_id_list.last)
-      next_user_id = ordered_id_list.include?(previous_user_id.to_s) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id.to_s) + 1).first : nil
+      next_user_id = ordered_id_list.include?(previous_user_id) ? ordered_id_list.rotate(ordered_id_list.index(previous_user_id) + 1).first : nil
 
       # allocate to creater of task when next user is not found
       community.members.find_by_id(next_user_id) || user

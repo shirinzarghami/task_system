@@ -57,19 +57,34 @@ class TaskTest < ActiveSupport::TestCase
     assert task.task_occurrences.count == 1, 'when repeat 0, a new occurrence should not be scheduled'
   end
 
-  test "update ordered_member string" do
+  test "update ordered_user_ids string" do
     community = FactoryGirl.create(:community_with_users, users_count: 2)
     user1, user2 = community.members.first(2)
-    task = FactoryGirl.create :task, community: community, user_order: "#{user1.id}, #{user2.id}"
-    assert task.ordered_members == [user1, user2]
+    task = FactoryGirl.create :task, community: community, ordered_user_ids: "#{user1.id}, #{user2.id}"
+    assert task.ordered_users == [user1, user2]
     
+    # Add a user
     user3 = FactoryGirl.create :user
     community.members << user3
-    assert task.ordered_members == [user1, user2, user3]
+    assert task.ordered_users == [user1, user2, user3] #It should be in the ordered users
 
+    # Remove a user that was an 'ordered' user
     CommunityUser.find_by_community_id_and_user_id!(community, user2).destroy
     community.reload
-    assert task.ordered_members == [user1, user3]
+    assert task.ordered_users == [user1, user3]    
+
+    # Remove user that is ignored user
+    user4 = FactoryGirl.create :user
+    community.members << user4
+    task.ignored_user_ids = user4.id.to_s
+    assert task.ordered_users == [user1, user3]
+    assert task.ignored_users == [user4] 
+    CommunityUser.find_by_community_id_and_user_id!(community, user4).destroy
+    community.reload
+    assert task.ordered_users == [user1, user3]
+    assert task.ignored_users == []
+
+
   end
 
   test "email when task occurrence is assigned" do

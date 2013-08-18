@@ -1,9 +1,0 @@
-= render partial: 'navigation'
-%table.table.table-striped
-  %tr
-    %th= TaskOccurrence.human_attribute_name(:task)
-    %th= TaskOccurrence.human_attribute_name(:duration)
-    %th= TaskOccurrence.human_attribute_name(:deadline)
-    %th
-  =render partial: 'todo', collection: @task_occurrences
-=will_paginate @task_occurrences, class: 'pagination pagination-centered pagination-mini'

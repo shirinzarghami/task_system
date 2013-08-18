@@ -1,0 +1,9 @@
+= render partial: 'navigation' 
+%table.table.table-striped
+  %tr
+    %th= sortable :task_name, TaskOccurrence.human_attribute_name(:task)
+    %th= sortable :user,TaskOccurrence.human_attribute_name(:allocated_to)
+    %th= sortable :time_in_minutes,TaskOccurrence.human_attribute_name(:duration)
+    %th= sortable :completed_at,TaskOccurrence.human_attribute_name(:completed_at)
+  =render partial: 'completed', collection: @task_occurrences
+=will_paginate @task_occurrences, class: 'pagination pagination-centered pagination-mini'

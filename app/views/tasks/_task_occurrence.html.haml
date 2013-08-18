@@ -8,11 +8,13 @@
       %br
       %small= t('activerecord.attributes.task.allocation_modes_short.voluntary') 
 
-  %td= l task_occurrence.deadline, format: :long
+  %td= l task_occurrence.deadline, format: :long if task_occurrence.deadline
   %td= task_occurrence_status task_occurrence
   %td.span6
     %small= task_occurrence.remarks
   %td
+    - if task_occurrence.task.nil?
+      = image_button 'iconic/pen_12x12.png', edit_community_task_occurrence_path(@community, task_occurrence), data: {title: t('.edit')}, class: 'tooltip-link'
     - if show_comment_button
       =image_button 'iconic/comment_stroke_12x11.png', community_task_occurrence_path(@community, task_occurrence), data: {title: t('.comments')}, class: 'tooltip-link'
       %small= number_of_comments(task_occurrence)

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   sequence :email do |n|
-    "person#{n}@example.com"
+    "person#{n}@exaample.com"
   end
 
   sequence :community_name do |n|
@@ -17,6 +17,7 @@ FactoryGirl.define do
     confirmed_at Time.now
     receive_assign_mail true
     receive_reminder_mail true
+    receive_comment_mail true
   end
 
   factory :task do
@@ -24,16 +25,18 @@ FactoryGirl.define do
     description 'Do something'
     deadline 1
     deadline_unit 'weeks'
-    user_order '1,2,3'
+    ordered_user_ids '1,2,3'
     interval 3
     interval_unit 'weeks'
     repeat_infinite true
     user_id 1
     community_id 1
     repeat 1
+    time Time.new(0) + 1.hour + 30.minutes
     allocation_mode 'in_turns'
     allocated_user_id 1
     next_occurrence Date.today
+    instantiate_automatically true
     factory :task_single_allocation do
       allocation_mode 'user'
       association :allocated_user, factory: :user
@@ -78,6 +81,12 @@ FactoryGirl.define do
     role 'normal'
     association :user, factory: :user
     association :community, factory: :community
+  end  
+
+  factory :community_user_with_community, class: CommunityUser do
+    role 'normal'
+    association :user, factory: :user
+    association :community, factory: :community_with_users
   end
 
   factory :task_occurrence do
@@ -104,7 +113,7 @@ FactoryGirl.define do
 
   factory :invitation do
     status 'requested'
-    association :community, factory: :community
+    association :community, factory: :community_with_users
     association :invitor, factory: :user
     invitee_email {generate :email}
     token "f2215de2764c983ae839f638c353ac"
@@ -113,6 +122,54 @@ FactoryGirl.define do
       association :invitee, factory: :user, email: mail
       invitee_email mail
     end
-
   end
+
+  factory :comment do
+    title 'Test'
+    body 'Blablablab'
+    subject 'Test'
+    association :user, factory: :user
+
+    factory :comment_with_task_occurrence do
+      association :commentable, factory: :task_occurrence
+    end
+  end 
+
+  factory :user_saldo_modification do
+    price 25
+    percentage 25
+    checked true
+  end
+
+  factory :product_declaration do
+    title 'Test'
+    description 'Test'
+    date '2013-06-23'
+    type 'ProductDeclaration'
+    price 100
+    association :community_user, factory: :community_user_with_community
+
+
+    factory :product_declaration_with_saldos do
+      ignore do
+        community_users_set_1 []
+        saldo_price_1 0
+        community_users_set_2 []
+        saldo_price_2 0
+      end
+      after(:create) do |payment, evaluator|
+        if evaluator.community_users_set_1.any?
+          evaluator.community_users_set_1.each do |cu|
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, payment: payment
+          end
+        end       
+        if evaluator.community_users_set_2.any?
+          evaluator.community_users_set_2.each do |cu|
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, payment: payment
+          end
+        end
+      end
+    end
+  end
+
 end

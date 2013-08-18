@@ -1,7 +1,12 @@
 %p= t('tasks.new.drag_hint')
-= f.text_field :user_order, class: 'hide'
+= f.text_field :ordered_user_ids, class: 'hide'
+= f.text_field :ignored_user_ids, class: 'hide'
 %p
   %ul#user-sorter.sortable.nav.nav-tabs.nav-stacked
-    - @task.ordered_members.each do |member|
+    - @task.ordered_users.each do |member|
       %li.sort-item{:user_id => member.id}
         =link_to member.name, '#'
+    %li.separator= t('.ignore_users')
+
+    - @task.ignored_users.each do |member|
+      %li.sort-item{:user_id => member.id}= link_to member.name, '#'
