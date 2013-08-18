@@ -26,11 +26,21 @@ en:
         user_saldo_modification:
           base:
             invalid_user: You are trying create a payment for an user outside the current community
+        repeatable_item:
+          only_on_week_days:
+            invalid: The days of week value is invalid
+            
     models:
       community: Community
       user: User
       invitation: Invitation
-      payment: payment
+      payment: Payment
+      event: Event
+      single_occurrence_event: One-time event
+      repeatable_event: Repeatable event
+      repeatable_item: Repeat
+      event_occurrence: Event occurrence
+      repeatable_item: Repeatable
     attributes:
       payment:
         title: Titel
@@ -73,6 +83,28 @@ en:
         invitee_email: E-mail
         created_at: Sent at
         status: Status
+
+      single_occurrence_event:
+        name: Name
+        description: Description
+
+      repeatable_event:
+        name: Name
+        description: Description
+        active: Active?
+
+      event_occurrence:
+        starts_at: Starts at
+        register_deadline: Register deadline
+
+      repeatable_item:
+        repeat_every: Repeat every
+        repeat_infinite: Repeat infinite
+        next_occurrence: Starts at
+
+        only_on_week_days: Only on days
+        deadline: Deadline
+        has_deadline: Has deadline?
 
       task:
         time: Time to complete
