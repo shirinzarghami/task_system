@@ -51,6 +51,7 @@ en:
     edit: Edit
     user_info: User info
     payments: Payments
+    events: Events
   activerecord:
       errors:
         attributes:

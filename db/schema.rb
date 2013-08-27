@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20130818093508) do
     t.text     "description"
     t.integer  "community_user_id"
     t.string   "type"
-    t.boolean  "destroyed",         :default => false
+    t.boolean  "deleted",           :default => false
     t.boolean  "active",            :default => true
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false

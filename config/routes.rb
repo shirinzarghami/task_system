@@ -19,6 +19,7 @@ TaskSystem::Application.routes.draw do
     end
     resource :saldo, only: [:show], controller: 'saldo'
     resources :community_users, only: [:show]
+    resources :events
     resources :tasks do
       resources :task_occurrences, only: [:new, :create]
     end
