@@ -165,8 +165,9 @@ class TaskOccurrenceTest < ActiveSupport::TestCase
     mails = ActionMailer::Base.deliveries
     assert mails.size == 1, "Send 1 mail for 2 occurrences 24h or less before deadline"
     assert mails.last.to.first == @user.email, "Reminder to correct email"
-    assert @task_occurrences.select {|to| to.reload.reminder_mail_sent == false}.size == 0
+    assert mails.last.body.include?("Blabla"), "Should show the title of the task in the mail"
 
+    assert @task_occurrences.select {|to| to.reload.reminder_mail_sent == false}.size == 0
     TaskOccurrence.send_reminders
     mails = ActionMailer::Base.deliveries
     assert mails.size == 1, "Do not send mail again"

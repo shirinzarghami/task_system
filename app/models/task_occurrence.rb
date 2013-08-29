@@ -44,9 +44,9 @@ class TaskOccurrence < ActiveRecord::Base
       ActiveRecord::Base.transaction do 
         task_occurrences = uncompleted.approaching_deadline.no_reminder_sent.where(user_id: result.user_id)
         user = User.find result.user_id
-        task_occurrences.update_all reminder_mail_sent: true
         # next unless user.receive_reminder_mail
         TaskOccurrenceMailer.reminder(user, task_occurrences).deliver
+        task_occurrences.update_all reminder_mail_sent: true
       end
     end
   end
