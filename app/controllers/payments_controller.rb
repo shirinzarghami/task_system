@@ -1,10 +1,11 @@
 class PaymentsController < ApplicationController
-  load_and_authorize_resource
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :set_breadcrumbs, except: [:update, :create, :destroy]
   before_filter :find_payment, except: [:index, :new, :create, :edit, :update]
-
+  before_filter :new_payment, only: [:create]
+  
+  load_and_authorize_resource
   include Sortable::Controller
   sort :payment, default_column: :date, default_direction: :asc
 
@@ -44,8 +45,6 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = @community_user.payments.build payment_params
-    @payment.becomes(ProductDeclaration)
     if @payment.save
       @payment.save_category_tags
       flash[:notice] = t('messages.save_success')
@@ -83,6 +82,11 @@ class PaymentsController < ApplicationController
     def find_payment
       @object ||= @payment ||= Payment.find(params.has_key?(:payment_id) ? params[:payment_id] : params[:id])
       add_crumb(@payment.title.truncate(10), community_payment_path(@community, @payment))
+    end
+
+    def new_payment
+      @payment = @community_user.payments.build payment_params
+      @payment.becomes(ProductDeclaration)
     end
 
     def search_conditions
