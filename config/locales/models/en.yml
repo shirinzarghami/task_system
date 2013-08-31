@@ -101,7 +101,7 @@ en:
         repeat_every: Repeat every
         repeat_infinite: Repeat infinite
         next_occurrence: Starts at
-
+        enabled: Schedule automatically
         only_on_week_days: Only on days
         deadline: Deadline
         has_deadline: Has deadline?

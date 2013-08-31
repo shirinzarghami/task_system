@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20130818093508) do
     t.string   "deadline_unit"
     t.integer  "deadline_number",     :default => 0
     t.boolean  "has_deadline",        :default => true
+    t.boolean  "enabled",             :default => true
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end

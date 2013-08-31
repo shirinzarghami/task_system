@@ -10,3 +10,18 @@
 
 jQuery ->
   $('.alert').alert()
+
+  $("[data-toggle-visibility-of]").click ->
+    obj = $('#' + $(this).data('toggle-visibility-of'))
+    if $(this).attr('checked')
+      obj.slideDown()
+    else
+      obj.slideUp()
+
+  $("[data-toggle-visibility-of]").each ->
+    obj = $('#' + $(this).data('toggle-visibility-of'))
+
+    if obj.is(':visible')
+      obj.hide() unless $(this).attr('checked')
+    else
+      obj.show() if $(this).attr('checked')

@@ -12,7 +12,7 @@ class CreateRepeatableItems < ActiveRecord::Migration
       t.string :deadline_unit
       t.integer :deadline_number, default: 0, nil: 0
       t.boolean :has_deadline, default: true, nil: true
-
+      t.boolean :enabled, default: true, nil: true
       t.timestamps
     end
   end

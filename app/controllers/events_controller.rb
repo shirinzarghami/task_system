@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  EVENT_TYPES = [RepeatableEvent, SingleOccurrenceEvent]
+
   add_crumb(lambda {|instance| instance.t('breadcrumbs.communities')}) { |instance| instance.send :communities_path }
   before_filter :find_community
   before_filter :set_breadcrumbs, only: [:index, :show, :new, :edit]
@@ -16,7 +18,7 @@ class EventsController < ApplicationController
   end
 
   def event_type
-    if params.has_key?(:type) && Event::EVENT_TYPES.include?(params[:type].camelize)
+    if params.has_key?(:type) && EVENT_TYPES.include?(params[:type].camelize)
       params[:type].camelize.constantize
     else
       RepeatableEvent

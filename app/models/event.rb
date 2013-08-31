@@ -1,6 +1,4 @@
 class Event < ActiveRecord::Base
-  EVENT_TYPES = [RepeatableEvent, SingleOccurrenceEvent]
-
   attr_accessible :active, :community_user_id, :description, :destroyed, :name, :type
 
   belongs_to :community_user # Creator
