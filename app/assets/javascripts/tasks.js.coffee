@@ -21,9 +21,7 @@ jQuery ->
       $(this).tab('show')
 
   show_allocation_tag($('#task_allocation_mode').val() + '_tab')
-  $('input.datepicker').each ->
-    $(this).datepicker
-      dateFormat: 'yy-mm-dd'
+
     
 
   $('#task_repeat_infinite').click ->    

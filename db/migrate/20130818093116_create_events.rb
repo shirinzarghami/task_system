@@ -7,7 +7,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :type
       t.boolean :deleted, default: false, nil: false
       t.boolean :active, default: true, nil: true
-
+      t.boolean :has_roles, default: false, nil: false
       t.timestamps
     end
   end

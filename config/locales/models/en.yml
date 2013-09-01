@@ -41,6 +41,7 @@ en:
       repeatable_item: Repeat
       event_occurrence: Event occurrence
       repeatable_item: Repeatable
+      event_role: Role
     attributes:
       payment:
         title: Titel
@@ -92,10 +93,16 @@ en:
         name: Name
         description: Description
         active: Active?
+        has_roles: Has roles?
 
       event_occurrence:
         starts_at: Starts at
         register_deadline: Register deadline
+
+      event_role:
+        max_users: Max. users
+        has_task_occurrence: Has task
+        time: Time to complete
 
       repeatable_item:
         repeat_every: Repeat every
@@ -103,7 +110,7 @@ en:
         next_occurrence: Starts at
         enabled: Schedule automatically
         only_on_week_days: Only on days
-        deadline: Deadline
+        deadline: Deadline after
         has_deadline: Has deadline?
 
       task:

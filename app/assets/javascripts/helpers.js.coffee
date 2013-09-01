@@ -12,16 +12,28 @@ jQuery ->
   $('.alert').alert()
 
   $("[data-toggle-visibility-of]").click ->
-    obj = $('#' + $(this).data('toggle-visibility-of'))
+    obj_name = $(this).data('toggle-visibility-of')
+    obj = $('#' + obj_name) #Find by ID
+    obj = $(this).closest('tr, div').find('.' + obj_name).first() if obj.length == 0  # Find by class if no ID is found
+    console.log(obj_name)
+    
     if $(this).attr('checked')
       obj.slideDown()
     else
       obj.slideUp()
 
   $("[data-toggle-visibility-of]").each ->
-    obj = $('#' + $(this).data('toggle-visibility-of'))
+    obj_name = $(this).data('toggle-visibility-of')
 
+    obj = $('#' + obj_name) #Find by ID
     if obj.is(':visible')
       obj.hide() unless $(this).attr('checked')
     else
       obj.show() if $(this).attr('checked')
+
+  $('input.datepicker').each ->
+    $(this).datepicker
+      dateFormat: 'yy-mm-dd'
+
+  $('input.datetimepicker').each ->
+    $(this).datetimepicker()

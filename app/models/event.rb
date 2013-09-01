@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :community_user # Creator
   has_one :community, through: :community_user 
   has_one :user, through: :community_user #creator
-
+  has_many :event_roles, dependent: :destroy
   
   validates :name, presence: true
 end

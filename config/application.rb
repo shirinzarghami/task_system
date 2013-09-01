@@ -71,7 +71,7 @@ module TaskSystem
     config.max_created_communities = 5
     config.max_members = 10
     
-    config.assets.precompile += %w(sessions.css token-input-facebook.css)
+    config.assets.precompile += %w(sessions.css token-input-facebook.css jquery-ui-timepicker-addon.js jquery-ui-timepicker-addon.css)
 
     config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
 

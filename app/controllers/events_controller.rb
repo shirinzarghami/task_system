@@ -8,6 +8,7 @@ class EventsController < ApplicationController
   def new
     add_crumb(t('breadcrumbs.new'), new_community_event_path(@community))
     @event = event_type.new
+    @event.event_roles.build
   end
 
   protected

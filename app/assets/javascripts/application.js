@@ -21,5 +21,6 @@
 //= require bootstrap
 //= require helpers
 //= require tinymce-jquery
+//= require jquery-ui-timepicker-addon
 //= require_tree .
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130818093508) do
+ActiveRecord::Schema.define(:version => 20130901085250) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -57,6 +57,16 @@ ActiveRecord::Schema.define(:version => 20130818093508) do
     t.datetime "updated_at",        :null => false
   end
 
+  create_table "event_roles", :force => true do |t|
+    t.string   "name"
+    t.integer  "time"
+    t.boolean  "has_task_occurrence"
+    t.integer  "max_users"
+    t.integer  "event_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -64,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130818093508) do
     t.string   "type"
     t.boolean  "deleted",           :default => false
     t.boolean  "active",            :default => true
+    t.boolean  "has_roles",         :default => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
   end
