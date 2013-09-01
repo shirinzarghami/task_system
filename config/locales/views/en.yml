@@ -282,6 +282,10 @@ en:
         "Due to rounding of prices, the total sum of payments may contain a small error. Ideally, all cost and 
         expenses should add up to zero. The lost money is the factual sum."
 
+  event_roles:
+    form:
+      delete: Delete role
+      add: Add role
   form:
     categories:
       general: General
