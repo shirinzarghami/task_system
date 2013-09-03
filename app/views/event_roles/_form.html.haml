@@ -5,7 +5,7 @@
     = f.input :has_roles, label: false, inline_label: true, input_html: {data: {'toggle-visibility-of' => 'role-options'}}
 
     %div#role-options
-      %table.table
+      %table.table#role-table
         %tr
           %th= EventRole.human_attribute_name :name
           %th= EventRole.human_attribute_name :max_users
@@ -13,13 +13,12 @@
           %th= EventRole.human_attribute_name :time
           %th
 
-        %tr
+        %tr{:data => {'event-role-number' => 0}}
           %td= r.text_field :name
           %td= r.number_field :max_users, class: 'input-mini'
           %td= r.check_box :has_task_occurrence, data: {'toggle-visibility-of' => 'role-time-options'}
           %td= r.input :time, as: :time, label: false, wrapper_tag: false, label_tag: false, wrapper_html: {class: 'neighbour role-time-options'}
-          %td
-            = image_button 'iconic/trash_fill_12x12.png', '#', data: {:title => t('.delete')}, class: 'tooltip-link add-role-buton'
-            = image_button 'iconic/plus_12x12.png', '#', data: {title: t('.add')}, class: 'tooltip-link remove-role-buton'
-            = image_tag 'iconic/trash_fill_12x12.png', class: 'add-role-buton'
+          %td.event-role-actions
+            = image_button 'iconic/trash_fill_12x12.png', '#', data: {title: t('.add')}, class: 'tooltip-link remove-role-buton'
+            = image_button 'iconic/plus_12x12.png', '#', data: {:title => t('.delete')}, class: 'tooltip-link add-role-buton'
 
