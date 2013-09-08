@@ -14,8 +14,8 @@ class RepeatableItem < ActiveRecord::Base
   validates :repeat_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :next_occurrence, presence: true
   
-  validates :repeatable_id, presence: true
-  validates :repeatable_type, presence: true
+  # validates :repeatable_id, presence: true
+  # validates :repeatable_type, presence: true
 
   validate :validate_only_on_week_days
 

@@ -12,6 +12,7 @@ class EventsController < ApplicationController
 
   def create
     @event = event_type_class.new event_params
+    debugger
     if @event.save
       flash[:notice] = t('messages.save_success')
       redirect_to community_events_path @community
