@@ -8,28 +8,27 @@
       number = text_field.html().replace(',','.').replace('€','')
     return number
 
-jQuery ->
-  $('.alert').alert()
-
-  $("[data-toggle-visibility-of]").click ->
-    obj_name = $(this).data('toggle-visibility-of')
+  toggleShow: (src_obj, animate = true) ->
+    obj_name = src_obj.data('toggle-visibility-of')
     obj = $('#' + obj_name) #Find by ID
-    obj = $(this).closest('tr, div').find('.' + obj_name).first() if obj.length == 0  # Find by class if no ID is found
-    console.log(obj_name)
+    obj = src_obj.closest('tr, div').find('.' + obj_name).first() if obj.length == 0  # Find by class if no ID is found
     
-    if $(this).attr('checked')
-      obj.slideDown()
+    if src_obj.attr('checked')
+      if animate then obj.slideDown() else obj.show()
     else
-      obj.slideUp()
+      if animate then obj.slideUp() else obj.hide()
 
-  $("[data-toggle-visibility-of]").each ->
-    obj_name = $(this).data('toggle-visibility-of')
+  bindToggleVisibility: () ->
+    $("[data-toggle-visibility-of]").each ->
+      ts.toggleShow($(this), false)
 
-    obj = $('#' + obj_name) #Find by ID
-    if obj.is(':visible')
-      obj.hide() unless $(this).attr('checked')
-    else
-      obj.show() if $(this).attr('checked')
+    $("[data-toggle-visibility-of]").click (event) ->
+      ts.toggleShow($(this))
+
+jQuery ->
+  ts.bindToggleVisibility()
+
+  $('.alert').alert()
 
   $('input.datepicker').each ->
     $(this).datepicker

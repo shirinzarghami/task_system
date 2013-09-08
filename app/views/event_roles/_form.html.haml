@@ -12,13 +12,12 @@
           %th= EventRole.human_attribute_name :has_task_occurrence
           %th= EventRole.human_attribute_name :time
           %th
-
-        %tr{:data => {'event-role-number' => 0}}
-          %td= r.text_field :name
+        %tr.event-role{:data => {'event-role-number' => (r.object && r.object.id ? r.object.id : 0)}}
+          %td= r.text_field :name, :data => {'attribuut-name' => 'name'}
           %td= r.number_field :max_users, class: 'input-mini'
           %td= r.check_box :has_task_occurrence, data: {'toggle-visibility-of' => 'role-time-options'}
           %td= r.input :time, as: :time, label: false, wrapper_tag: false, label_tag: false, wrapper_html: {class: 'neighbour role-time-options'}
           %td.event-role-actions
-            = image_button 'iconic/trash_fill_12x12.png', '#', data: {title: t('.add')}, class: 'tooltip-link remove-role-buton'
-            = image_button 'iconic/plus_12x12.png', '#', data: {:title => t('.delete')}, class: 'tooltip-link add-role-buton'
+            = image_button 'iconic/trash_fill_12x12.png', '#', class: 'remove-role-button hide'
+            = image_button 'iconic/plus_12x12.png', '#', class: 'add-role-button'
 

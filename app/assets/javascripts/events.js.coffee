@@ -1,48 +1,36 @@
-addRole = () ->
-  latest_event_role = $("[data-event-role-number]").last()
+# Add a new row before the last row. Clear the text fields of the last one
+addRole = (event) ->
+  event.preventDefault()
 
-  number_of_roles = parseInt(latest_event_role.data('event-role-number'))
-  cloned_event_role = latest_event_role.clone()
-  cloned_event_role.hide()
-  cloned_event_role.appendTo('#role-table')
+  event_role = $(event.target).parents('tr.event-role')
+  $('#role-table tr:nth-last-child(2)').after(event_role.clone())
 
-  cloned_event_role.data('event-role-number', number_of_roles + 1)
-  cloned_event_role.find('.remove-role-buton').show()
-  latest_event_role.find('.add-role-buton').remove()
-  bindAddRoleButton(cloned_event_role.find('.add-role-buton'))
-  bindRemoveRoleButton(cloned_event_role.find('.remove-role-buton'))
+  $('.remove-role-button:not(:last)').each ->
+    $(this).show()
+    $(this).click(removeRole)
 
-  cloned_event_role.slideDown(400)
-
-removeRole = (obj) ->
-  event_role = obj.parents('tr')
-  event_roles = $("[data-event-role-number]")
-  latest_event_role = event_roles.last()
-  second_latest_event_role = event_roles[event_roles.length - 2]
-
-  if event_role[0] == latest_event_role[0]
-    console.log('Last role')
-    latest_event_role.find('.add-role-buton').clone().appendTo(second_latest_event_role.find('.event-role-actions'))
-
-  event_role.slideUp 400, ->
-    event_role.remove()
-
-bindAddRoleButton = (obj) ->
-  obj.on 'click', (event, object) ->
-    event.preventDefault()
-    addRole()
-
-bindRemoveRoleButton = (obj) ->
-  obj.on 'click', () ->
-    event.preventDefault()
-    removeRole(obj)
-  
+  $('.add-role-button:not(:last)').hide()
+  clearLastRole()
+  updateFieldNames()
+  ts.bindToggleVisibility()
 
 
+
+clearLastRole = () ->
+  $('tr.event-role:last input, tr.event-role:last select').val('')
+  $('tr.event-role:last input[type=checkbox]').attr('checked', false)
+
+updateFieldNames = () ->
+  $('tr.event-role').each (id) ->
+    $(this).find('input, select').each ->
+      between_brackets = $(this).attr('name').match(/\[(.*?)\]/gi)
+      attribute_name = between_brackets[between_brackets.length - 1].replace(/\[|\]/gi, '')
+      $(this).attr('name', 'repeatable_event[event_role]' + '[' + id  + '][' + attribute_name + ']') 
+
+removeRole = (event) ->
+  event.preventDefault()
+  $(event.target).parents('tr.event-role').remove()
 
 
 jQuery ->
-  $('.add-role-buton:last').each ->
-    bindAddRoleButton($(this))
-
-  $('.remove-role-buton').hide()
+  $('.add-role-button').click(addRole)

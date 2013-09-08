@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :active, :community_user_id, :description, :destroyed, :name, :type
+  # attr_accessible :active, :community_user_id, :description, :destroyed, :name, :type, :repeatable_item_attributes
 
   belongs_to :community_user # Creator
   has_one :community, through: :community_user 

@@ -1,5 +1,5 @@
 class RepeatableItem < ActiveRecord::Base
-  UNIT_VALUES = ['days','weeks', 'months', 'years']
+  UNIT_VALUES = ['days','weeks', 'months', 'years', 'hours']
   WEEK_DAY_VALUES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   attr_accessible :deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number, :repeatable_id, :repeatable_type
 
@@ -8,8 +8,8 @@ class RepeatableItem < ActiveRecord::Base
   validates :repeat_every_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :repeat_every_unit, presence: true, inclusion: {in: UNIT_VALUES}
 
-  validates :deadline, presence: true, :numericality => {:greater_than_or_equal_to => 0}
-  validates :deadline_number, presence: true, inclusion: {in: UNIT_VALUES}
+  validates :deadline_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
+  validates :deadline_unit, presence: true, inclusion: {in: UNIT_VALUES}
   
   validates :repeat_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :next_occurrence, presence: true

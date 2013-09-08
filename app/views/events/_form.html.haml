@@ -1,6 +1,6 @@
 - content_for :logo do
   = image_tag 'iconic/list_32x28.png'
-= simple_form_for(@event, url: form_url, html: {class: 'form-horizontal'}) do |f|
+= simple_form_for(@event, url: event_form_url, html: {class: 'form-horizontal'}) do |f|
   %fieldset
     %legend= t('form.categories.general')
     = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
@@ -13,3 +13,4 @@
 
   = render partial: 'repeatable_items/form', locals: {f: f} if @event.is_a? RepeatableEvent
   = render partial: 'event_roles/form', locals: {f: f}
+  = f.button :submit, class: 'btn btn-primary'

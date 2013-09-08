@@ -284,8 +284,7 @@ en:
 
   event_roles:
     form:
-      delete: Delete role
-      add: Add role
+
   form:
     categories:
       general: General
