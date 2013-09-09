@@ -9,7 +9,7 @@ class EventRole < ActiveRecord::Base
 
   def set_default_values
     self.max_users ||= 10
-    self.time ||= 0
+    self.time ||= Time.at(0) + 30.minutes
     self.has_task_occurrence = false if has_task_occurrence.nil?
   end
 end

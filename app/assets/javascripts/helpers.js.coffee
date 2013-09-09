@@ -35,4 +35,6 @@ jQuery ->
       dateFormat: 'yy-mm-dd'
 
   $('input.datetimepicker').each ->
-    $(this).datetimepicker()
+    $(this).datetimepicker
+      dateFormat: 'yy-mm-dd'
+      timeFormat: 'HH:mm:ss Z'      

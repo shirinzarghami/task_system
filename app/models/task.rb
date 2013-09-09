@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   ALLOCATION_MODES = [:in_turns, :time, :time_all, :voluntary, :user]
-  ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]} 
+  ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]}
 
   TIME_UNITS = {
     days: 1.day,

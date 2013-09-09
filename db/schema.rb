@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20130901085250) do
 
   create_table "event_roles", :force => true do |t|
     t.string   "name"
-    t.integer  "time"
+    t.time     "time"
     t.boolean  "has_task_occurrence"
     t.integer  "max_users"
     t.integer  "event_id"

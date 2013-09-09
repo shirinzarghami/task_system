@@ -73,9 +73,9 @@ class PaymentsController < ApplicationController
 
     def payment_params
       if params.has_key? :payment
-        params.require(:payment).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:payment).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]})
       elsif params.has_key? :product_declaration
-        params.require(:product_declaration).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id, :payment_id]})
+        params.require(:product_declaration).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id]})
       end
     end
 
