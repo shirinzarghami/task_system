@@ -42,7 +42,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    debugger
     if @task.update_attributes task_params
       flash[:notice] = t('messages.save_success')
       redirect_to community_tasks_path @community

@@ -4,8 +4,6 @@ class InvitationsController < ApplicationController
   before_filter :find_invitation_by_token, only: [:edit, :update, :show]
   before_filter :destroy_allowed, only: [:destroy]
 
-  # before_filter :accept_allowed?, only: [:accept]
-  # before_filter :accept_new_account_allowed?, only: [:accept_new_account]
   def new
     @communities = current_user.communities
     @invitation_dummy = Invitation.new
@@ -52,7 +50,6 @@ class InvitationsController < ApplicationController
           redirect_to invitation_path(@invitation.token)
         end
       else
-        # flash[:error] = t('messages.accept_invitation_fail')
         flash[:error] = error_messages_for @invitation, t('messages.accept_invitation_fail')
         render action: 'edit'
       end

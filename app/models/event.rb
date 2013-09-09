@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  # attr_accessible :active, :community_user_id, :description, :destroyed, :name, :type, :repeatable_item_attributes
+  ActiveRecord::Base.send(:include, ActiveModel::ForbiddenAttributesProtection)
+  attr_accessible :active, :community_user_id, :description, :destroyed, :name, :type, :repeatable_item_attributes, :event_roles_attributes
   # TODO: Mass assignment protection is off. Check whether strong parameters is used!!!
 
   belongs_to :community_user # Creator

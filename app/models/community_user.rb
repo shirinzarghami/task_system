@@ -1,7 +1,7 @@
 class CommunityUser < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   ROLES  =%w(normal admin)
-  attr_accessible :community_id, :role, :user_id, :user, :community
+  attr_accessible :community_id, :role, :user_id, :user, :community #Replaced by strong parameters
 
   belongs_to :user
   belongs_to :community

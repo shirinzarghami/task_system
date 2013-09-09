@@ -1,4 +1,5 @@
 class UserSaldoModification < ActiveRecord::Base
+  
   attr_accessible :community_user_id, :payment_id, :price, :community_user, :checked, :percentage
 
   belongs_to :payment

@@ -10,7 +10,7 @@ class PaymentsController < ApplicationController
   sort :payment, default_column: :date, default_direction: :asc
 
   def index
-    @payments = @community.payments.joins("RIGHT JOIN taggings ON taggings.taggable_id = payments.id AND taggings.taggable_type = 'Payment'").where(search_conditions).order(sort_column + ' ' + sort_direction).group('payments.id').paginate(page: params[:page], per_page: 20)
+    @payments = @community.payments.joins("LEFT JOIN taggings ON taggings.taggable_id = payments.id AND taggings.taggable_type = 'Payment'").where(search_conditions).order(sort_column + ' ' + sort_direction).group('payments.id').paginate(page: params[:page], per_page: 20)
 
     respond_to do |format|
       format.html
