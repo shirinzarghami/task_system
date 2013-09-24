@@ -43,7 +43,7 @@ gem 'acts-as-taggable-on'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 
 # To use debugger
