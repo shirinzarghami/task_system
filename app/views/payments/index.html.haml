@@ -5,7 +5,7 @@
 - content_for :search do
   = render partial: 'shared/search'
 %p
-  %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
+  %h2= image_tag('money_bag.png') + t('.title')
   - if @payments.any?
     - if params[:q].present?
       %p.search-result
