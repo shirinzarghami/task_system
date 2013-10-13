@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   # Switched off
   # 
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :registerable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :registerable, :timeoutable
 
 
 
