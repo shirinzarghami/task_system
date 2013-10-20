@@ -14,6 +14,7 @@ class CommunityUser < ActiveRecord::Base
   validate :validate_at_least_one_admin
 
   before_destroy :destroy_has_at_least_one_admin?
+  before_create :set_start_saldo
 
   scope :administrators, where(role: 'admin')
   scope :exclude, lambda {|community_user| where(['community_users.id != ?', community_user.id]) unless community_user.new_record?}
@@ -41,6 +42,10 @@ class CommunityUser < ActiveRecord::Base
       community_users = community.community_users.administrators.exclude(self)
       errors.add(:base, :at_least_one_admin) unless community_users.count > 0
       errors.blank?
+    end
+
+    def set_start_saldo
+      community.start_saldo_distribution.user_saldo_modifications.create community_user: self, price: 0, percentage: 0      
     end
     
 

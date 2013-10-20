@@ -2,7 +2,7 @@ class UserSaldoModification < ActiveRecord::Base
   
   attr_accessible :community_user_id, :payment_id, :price, :community_user, :checked, :percentage
 
-  belongs_to :payment
+  belongs_to :chargeable, polymorphic: true
   belongs_to :community_user
   has_one :user, through: :community_user
   has_one :community, through: :community_user

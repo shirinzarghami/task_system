@@ -10,8 +10,8 @@ class Payment < ActiveRecord::Base
 
   belongs_to :community_user #Creator
   has_one :community, through: :community_user
+  has_many :user_saldo_modifications, dependent: :destroy, as: :chargeable
 
-  has_many :user_saldo_modifications, dependent: :destroy
   accepts_nested_attributes_for :user_saldo_modifications
 
   after_initialize :set_initial_values

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130901085250) do
+ActiveRecord::Schema.define(:version => 20131013194631) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -121,6 +121,12 @@ ActiveRecord::Schema.define(:version => 20130901085250) do
     t.datetime "updated_at",                            :null => false
   end
 
+  create_table "start_saldo_distributions", :force => true do |t|
+    t.integer  "community_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -181,12 +187,13 @@ ActiveRecord::Schema.define(:version => 20130901085250) do
 
   create_table "user_saldo_modifications", :force => true do |t|
     t.decimal  "price",             :precision => 8, :scale => 2
-    t.integer  "payment_id"
+    t.integer  "chargeable_id"
     t.integer  "community_user_id"
     t.decimal  "percentage",        :precision => 8, :scale => 2
     t.boolean  "checked"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
+    t.string   "chargeable_type"
   end
 
   create_table "users", :force => true do |t|

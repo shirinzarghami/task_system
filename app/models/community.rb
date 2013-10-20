@@ -22,6 +22,7 @@ class Community < ActiveRecord::Base
   has_many :admin_users, through: :community_users, class_name: 'User', source: :user, conditions: ['role = ?', 'admin']
   belongs_to :creator, class_name: 'User'
   has_many :tasks, dependent: :destroy
+  has_one :start_saldo_distribution, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_\s]+$/}
   validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_\-]+$/}
@@ -30,7 +31,7 @@ class Community < ActiveRecord::Base
   validate :validate_max_members_exceeded
   before_validation :deduce_subdomain
   after_validation :set_invitation_errors
-
+  before_create :create_start_saldo
 
   # Token input railscast 258
   def user_tokens= ids
@@ -71,6 +72,10 @@ class Community < ActiveRecord::Base
       if self.community_users.size > max_users
         [:user_tokens, :admin_user_tokens, :invitation_emails].each {|atr| errors.add(atr, :max_members_exceeded)}
       end
+    end
+
+    def create_start_saldo
+      self.create_start_saldo_distribution
     end
 
 end

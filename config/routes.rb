@@ -18,6 +18,7 @@ TaskSystem::Application.routes.draw do
       resources :comments, only: [:create, :destroy]
     end
     resource :saldo, only: [:show], controller: 'saldo'
+    resource :start_saldo_distribution, only: [:edit, :update]
     resources :community_users, only: [:show]
     resources :events
     resources :tasks do

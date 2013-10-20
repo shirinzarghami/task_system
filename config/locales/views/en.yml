@@ -52,6 +52,7 @@ en:
     user_info: User info
     payments: Payments
     events: Events
+    start_saldo_distribution: Start saldos
   activerecord:
       errors:
         attributes:
@@ -159,6 +160,9 @@ en:
     show:
       title: Invitation
 
+  start_saldo_distributions:
+    edit:
+      title: Start saldos
   tasks:
     new:
       title: Create a recurring task
