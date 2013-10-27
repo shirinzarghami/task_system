@@ -160,12 +160,12 @@ FactoryGirl.define do
       after(:create) do |payment, evaluator|
         if evaluator.community_users_set_1.any?
           evaluator.community_users_set_1.each do |cu|
-            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, payment: payment
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, chargeable: payment
           end
         end       
         if evaluator.community_users_set_2.any?
           evaluator.community_users_set_2.each do |cu|
-            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, payment: payment
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, chargeable: payment
           end
         end
       end

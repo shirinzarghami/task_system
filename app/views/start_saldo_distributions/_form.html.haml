@@ -1,5 +1,11 @@
 = simple_form_for @start_saldo_distribution, url: community_start_saldo_distribution_path(@community), html: {class: 'form-horizontal'} do |f|
   %fieldset
-    %legend= t('.categories.payment')
+    %legend= t('start_saldo_distributions.edit.title')
     = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
     %div.control-group
+    %table.table
+      = f.fields_for :user_saldo_modifications do |g|
+        %tr
+          %td= g.object.community_user.user.name
+          %td= g.input :price, input_html: {class: 'input-mini start-saldo'}
+  =f.button :submit, t('start_saldo_distributions.form.submit'), class: 'btn btn-primary'

@@ -12,9 +12,9 @@ class StartSaldoDistributionsController < ApplicationController
 
     if @start_saldo_distribution.update_attributes start_saldo_params
       flash[:notice] = t('messages.save_success')
-      redirect_to community_tasks_path @community
+      redirect_to community_saldo_path @community
     else
-      flash[:error] = t('messages.save_fail')
+      flash[:error] = @start_saldo_distribution.errors[:base].try(:first) || t('messages.save_fail')
       render action: 'edit'
     end
   end

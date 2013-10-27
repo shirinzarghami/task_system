@@ -80,6 +80,7 @@ en:
       version: Version
       payments: Payments
       saldos: Saldos
+      start_saldos: Start saldos
 
 
 
@@ -163,6 +164,9 @@ en:
   start_saldo_distributions:
     edit:
       title: Start saldos
+    form:
+      title: Start saldos
+      submit: Save
   tasks:
     new:
       title: Create a recurring task
@@ -280,6 +284,7 @@ en:
       title: Saldo overview
       saldo: Saldo
       lost-money: Lost money
+      start_saldo: Edit start saldo
       error: Error
       error-percentage: "%{perc} of total expenses"
       error-tooltip: 

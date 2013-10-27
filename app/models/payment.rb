@@ -37,15 +37,16 @@ class Payment < ActiveRecord::Base
     self == Payment ? ActiveModel::Name.new(Payment, nil, 'Payment') : Payment.model_name
   end
 
-  private
-    def set_initial_values
-      self.price ||= 0
-      self.date ||= Date.today
-    end
 
-    def invalid_user
-      errors.add(:base, :invalid_user) unless self.user_saldo_modifications.reject {|usm| self.community.id == usm.community.id}.size == 0
-    end
+  private
+  def set_initial_values
+    self.price ||= 0
+    self.date ||= Date.today
+  end
+
+  def invalid_user
+    errors.add(:base, :invalid_user) unless self.user_saldo_modifications.reject {|usm| self.community.id == usm.community.id}.size == 0
+  end
 
   
 end

@@ -31,22 +31,27 @@ class CommunityUser < ActiveRecord::Base
     self.role == 'normal'
   end
 
+  def saldo
+    user_saldo_modifications.sum(:price)
+  end
+
 
   protected
-    def validate_at_least_one_admin
-      community_users = community.present? ? community.community_users.administrators.exclude(self) : []
-      errors.add(:base, :at_least_one_admin) unless community_users.count > 0 or self.role == 'admin'
-    end
+  def set_start_saldo
+    community.start_saldo_distribution.user_saldo_modifications.build community_user: self, price: 0, percentage: 0     
+  end
 
-    def destroy_has_at_least_one_admin?
-      community_users = community.community_users.administrators.exclude(self)
-      errors.add(:base, :at_least_one_admin) unless community_users.count > 0
-      errors.blank?
-    end
+  def validate_at_least_one_admin
+    community_users = community.present? ? community.community_users.administrators.exclude(self) : []
+    errors.add(:base, :at_least_one_admin) unless community_users.count > 0 or self.role == 'admin'
+  end
 
-    def set_start_saldo
-      community.start_saldo_distribution.user_saldo_modifications.create community_user: self, price: 0, percentage: 0      
-    end
+  def destroy_has_at_least_one_admin?
+    community_users = community.community_users.administrators.exclude(self)
+    errors.add(:base, :at_least_one_admin) unless community_users.count > 0
+    errors.blank?
+  end
+
     
 
 end

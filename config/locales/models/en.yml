@@ -9,6 +9,10 @@ en:
           attributes:
             base:
               max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+        start_saldo_distribution: 
+          attributes:
+            base:
+              result_should_be_zero: The sum of the start saldos should be zero
         community:
           attributes:
             user_tokens:
