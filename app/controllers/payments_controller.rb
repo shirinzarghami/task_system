@@ -29,7 +29,9 @@ class PaymentsController < ApplicationController
 
   def new
     add_crumb(t('breadcrumbs.new'), new_community_task_path(@community))
-    @payment = ProductDeclaration.new
+
+    @payment = payment_type.new
+    @payment.build_repeatable_item if @payment.is_a?(RepeatablePayment)
     @community.community_users.each {|co| @payment.user_saldo_modifications.build community_user: co}  
   end
 
@@ -72,10 +74,14 @@ class PaymentsController < ApplicationController
     end
 
     def payment_params
+      standard_params         = [:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]}]
+      repeatable_item_params  = [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number]
       if params.has_key? :payment
-        params.require(:payment).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]})
+        params.require(:payment).permit(*standard_params)
       elsif params.has_key? :product_declaration
-        params.require(:product_declaration).permit(:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id]})
+        params.require(:product_declaration).permit(*standard_params)
+      elsif params.has_key? :repeatable_payment
+        params.require(:repeatable_payment).permit(*(standard_params + repeatable_item_params))
       end
     end
 
@@ -86,7 +92,7 @@ class PaymentsController < ApplicationController
 
     def new_payment
       @payment = @community_user.payments.build payment_params
-      @payment.becomes(ProductDeclaration)
+      # @payment.becomes(ProductDeclaration)
     end
 
     def search_conditions
@@ -99,5 +105,10 @@ class PaymentsController < ApplicationController
         values = [search, search, (@search_tag.id if @search_tag)].compact
         [conditions, values].flatten
       end
+    end
+
+    def payment_type
+      type = params[:type].try(:constantize) rescue nil
+      (type && type < Payment) ? type : ProductDeclaration
     end
 end

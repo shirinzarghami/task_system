@@ -4,7 +4,7 @@ class Payment < ActiveRecord::Base
   # PERSIST_DYNAMIC_ATTRIBUTES = []
   # include DynamicAttributes
   
-  attr_accessible :community_user_id, :date, :description, :dynamic_attributes, :title, :type, :user_saldo_modifications_attributes, :price, :categories
+  attr_accessible :community_user_id, :date, :description, :dynamic_attributes, :title, :type, :user_saldo_modifications_attributes, :price, :categories, :repeatable_item_attributes
   attr_accessor :categories
   acts_as_taggable_on :categories
 
