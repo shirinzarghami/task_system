@@ -30,8 +30,8 @@ class PaymentsController < ApplicationController
   def new
     add_crumb(t('breadcrumbs.new'), new_community_task_path(@community))
 
-    @payment = payment_type.new
-    @payment.build_repeatable_item if @payment.is_a?(RepeatablePayment)
+    @payment = ProductDeclaration.new
+    @payment.build_repeatable_item
     @community.community_users.each {|co| @payment.user_saldo_modifications.build community_user: co}  
   end
 
@@ -74,15 +74,12 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    standard_params         = [:categories, :price, :date, :description, :title, :type, {user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]}]
+    standard_params         = [:categories, :price, :date, :description, :title, :type]
+    user_saldo_params       = [{user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]}]
     repeatable_item_params  = [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number]
-    if params.has_key? :payment
-      params.require(:payment).permit(*standard_params)
-    elsif params.has_key? :product_declaration
-      params.require(:product_declaration).permit(*standard_params)
-    elsif params.has_key? :repeatable_payment
-      params.require(:repeatable_payment).permit(*(standard_params + repeatable_item_params))
-    end
+    payment_attritbutes     = params[:payment] || params[:product_declaration]
+
+    payment_attritbutes.permit *(standard_params + repeatable_item_params + user_saldo_params)
   end
 
   def find_payment
@@ -99,15 +96,10 @@ class PaymentsController < ApplicationController
       @search_tag = ActsAsTaggableOn::Tag.find_by_name params[:q]
 
       search = "%#{params[:q]}%"
-      # conidtions = ['title LIKE ? OR description LIKE ?', search, search]
       conditions = ['title LIKE ?', 'description LIKE ?', ("taggings.tag_id = ?" if @search_tag)].compact.join(' OR ')
       values = [search, search, (@search_tag.id if @search_tag)].compact
       [conditions, values].flatten
     end
   end
 
-  def payment_type
-    type = params[:type].try(:constantize) rescue nil
-    (type && type < Payment) ? type : ProductDeclaration
-  end
 end

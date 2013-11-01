@@ -75,6 +75,8 @@ module TaskSystem
 
     config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
 
+    config.cron_job_logger = ActiveSupport::BufferedLogger.new(Rails.root.join('log', 'cron_job.log'))
+
     config.to_prepare do
         # Devise::SessionsController.layout "devise"
         # Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application"   : "registrations" }

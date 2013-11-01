@@ -172,4 +172,19 @@ FactoryGirl.define do
     end
   end
 
+  FactoryGirl.define do
+
+    factory :repeatable_item_every_week, :class => RepeatableItem do
+      repeat_every_unit 'weeks'
+      repeat_number 1
+      repeat_infinite false
+      next_occurrence Time.now
+      repeat_every_number 1
+      deadline_unit 'weeks'
+      deadline_number 1
+      has_deadline true
+      enabled true       
+    end
+  end
+
 end

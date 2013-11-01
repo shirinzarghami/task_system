@@ -28,6 +28,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
 end
+
 gem 'jquery-rails'
 gem 'acts_as_commentable_with_threading'
 gem 'shoulda-context'

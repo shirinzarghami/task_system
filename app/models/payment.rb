@@ -7,9 +7,14 @@ class Payment < ActiveRecord::Base
 
   belongs_to :community_user #Creator
   has_one :community, through: :community_user
+  has_one :repeatable_item, as: :repeatable, dependent: :destroy
   has_many :user_saldo_modifications, dependent: :destroy, as: :chargeable
 
+  belongs_to :parent, :class_name => 'Payment'
+  has_many :childeren, :class_name => 'Payment'
+
   accepts_nested_attributes_for :user_saldo_modifications
+  accepts_nested_attributes_for :repeatable_item
 
   after_initialize :set_initial_values
 
@@ -19,6 +24,8 @@ class Payment < ActiveRecord::Base
   validate :invalid_user
 
   acts_as_commentable
+
+
 
   def save_category_tags
     if @categories.present?
@@ -32,6 +39,17 @@ class Payment < ActiveRecord::Base
     self == Payment ? ActiveModel::Name.new(Payment, nil, 'Payment') : Payment.model_name
   end
 
+  def repeat!
+    cloned_payment = self.clone
+    cloned_payment.title = "#{title} - I18n.l(Date.today)"
+    cloned_payment.save! && save!
+  end
+
+  def clone
+    clone = self.dup
+    user_saldo_modifications.each {|saldo_mod| user_saldo_modifications.build.attributes = saldo_mod}
+    clone
+  end
 
   private
   def set_initial_values

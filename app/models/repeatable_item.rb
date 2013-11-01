@@ -22,16 +22,27 @@ class RepeatableItem < ActiveRecord::Base
 
   validate :validate_only_on_week_days
 
-  scope :to_schedule, where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR repeat > ?", true, 0])
+  scope :to_schedule, lambda {where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR repeat_number > ?", true, 0])}
 
   after_initialize :set_default_values
 
   def self.schedule_upcoming
-    RepeatableItem.to_schedule.each do |repeatable_item| 
-      ActiveRecord::Base.transaction do
-        repeatable_item.repeatable.repeat
-        repeatable_item.next_occurrence += repeat_every
-      end
+    RepeatableItem.to_schedule.each do |repeatable_item|
+      # begin
+        repeatable_item.repeat!
+
+      # rescue
+      #   Rails.application.config.cron_job_logger.warn "Could not repeat #{repeatable_item.repeatable.class} with id = #{repeatable_item.repeatable.id}"
+      # end
+    end
+  end
+
+  def repeat!
+    ActiveRecord::Base.transaction do
+      repeatable.repeat!
+      self.next_occurrence += repeat_every
+      self.repeat_number -= 1 unless repeat_infinite || repeat_number == 0 
+      save!
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013194631) do
+ActiveRecord::Schema.define(:version => 20131101200301) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20131013194631) do
     t.decimal  "price",              :precision => 8, :scale => 2
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.integer  "payment_id"
   end
 
   create_table "repeatable_items", :force => true do |t|
