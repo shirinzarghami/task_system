@@ -1,8 +1,5 @@
 class Payment < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  # require 'include/dynamic_attributes'
-  # PERSIST_DYNAMIC_ATTRIBUTES = []
-  # include DynamicAttributes
   
   attr_accessible :community_user_id, :date, :description, :dynamic_attributes, :title, :type, :user_saldo_modifications_attributes, :price, :categories, :repeatable_item_attributes
   attr_accessor :categories
@@ -21,8 +18,6 @@ class Payment < ActiveRecord::Base
   validates :price, presence: true, :numericality => {:greater_than => 0}
   validate :invalid_user
 
-  # default_scope order('created_at DESC')
-  
   acts_as_commentable
 
   def save_category_tags

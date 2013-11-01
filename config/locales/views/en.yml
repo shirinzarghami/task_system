@@ -273,6 +273,7 @@ en:
     index:
       title: Overview of payments
       new_product_declaration: Product declaration
+      repeatable_payment: Repeatable payment
       non-found: No payments were found
       search-results: Search results for '%{query}'.
       showall: Show all payments

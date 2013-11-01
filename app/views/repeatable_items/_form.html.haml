@@ -1,3 +1,4 @@
+- show_deadline = true unless defined?(show_deadline)
 = f.fields_for :repeatable_item do |r|
   %fieldset
     %legend= t('form.categories.instantiation')
@@ -12,11 +13,11 @@
 
       = r.input :repeat_number, input_html: {class: 'input-mini'}
       = r.input :repeat_infinite, as: :boolean
-
-  %fieldset
-    %legend= t('form.categories.deadline')
-    = image_tag 'iconic/clock_32x32.png', class: 'logo'
-    = r.input :has_deadline, inline_label: true, label: false, input_html: {data: {'toggle-visibility-of' => 'deadline-options'}}
-    %div#deadline-options
-      = r.input :deadline_number, as: :integer, input_html: {class: 'input-mini'}, wrapper_html: {class: 'inline'}, label: RepeatableItem.human_attribute_name(:deadline)
-      = r.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, input_html: {class: 'input-small'}, wrapper_html: {class: 'inline neighbour'}, label: false
+  - if show_deadline
+    %fieldset
+      %legend= t('form.categories.deadline')
+      = image_tag 'iconic/clock_32x32.png', class: 'logo'
+      = r.input :has_deadline, inline_label: true, label: false, input_html: {data: {'toggle-visibility-of' => 'deadline-options'}}
+      %div#deadline-options
+        = r.input :deadline_number, as: :integer, input_html: {class: 'input-mini'}, wrapper_html: {class: 'inline'}, label: RepeatableItem.human_attribute_name(:deadline)
+        = r.input :deadline_unit, as: :select, collection: [:days, :weeks, :months], label: '', include_blank: false, input_html: {class: 'input-small'}, wrapper_html: {class: 'inline neighbour'}, label: false

@@ -35,3 +35,4 @@
       %span.caret
     %ul.dropdown-menu
       %li= link_to t('.new_product_declaration'), new_community_payment_path(@community)
+      %li= link_to t('.repeatable_payment'), new_community_payment_path(@community, type: 'RepeatablePayment')

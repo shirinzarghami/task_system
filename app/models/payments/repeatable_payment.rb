@@ -3,4 +3,7 @@ class RepeatablePayment < Payment
 
   accepts_nested_attributes_for :repeatable_item
 
+  def repeat
+    
+  end
 end
