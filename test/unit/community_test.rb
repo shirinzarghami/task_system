@@ -3,7 +3,6 @@ require 'test_helper'
 class CommunityTest < ActiveSupport::TestCase
 
   test "Community should be valid with valid attributes" do
-    # c = Community.new name: 'Test', max_users: 20, subdomain: 'test'
     c = FactoryGirl.build :community
     assert c.save
   end
