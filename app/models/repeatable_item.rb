@@ -1,5 +1,6 @@
 class RepeatableItem < ActiveRecord::Base
-  ActiveRecord::Base.send(:include, ActiveModel::ForbiddenAttributesProtection)
+  include ActiveModel::ForbiddenAttributesProtection
+
   UNIT_VALUES = ['days','weeks', 'months', 'years', 'hours']
   WEEK_DAY_VALUES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   

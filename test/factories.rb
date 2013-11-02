@@ -20,6 +20,10 @@ FactoryGirl.define do
     receive_comment_mail true
   end
 
+  factory :start_saldo_distribution do
+
+  end
+
   factory :task do
     name 'Do something'
     description 'Do something'
@@ -61,6 +65,7 @@ FactoryGirl.define do
   factory :community do
     name {generate :community_name}
     creator_id 1
+    association :start_saldo_distribution, factory: :start_saldo_distribution
     factory :community_with_users do
       ignore do
         users_count 5

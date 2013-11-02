@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
   before_filter :check_destroy_allowed, only: [:destroy]
 
   def create
-    debugger
     @comment = Comment.build_from(@commentable, current_user.id, params.require(:comment_body))
     if @comment.save
       respond_to do |format|
