@@ -1,7 +1,2 @@
-- content_for :title do
-  =t('communities.index.title')
-- content_for :menu  do
-  = render partial: 'menu.html.haml'
-
 = render partial: 'invitations', locals: {show_accept: true} if @invitations.any?
 = render partial: 'community_users'

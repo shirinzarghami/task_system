@@ -18,10 +18,6 @@ class ActiveSupport::TestCase
     Task.all.select {|t| t.next_occurrence <= Date.today}.each {|t| t.schedule}
   end
 
-  def permit_all_hash hash = {}
-    ActionController::Parameters.new hash.permit!
-  end
-
 end
 
 class ActionController::TestCase

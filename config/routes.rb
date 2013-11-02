@@ -1,7 +1,9 @@
 TaskSystem::Application.routes.draw do
   get "tags/index"
 
-  devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, controllers: {registrations: "registrations"}
+  devise_for :users, path_names: {sign_in: 'login', sign_up: 'register', sign_out: 'logout'}, 
+  controllers: {registrations: "users/registrations", :passwords => "users/passwords", :confirmations => 'users/confirmations'}
+  
   devise_scope :user do
     get "logout", :to => "devise/sessions#destroy"
   end
