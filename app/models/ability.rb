@@ -12,13 +12,13 @@ class Ability
         # Read, update and destroy everything in the community
         limit_by_community_for_action [:read, :update, :destroy]
         # Create everything
-        can :create, [Task, TaskOccurrence, Payment, ProductDeclaration, RepeatablePayment, Comment, Invitation, UserSaldoModification, CommunityUser]
+        can :create, [Task, TaskOccurrence, Payment, ProductDeclaration, Comment, Invitation, UserSaldoModification, CommunityUser]
       else
         # Read all stuff in community
         limit_by_community_for_action :read
 
         # Create everything except CommunityUser
-        can :create, [Task, TaskOccurrence, Payment, ProductDeclaration, RepeatablePayment, Comment, Invitation, UserSaldoModification]
+        can :create, [Task, TaskOccurrence, Payment, ProductDeclaration, Comment, Invitation, UserSaldoModification]
 
         # Only update / destroy what was created by themselve
         can [:update, :destroy], [Task, CommunityUser, Comment], user_id: community_user.user_id

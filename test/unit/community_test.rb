@@ -14,7 +14,8 @@ class CommunityTest < ActiveSupport::TestCase
   end
 
   test "A user can only have one role within one community" do
-    c = Community.new name: 'Test', max_users: 20, subdomain: 'test'
+    attributes = ActionController::Parameters.new name: 'Test', max_users: 20, subdomain: 'test'
+    c = Community.new attributes.permit!
     c.users << users(:one)
     c.admin_users << users(:one)
     assert !c.save
@@ -26,7 +27,8 @@ class CommunityTest < ActiveSupport::TestCase
     end
 
     should "Not exceed when creating community_users" do
-      @community.community_users.build(role: 'admin', user: FactoryGirl.create(:user))
+      attributes = ActionController::Parameters.new role: 'admin', user: FactoryGirl.create(:user)
+      @community.community_users.build(attributes.permit!)
       assert !@community.save
       assert @community.errors[:invitation_emails].include?("The number of community members exceeds the limitation. No new members can be added")
     end

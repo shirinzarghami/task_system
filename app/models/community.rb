@@ -1,9 +1,9 @@
 class Community < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
+  # include ActiveModel::ForbiddenAttributesProtection
   extend FriendlyId
-    friendly_id :subdomain
+  
+  friendly_id :subdomain
 
-  attr_accessible :name, :subdomain, :user_tokens, :admin_user_tokens, :invitation_emails, :creator, :max_users #Replaced by strong parameters
   attr_reader :user_tokens, :admin_user_tokens
   attr_accessor :invitation_emails
   acts_as_tagger
