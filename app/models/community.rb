@@ -31,7 +31,6 @@ class Community < ActiveRecord::Base
   validate :validate_max_members_exceeded
   before_validation :deduce_subdomain
   after_validation :set_invitation_errors
-  before_create :create_start_saldo
 
   # Token input railscast 258
   def user_tokens= ids
@@ -73,9 +72,4 @@ class Community < ActiveRecord::Base
         [:user_tokens, :admin_user_tokens, :invitation_emails].each {|atr| errors.add(atr, :max_members_exceeded)}
       end
     end
-
-    def create_start_saldo
-      self.build_start_saldo_distribution
-    end
-
 end

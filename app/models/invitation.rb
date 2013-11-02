@@ -57,9 +57,13 @@ class Invitation < ActiveRecord::Base
         community_user.user = user
         community_user.role = 'normal'
         community_user.community = community
-        community_user.save!
         
+        start_saldos = community.start_saldo_distribution
+        start_saldos.user_saldo_modifications.build community_user: community_user, price: 0, percentage: 0
         self.status = 'accepted'
+
+        community_user.save!
+        start_saldos.save!
         save!
       end
     rescue
