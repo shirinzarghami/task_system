@@ -75,7 +75,7 @@ class Community < ActiveRecord::Base
     end
 
     def create_start_saldo
-      self.build_start_saldo_distribution 
+      self.build_start_saldo_distribution
     end
 
 end

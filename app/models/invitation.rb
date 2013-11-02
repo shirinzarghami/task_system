@@ -53,7 +53,12 @@ class Invitation < ActiveRecord::Base
           invitee_email = user.email
           user.save!
         end
-        CommunityUser.create! user: user, role: 'normal', community: community
+        community_user = CommunityUser.new
+        community_user.user = user
+        community_user.role = 'normal'
+        community_user.community = community
+        community_user.save!
+        
         self.status = 'accepted'
         save!
       end
