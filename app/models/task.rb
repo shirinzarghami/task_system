@@ -38,7 +38,7 @@ class Task < ActiveRecord::Base
       User.includes(:task_occurrences).joins(:task_occurrences).uniq.where('task_occurrences.should_send_assign_mail' => true).each do |user|
         # Send email
         TaskOccurrenceMailer.assign(user, *user.task_occurrences).deliver
-        TaskOccurrence.where(user_id: task_occurrence.user.id).update_all(should_send_assign_mail: false)
+        TaskOccurrence.where(user_id: user.id).update_all(should_send_assign_mail: false)
       end
     end 
   end
