@@ -74,12 +74,11 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    standard_params         = [:categories, :price, :date, :description, :title, :type]
+    standard_params         = [:categories, :price, :date, :description, :title]
     user_saldo_params       = [{user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]}]
     repeatable_item_params  = [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number]
-    payment_attritbutes     = params[:payment] || params[:product_declaration]
 
-    payment_attritbutes.permit *(standard_params + repeatable_item_params + user_saldo_params)
+    params.require(:payment).permit *(standard_params + repeatable_item_params + user_saldo_params)
   end
 
   def find_payment

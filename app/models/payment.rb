@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   
+  attr_accessible :type, :categories, :price, :date, :description, :title, :user_saldo_modifications_attributes
   attr_accessor :categories
   acts_as_taggable_on :categories
 
@@ -23,8 +24,6 @@ class Payment < ActiveRecord::Base
   validate :invalid_user
 
   acts_as_commentable
-
-
 
   def save_category_tags
     if @categories.present?

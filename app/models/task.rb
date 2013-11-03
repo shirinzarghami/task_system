@@ -32,10 +32,12 @@ class Task < ActiveRecord::Base
     def schedule_upcoming_occurrences
       Task.to_schedule.each {|task| task.schedule({}, hold_email: true)}
       
-      # User.joins(:task_occurrences).group('users.id').where('task_occurrences.should_send_assign_mail = true').each do |user|
-      TaskOccurrence.group('user_id').where(should_send_assign_mail: true).where('user_id IS NOT NULL').each do |task_occurrence|  
+      # TaskOccurrence.group('user_id').where(should_send_assign_mail: true).where('user_id IS NOT NULL').each do |task_occurrence|  
+     
+      # Is dit nodig ?where('user_id IS NOT NULL')
+      User.includes(:task_occurrences).joins(:task_occurrences).uniq.where('task_occurrences.should_send_assign_mail' => true).each do |user|
         # Send email
-        TaskOccurrenceMailer.assign(task_occurrence.user).deliver
+        TaskOccurrenceMailer.assign(user, *user.task_occurrences).deliver
         TaskOccurrence.where(user_id: task_occurrence.user.id).update_all(should_send_assign_mail: false)
       end
     end 
