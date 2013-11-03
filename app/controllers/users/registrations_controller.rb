@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :check_register_on, only: [:new, :create]
   layout :get_layout
   

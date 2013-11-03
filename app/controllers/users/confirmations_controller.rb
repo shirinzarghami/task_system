@@ -1,4 +1,4 @@
-class Users::ConfirmationsController < Devise::RegistrationsController
+class Users::ConfirmationsController < Devise::ConfirmationsController
   def resource_params
     params.require(:user).permit(:email, :password, :password_confirmation, :reset_password_token)
   end
