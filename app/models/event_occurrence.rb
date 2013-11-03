@@ -1,4 +1,5 @@
 class EventOccurrence < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   attr_accessible :event_id, :register_deadline, :starts_at
 
   belongs_to :event

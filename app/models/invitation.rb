@@ -1,4 +1,5 @@
 class Invitation < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community, :invitation_emails
   
   STATUS = [:requested, :denied, :accepted]

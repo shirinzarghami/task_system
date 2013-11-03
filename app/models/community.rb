@@ -1,5 +1,5 @@
 class Community < ActiveRecord::Base
-  # include ActiveModel::ForbiddenAttributesProtection
+  include ActiveModel::ForbiddenAttributesProtection
   extend FriendlyId
   
   friendly_id :subdomain
@@ -27,8 +27,9 @@ class Community < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[A-Za-z\d_\s]+$/}
   validates :subdomain, presence: true, uniqueness: true, length: {maximum: 20, minimum: 3}, format: { :with => /^[a-z\d_\-]+$/}
   validates :creator_id, presence: true
-
   validate :validate_max_members_exceeded
+
+
   before_validation :deduce_subdomain
   after_validation :set_invitation_errors
 
@@ -63,13 +64,13 @@ class Community < ActiveRecord::Base
   end
 
   protected
-    def set_invitation_errors
-      self.errors.select {|e| e.first == :invitations}.each {|e| self.errors.add(:invitation_emails, e.last)}
-    end
+  def set_invitation_errors
+    self.errors.select {|e| e.first == :invitations}.each {|e| self.errors.add(:invitation_emails, e.last)}
+  end
 
-    def validate_max_members_exceeded
-      if self.community_users.size > max_users
-        [:user_tokens, :admin_user_tokens, :invitation_emails].each {|atr| errors.add(atr, :max_members_exceeded)}
-      end
+  def validate_max_members_exceeded
+    if self.community_users.size > max_users
+      [:user_tokens, :admin_user_tokens, :invitation_emails].each {|atr| errors.add(atr, :max_members_exceeded)}
     end
+  end
 end
