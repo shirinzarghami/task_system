@@ -1,4 +1,5 @@
 class RepeatableEvent < Event
+  include ActiveModel::ForbiddenAttributesProtection
   has_many :event_occurrences, dependent: :destroy
   has_one :repeatable_item, as: :repeatable, dependent: :destroy
 

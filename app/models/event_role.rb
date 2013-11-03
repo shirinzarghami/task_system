@@ -1,6 +1,5 @@
 class EventRole < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  attr_accessible :event_id, :has_task_occurrence, :max_users, :name, :time
 
   belongs_to :event
 

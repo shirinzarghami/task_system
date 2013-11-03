@@ -2,8 +2,6 @@ class StartSaldoDistribution < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   include Chargeable::Validations
   
-  attr_accessible :community_id, :user_saldo_modifications_attributes
-
   belongs_to :community
   has_many :user_saldo_modifications, as: :chargeable
 

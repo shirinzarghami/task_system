@@ -10,8 +10,6 @@ class RepeatableItem < ActiveRecord::Base
     months: 1.month
   }
 
-  attr_accessible :deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number, :repeatable_id, :repeatable_type
-
   belongs_to :repeatable, polymorphic: true
 
   validates :repeat_every_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}

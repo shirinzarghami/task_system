@@ -1,8 +1,6 @@
 class UserSaldoModification < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   
-  attr_accessible :community_user_id, :payment_id, :price, :community_user, :checked, :percentage
-
   belongs_to :chargeable, polymorphic: true
   belongs_to :community_user
   has_one :user, through: :community_user

@@ -9,8 +9,6 @@ class Task < ActiveRecord::Base
     months: 1.month
   }
 
-  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :ordered_user_ids, :ignored_user_ids, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit, :user
-
   belongs_to :community
   belongs_to :user # Creator of the task
   belongs_to :allocated_user, class_name: 'User'
