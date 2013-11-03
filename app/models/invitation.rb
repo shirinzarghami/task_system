@@ -18,7 +18,8 @@ class Invitation < ActiveRecord::Base
   before_create :generate_token
   after_initialize :set_default_values
 
-  scope :requested, where(['status = ?', 'requested'])
+  scope :requested, where(status: 'requested')
+  
   def send_invitation_email
     InvitationMailer.invitation(self).deliver
   end

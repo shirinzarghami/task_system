@@ -1,4 +1,5 @@
 class UserSaldoModification < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   
   attr_accessible :community_user_id, :payment_id, :price, :community_user, :checked, :percentage
 

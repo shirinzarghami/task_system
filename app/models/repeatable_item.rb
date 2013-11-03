@@ -29,12 +29,11 @@ class RepeatableItem < ActiveRecord::Base
 
   def self.schedule_upcoming
     RepeatableItem.to_schedule.each do |repeatable_item|
-      # begin
+      begin
         repeatable_item.repeat!
-
-      # rescue
-      #   Rails.application.config.cron_job_logger.warn "Could not repeat #{repeatable_item.repeatable.class} with id = #{repeatable_item.repeatable.id}"
-      # end
+      rescue
+        Rails.application.config.cron_job_logger.warn "Could not repeat #{repeatable_item.repeatable.class} with id = #{repeatable_item.repeatable.id}"
+      end
     end
   end
 
