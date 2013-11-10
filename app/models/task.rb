@@ -167,14 +167,15 @@ class Task < ActiveRecord::Base
     end
 
     def allocate_by_time
+      # debugger
       # Find the user in this community that spend the least amount of time on this tasks
-      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).where(['community_users.community_id = ?', community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).where(['community_users.community_id = ?', community.id]).group("community_users.user_id").order("sum_time_in_minutes asc nulls first").sum(:time_in_minutes).keys.first
       least_time_user_id.nil? ? community.members.first : community.members.find(least_time_user_id)
     end
 
     def allocate_by_time_all
       # Find the user in this community that spend the least amount of time on all tasks together
-      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes asc nulls first").sum(:time_in_minutes).keys.first
       least_time_user_id.nil? ? community.members.first : community.members.find(least_time_user_id)
     end
 
