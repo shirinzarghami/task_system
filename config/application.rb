@@ -39,7 +39,6 @@ module TaskSystem
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
 
-
     config.i18n.default_locale = :en
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -61,7 +60,7 @@ module TaskSystem
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
+    config.active_record.whitelist_attributes = false
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -72,9 +71,11 @@ module TaskSystem
     config.max_created_communities = 5
     config.max_members = 10
     
-    config.assets.precompile += %w(sessions.css token-input-facebook.css)
+    config.assets.precompile += %w(sessions.css token-input-facebook.css jquery-ui-timepicker-addon.js jquery-ui-timepicker-addon.css)
 
     config.action_mailer.default_url_options = { :host => CONFIG[:domain] }
+
+    config.cron_job_logger = ActiveSupport::BufferedLogger.new(Rails.root.join('log', 'cron_job.log'))
 
     config.to_prepare do
         # Devise::SessionsController.layout "devise"

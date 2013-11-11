@@ -5,4 +5,8 @@ class SaldoController < ApplicationController
     @saldos = @community.user_saldo_modifications.group(:community_user_id).sum(:price)
     @error = @community.user_saldo_modifications.sum(:price)
   end
+
+  def update
+    
+  end
 end

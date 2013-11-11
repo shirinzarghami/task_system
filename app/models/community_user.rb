@@ -1,7 +1,7 @@
 class CommunityUser < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  ROLES  =%w(normal admin)
-  attr_accessible :community_id, :role, :user_id, :user, :community
+  
+  ROLES = %w(normal admin)
 
   belongs_to :user
   belongs_to :community
@@ -30,18 +30,19 @@ class CommunityUser < ActiveRecord::Base
     self.role == 'normal'
   end
 
+  def saldo
+    user_saldo_modifications.sum(:price)
+  end
 
   protected
-    def validate_at_least_one_admin
-      community_users = community.present? ? community.community_users.administrators.exclude(self) : []
-      errors.add(:base, :at_least_one_admin) unless community_users.count > 0 or self.role == 'admin'
-    end
+  def validate_at_least_one_admin
+    community_users = community.present? ? community.community_users.administrators.exclude(self) : []
+    errors.add(:base, :at_least_one_admin) unless community_users.count > 0 or self.role == 'admin'
+  end
 
-    def destroy_has_at_least_one_admin?
-      community_users = community.community_users.administrators.exclude(self)
-      errors.add(:base, :at_least_one_admin) unless community_users.count > 0
-      errors.blank?
-    end
-    
-
+  def destroy_has_at_least_one_admin?
+    community_users = community.community_users.administrators.exclude(self)
+    errors.add(:base, :at_least_one_admin) unless community_users.count > 0
+    errors.blank?
+  end
 end

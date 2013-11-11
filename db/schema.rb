@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614215233) do
+ActiveRecord::Schema.define(:version => 20131101200301) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -49,6 +49,36 @@ ActiveRecord::Schema.define(:version => 20130614215233) do
     t.datetime "updated_at",                         :null => false
   end
 
+  create_table "event_occurrences", :force => true do |t|
+    t.datetime "starts_at"
+    t.datetime "register_deadline"
+    t.integer  "event_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "event_roles", :force => true do |t|
+    t.string   "name"
+    t.time     "time"
+    t.boolean  "has_task_occurrence"
+    t.integer  "max_users"
+    t.integer  "event_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "community_user_id"
+    t.string   "type"
+    t.boolean  "deleted",           :default => false
+    t.boolean  "active",            :default => true
+    t.boolean  "has_roles",         :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
   create_table "invitations", :force => true do |t|
     t.integer  "invitor_id"
     t.integer  "invitee_id"
@@ -72,6 +102,30 @@ ActiveRecord::Schema.define(:version => 20130614215233) do
     t.decimal  "price",              :precision => 8, :scale => 2
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.integer  "payment_id"
+  end
+
+  create_table "repeatable_items", :force => true do |t|
+    t.string   "repeat_every_unit"
+    t.integer  "repeat_number",       :default => 0
+    t.boolean  "repeat_infinite",     :default => true
+    t.datetime "next_occurrence"
+    t.string   "only_on_week_days"
+    t.integer  "repeat_every_number", :default => 0
+    t.integer  "repeatable_id"
+    t.string   "repeatable_type"
+    t.string   "deadline_unit"
+    t.integer  "deadline_number",     :default => 0
+    t.boolean  "has_deadline",        :default => true
+    t.boolean  "enabled",             :default => true
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
+  create_table "start_saldo_distributions", :force => true do |t|
+    t.integer  "community_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "taggings", :force => true do |t|
@@ -134,12 +188,13 @@ ActiveRecord::Schema.define(:version => 20130614215233) do
 
   create_table "user_saldo_modifications", :force => true do |t|
     t.decimal  "price",             :precision => 8, :scale => 2
-    t.integer  "payment_id"
+    t.integer  "chargeable_id"
     t.integer  "community_user_id"
     t.decimal  "percentage",        :precision => 8, :scale => 2
     t.boolean  "checked"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
+    t.string   "chargeable_type"
   end
 
   create_table "users", :force => true do |t|

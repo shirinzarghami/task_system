@@ -1,0 +1,14 @@
+= simple_form_for(@event, url: event_form_url, html: {class: 'form-horizontal'}) do |f|
+  %fieldset
+    %legend= t('form.categories.general')
+    = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
+    %div.control-group
+      = f.hidden_field :type
+      = f.input :name
+      = f.input :active
+      = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
+      = tinymce
+
+  = render partial: 'repeatable_items/form', locals: {f: f} if @event.is_a? RepeatableEvent
+  = render partial: 'event_roles/form', locals: {f: f}
+  = f.button :submit, class: 'btn btn-primary'

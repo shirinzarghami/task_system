@@ -51,6 +51,8 @@ en:
     edit: Edit
     user_info: User info
     payments: Payments
+    events: Events
+    start_saldo_distribution: Start saldos
   activerecord:
       errors:
         attributes:
@@ -78,6 +80,7 @@ en:
       version: Version
       payments: Payments
       saldos: Saldos
+      start_saldos: Start saldos
 
 
 
@@ -158,6 +161,12 @@ en:
     show:
       title: Invitation
 
+  start_saldo_distributions:
+    edit:
+      title: Start saldos
+    form:
+      title: Start saldos
+      submit: Save
   tasks:
     new:
       title: Create a recurring task
@@ -264,6 +273,7 @@ en:
     index:
       title: Overview of payments
       new_product_declaration: Product declaration
+      repeatable_payment: Repeatable payment
       non-found: No payments were found
       search-results: Search results for '%{query}'.
       showall: Show all payments
@@ -275,17 +285,23 @@ en:
       title: Saldo overview
       saldo: Saldo
       lost-money: Lost money
+      start_saldo: Edit start saldo
       error: Error
       error-percentage: "%{perc} of total expenses"
       error-tooltip: 
         "Due to rounding of prices, the total sum of payments may contain a small error. Ideally, all cost and 
         expenses should add up to zero. The lost money is the factual sum."
 
+  event_roles:
+    form:
+
   form:
     categories:
       general: General
       instantiation: Occurrences
       allocation: Allocation
+      deadline: Deadline
+      roles: Roles
 
     details: "%{model} details"
     token_hint: Type an user e-mail to search and add users

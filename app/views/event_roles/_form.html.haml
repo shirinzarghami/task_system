@@ -1,0 +1,23 @@
+= f.fields_for :event_roles do |r|
+  %fieldset
+    %legend= t('form.categories.roles')
+    = image_tag 'iconic/user_24x32.png', class: 'logo'
+    = f.input :has_roles, label: false, inline_label: true, input_html: {data: {'toggle-visibility-of' => 'role-options'}}
+
+    %div#role-options
+      %table.table#role-table
+        %tr
+          %th= EventRole.human_attribute_name :name
+          %th= EventRole.human_attribute_name :max_users
+          %th= EventRole.human_attribute_name :has_task_occurrence
+          %th= EventRole.human_attribute_name :time
+          %th
+        %tr.event-role{:data => {'event-role-number' => (r.object && r.object.id ? r.object.id : 0)}}
+          %td= r.text_field :name, :data => {'attribuut-name' => 'name'}
+          %td= r.number_field :max_users, class: 'input-mini'
+          %td= r.check_box :has_task_occurrence, data: {'toggle-visibility-of' => 'role-time-options'}
+          %td= r.input :time, as: :time, label: false, wrapper_tag: false, label_tag: false, wrapper_html: {class: 'neighbour role-time-options'}
+          %td.event-role-actions
+            = image_button 'iconic/trash_fill_12x12.png', '#', class: 'remove-role-button hide'
+            = image_button 'iconic/plus_12x12.png', '#', class: 'add-role-button'
+

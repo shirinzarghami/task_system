@@ -1,5 +1,3 @@
-- content_for :logo do
-  = image_tag 'iconic/list_32x28.png'
 = simple_form_for([@community, @task], html: {class: 'form-horizontal'}) do |f|
   %fieldset
     %legend= t('form.categories.general')
@@ -15,8 +13,8 @@
 
   %fieldset
     %legend= t('form.categories.instantiation')
-    = image_tag 'iconic/clock_32x32.png', class: 'logo'
-    = f.input :instantiate_automatically, inline_label: Task.human_attribute_name(:instantiate_automatically), label: false
+    = image_tag 'deadline_icon.png', class: 'logo'
+    = f.input :instantiate_automatically, inline_label: Task.human_attribute_name(:instantiate_automatically), label: false, input_html: {data: {'toggle-visibility-of' => 'instantiation_options'}}
 
     %div#instantiation_options
       = f.input :next_occurrence, as: :string, input_html: {class: 'datepicker'}

@@ -1,5 +1,4 @@
 class Admin::UsersController < AdminController
-  before_filter :remove_password_from_params, only: [:create, :update]
 
   def index
     @filter = filter_name
@@ -16,14 +15,15 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user = User.new(params[:user], as: :admin)
-   if @user.save
-    flash[:notice] = t('messages.save_success')
-    redirect_to admin_users_path
-   else
-    flash[:error] = t('messages.save_fail')
-    render action: 'new'
-   end
+    @user = User.new user_params
+
+    if @user.save
+      flash[:notice] = t('messages.save_success')
+      redirect_to admin_users_path
+    else
+      flash[:error] = t('messages.save_fail')
+      render action: 'new'
+    end
   end
 
   def edit
@@ -33,7 +33,7 @@ class Admin::UsersController < AdminController
   def update
      @user = User.find(params[:id])
 
-    if @user.update_attributes params[:user], as: :admin
+    if @user.update_attributes user_params
      flash[:notice] = t('messages.save_success')
      redirect_to admin_users_path
     else
@@ -49,30 +49,9 @@ class Admin::UsersController < AdminController
     redirect_to admin_users_path
   end
 
-  def remove_password_from_params
-    if params[:user][:password].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
-    end
+  protected
+  def user_params
+    params.require(:user).permit(:email, :global_role, :name, :locale, :password, :password_confirmation)
   end
-
-  def global_role_fix
-    if params[:user].has_key? :global_role
-      params[:user].delete(:global_role)
-    end
-  end
-
-  # def apply_filter
-  #   (params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym)) ? FILTERS[params[:filter].to_sym] : []
-  # end
-
-  # def filter_name
-  #   params.has_key?(:filter) and FILTERS.has_key?(params[:filter].to_sym) ? params[:filter] : ''
-  # end
-
-  # def find_user
-  #   (params.has_key? :query) ? ['email LIKE ?', "%#{params[:query]}%"] : []
-  # end
-
 
 end

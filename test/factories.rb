@@ -20,6 +20,10 @@ FactoryGirl.define do
     receive_comment_mail true
   end
 
+  factory :start_saldo_distribution do
+
+  end
+
   factory :task do
     name 'Do something'
     description 'Do something'
@@ -32,7 +36,7 @@ FactoryGirl.define do
     user_id 1
     community_id 1
     repeat 1
-    time Time.new(0) + 1.hour + 30.minutes
+    time Time.new(2000,1,1,0,30,0,0)
     allocation_mode 'in_turns'
     allocated_user_id 1
     next_occurrence Date.today
@@ -61,6 +65,7 @@ FactoryGirl.define do
   factory :community do
     name {generate :community_name}
     creator_id 1
+    association :start_saldo_distribution, factory: :start_saldo_distribution
     factory :community_with_users do
       ignore do
         users_count 5
@@ -160,15 +165,30 @@ FactoryGirl.define do
       after(:create) do |payment, evaluator|
         if evaluator.community_users_set_1.any?
           evaluator.community_users_set_1.each do |cu|
-            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, payment: payment
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_1, chargeable: payment
           end
         end       
         if evaluator.community_users_set_2.any?
           evaluator.community_users_set_2.each do |cu|
-            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, payment: payment
+            FactoryGirl.create :user_saldo_modification, community_user: cu, price: evaluator.saldo_price_2, chargeable: payment
           end
         end
       end
+    end
+  end
+
+  FactoryGirl.define do
+
+    factory :repeatable_item_every_week, :class => RepeatableItem do
+      repeat_every_unit 'weeks'
+      repeat_number 1
+      repeat_infinite false
+      next_occurrence Time.now
+      repeat_every_number 1
+      deadline_unit 'weeks'
+      deadline_number 1
+      has_deadline true
+      enabled true       
     end
   end
 

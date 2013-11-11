@@ -19,6 +19,7 @@ staging:
     authentication: "plain"
     user_name: "example@gmail.com"
     password: "qwerty"
+    default_from: "Necura Task System"
 
 
 production:

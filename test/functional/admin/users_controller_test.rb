@@ -19,7 +19,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-  post :create, @user_params
+    post :create, @user_params
     assert_response :redirect
     assert_redirected_to admin_users_path
   end

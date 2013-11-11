@@ -1,11 +1,7 @@
-- content_for :title do
-  = t('.title')
-
-
 - content_for :search do
   = render partial: 'shared/search'
 %p
-  %h2= image_tag('iconic/wrench_24x24.png') + t('.title')
+  %h2= image_tag('money_bag.png') + t('.title')
   - if @payments.any?
     - if params[:q].present?
       %p.search-result
@@ -28,10 +24,4 @@
       = link_to t('.showall'), params.except(:q) if params[:q].present?
 
 %p
-  = #icon_button t('.create'), new_community_task_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true
-  %div.btn-group
-    %a.btn.btn-primary.dropdown-toggle{'data-toggle' => 'dropdown', 'href' => '#'}
-      = t('.create')
-      %span.caret
-    %ul.dropdown-menu
-      %li= link_to t('.new_product_declaration'), new_community_payment_path(@community)
+  = icon_button t('.create'), new_community_payment_path(@community), link_class: 'btn-primary', icon_class: 'icon-plus', icon_white: true

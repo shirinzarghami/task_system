@@ -9,6 +9,10 @@ en:
           attributes:
             base:
               max_members_exceeded: The number of community members exceeds the limitation. No new members can be added
+        start_saldo_distribution: 
+          attributes:
+            base:
+              result_should_be_zero: The sum of the start saldos should be zero
         community:
           attributes:
             user_tokens:
@@ -26,11 +30,22 @@ en:
         user_saldo_modification:
           base:
             invalid_user: You are trying create a payment for an user outside the current community
+        repeatable_item:
+          only_on_week_days:
+            invalid: The days of week value is invalid
+            
     models:
       community: Community
       user: User
       invitation: Invitation
-      payment: payment
+      payment: Payment
+      event: Event
+      single_occurrence_event: One-time event
+      repeatable_event: Repeatable event
+      repeatable_item: Repeat
+      event_occurrence: Event occurrence
+      repeatable_item: Repeatable
+      event_role: Role
     attributes:
       payment:
         title: Titel
@@ -73,6 +88,34 @@ en:
         invitee_email: E-mail
         created_at: Sent at
         status: Status
+
+      single_occurrence_event:
+        name: Name
+        description: Description
+
+      repeatable_event:
+        name: Name
+        description: Description
+        active: Active?
+        has_roles: Has roles?
+
+      event_occurrence:
+        starts_at: Starts at
+        register_deadline: Register deadline
+
+      event_role:
+        max_users: Max. users
+        has_task_occurrence: Has task
+        time: Time to complete
+
+      repeatable_item:
+        repeat_every: Repeat every
+        repeat_infinite: Repeat infinite
+        next_occurrence: Starts at
+        enabled: Schedule automatically
+        only_on_week_days: Only on days
+        deadline: Deadline after
+        has_deadline: Has deadline?
 
       task:
         time: Time to complete

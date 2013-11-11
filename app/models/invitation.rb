@@ -1,5 +1,5 @@
 class Invitation < ActiveRecord::Base
-  attr_accessible :community_id, :invitee, :invitee_email, :invitor, :community, :invitation_emails
+  include ActiveModel::ForbiddenAttributesProtection
   
   STATUS = [:requested, :denied, :accepted]
   # Dummy variable for form
@@ -9,16 +9,16 @@ class Invitation < ActiveRecord::Base
   belongs_to :invitor, class_name: 'User'
   belongs_to :invitee, class_name: 'User'
 
-  # validates :community_id, presence: true
   validates :invitor, presence: true
-  # validates :community_id, presence: true
   validates :invitee_email, format:  {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, allow_blank: true
   validates :status, presence: true, :inclusion => { :in => Invitation::STATUS.map(&:to_s) }
+
   after_create :send_invitation_email
   before_create :generate_token
   after_initialize :set_default_values
 
-  scope :requested, where(['status = ?', 'requested'])
+  scope :requested, where(status: 'requested')
+  
   def send_invitation_email
     InvitationMailer.invitation(self).deliver
   end
@@ -54,8 +54,17 @@ class Invitation < ActiveRecord::Base
           invitee_email = user.email
           user.save!
         end
-        CommunityUser.create! user: user, role: 'normal', community: community
+        community_user = CommunityUser.new
+        community_user.user = user
+        community_user.role = 'normal'
+        community_user.community = community
+        
+        start_saldos = community.start_saldo_distribution
+        start_saldos.user_saldo_modifications.build community_user: community_user, price: 0, percentage: 0
         self.status = 'accepted'
+
+        community_user.save!
+        start_saldos.save!
         save!
       end
     rescue

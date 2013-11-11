@@ -1,13 +1,12 @@
 require 'test_helper'
 
 class Admin::CommunitiesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   include Devise::TestHelpers
 
   def setup
-    @user = users(:one)
+    @user = create :user, global_role: 'admin'
+    @community = create :community
+
     @user_params = {community: {name: 'Test', subdomain: 'test', max_users: 20}}
     sign_in @user
   end
@@ -23,7 +22,7 @@ class Admin::CommunitiesControllerTest < ActionController::TestCase
   end
 
   test "Should do a edit" do
-    get :edit, id: @user
+    get :edit, id: @community.id
     assert_response :success
   end
 
@@ -34,13 +33,14 @@ class Admin::CommunitiesControllerTest < ActionController::TestCase
   end
 
   test "Should do update" do
-    put :update, @user_params.merge(id: @user)
+    put :update, @user_params.merge(id: @community.id)
     assert_response :redirect
     assert_redirected_to admin_communities_path
   end
 
   test "Should do destroy" do
-    delete :destroy, id: @user 
+    delete :destroy, id: @community.id
+    refute Community.exists?(@community)
   end
 
 end

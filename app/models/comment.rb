@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
+  
   COMMENTABLES = [TaskOccurrence, Payment]
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 

@@ -1,4 +1,5 @@
-= simple_form_for @payment, url: form_url, html: {class: 'form-horizontal'} do |f|
+= simple_form_for @payment, url: payment_form_url, html: {class: 'form-horizontal'} do |f|
+  = f.hidden_field :type
   %fieldset
     %legend= t('.categories.payment')
     = image_tag 'iconic/book_alt2_32x28.png', class: 'logo'
@@ -12,6 +13,7 @@
       = f.input :categories, input_html: {class: 'categories-token-input span7', rows: 5, data: {checkpath: community_payments_tags_path(@community) + '.json', pre: f.object.categories_from(@community).map {|n| {name: n}}.to_json}}
       = f.input :description, input_html: {rows: 5, class: 'span7 tinymce'}
       = tinymce
+  = render partial: 'repeatable_items/form', locals: {f: f, show_deadline: false}
   %fieldset
     %legend= t('.categories.distribution')
     = image_tag 'iconic/chart_32x32.png', class: 'logo'

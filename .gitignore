@@ -20,3 +20,5 @@ config/deploy.rb
 /config/database.yml
 /config/application.yml
 
+/config/deploy.rb
+/config/deploy/staging.rb

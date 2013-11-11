@@ -1,15 +1,13 @@
 class Task < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   ALLOCATION_MODES = [:in_turns, :time, :time_all, :voluntary, :user]
-  ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]} 
+  ALLOCATION_MODES_FORM = Task::ALLOCATION_MODES.map {|m| [I18n.t("activerecord.attributes.task.allocation_modes.#{m.to_s}"), m]}
 
   TIME_UNITS = {
     days: 1.day,
     weeks: 1.week,
     months: 1.month
   }
-
-  attr_accessible :allocated_user_id, :allocation_mode, :deadline, :description, :interval, :next_occurrence, :name, :repeat, :should_be_checked, :time, :user_id, :ordered_user_ids, :ignored_user_ids, :instantiate_automatically, :interval_unit, :repeat_infinite, :deadline_unit, :user
 
   belongs_to :community
   belongs_to :user # Creator of the task
@@ -28,17 +26,19 @@ class Task < ActiveRecord::Base
   validates :user_id, presence: true
 
   after_initialize :set_default_values
-  scope :to_schedule, where(instantiate_automatically: true).where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR tasks.repeat > ?", true, 0])
+  scope :to_schedule, lambda {where(instantiate_automatically: true).where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR tasks.repeat > ?", true, 0])}
 
   class << self
     def schedule_upcoming_occurrences
       Task.to_schedule.each {|task| task.schedule({}, hold_email: true)}
       
-      # User.joins(:task_occurrences).group('users.id').where('task_occurrences.should_send_assign_mail = true').each do |user|
-      TaskOccurrence.group('user_id').where(should_send_assign_mail: true).where('user_id IS NOT NULL').each do |task_occurrence|  
+      # TaskOccurrence.group('user_id').where(should_send_assign_mail: true).where('user_id IS NOT NULL').each do |task_occurrence|  
+     
+      # Is dit nodig ?where('user_id IS NOT NULL')
+      User.includes(:task_occurrences).joins(:task_occurrences).uniq.where('task_occurrences.should_send_assign_mail' => true).each do |user|
         # Send email
-        TaskOccurrenceMailer.assign(task_occurrence.user).deliver
-        TaskOccurrence.where(user_id: task_occurrence.user.id).update_all(should_send_assign_mail: false)
+        TaskOccurrenceMailer.assign(user, *user.task_occurrences).deliver
+        TaskOccurrence.where(user_id: user.id).update_all(should_send_assign_mail: false)
       end
     end 
   end
@@ -167,14 +167,15 @@ class Task < ActiveRecord::Base
     end
 
     def allocate_by_time
+      # debugger
       # Find the user in this community that spend the least amount of time on this tasks
-      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).where(['community_users.community_id = ?', community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["(task_occurrences.task_id = ? OR task_occurrences.task_id IS NULL)", id]).where(['community_users.community_id = ?', community.id]).group("community_users.user_id").order("sum_time_in_minutes asc nulls first").sum(:time_in_minutes).keys.first
       least_time_user_id.nil? ? community.members.first : community.members.find(least_time_user_id)
     end
 
     def allocate_by_time_all
       # Find the user in this community that spend the least amount of time on all tasks together
-      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes").sum(:time_in_minutes).keys.first
+      least_time_user_id = TaskOccurrence.joins("RIGHT OUTER JOIN community_users ON task_occurrences.user_id = community_users.user_id").where(["community_users.community_id = ? ", community.id]).group("community_users.user_id").order("sum_time_in_minutes asc nulls first").sum(:time_in_minutes).keys.first
       least_time_user_id.nil? ? community.members.first : community.members.find(least_time_user_id)
     end
 
