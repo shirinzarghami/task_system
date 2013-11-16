@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.15'
 
-# gem 'mysql2'
 gem 'pg'
 gem 'cancan'
 gem 'tinymce-rails'

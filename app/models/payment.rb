@@ -1,7 +1,5 @@
 class Payment < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  
-  attr_accessible :type, :categories, :price, :date, :description, :title, :user_saldo_modifications_attributes
   attr_accessor :categories
   acts_as_taggable_on :categories
 
