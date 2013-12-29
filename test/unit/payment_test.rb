@@ -51,7 +51,5 @@ class PaymentTest < ActiveSupport::TestCase
       assert_equal -10, @saldo_modification_2.community_user.saldo
 
     end
-
-
   end
 end

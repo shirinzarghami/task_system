@@ -75,8 +75,8 @@ class PaymentsController < ApplicationController
 
   def payment_params
     standard_params         = [:categories, :price, :date, :description, :title]
-    user_saldo_params       = [{user_saldo_modifications_attributes: [:id, :checked, :percentage, :price, :community_user_id,]}]
-    repeatable_item_params  = [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_number]
+    user_saldo_params       = [{:user_saldo_modifications_attributes => [:id, :checked, :percentage, :price, :community_user_id]}]
+    repeatable_item_params  = [{:repeatable_item_attributes => [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_every_number]}]
 
     params.require(:payment).permit *(standard_params + repeatable_item_params + user_saldo_params)
   end

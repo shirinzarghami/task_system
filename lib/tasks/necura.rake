@@ -7,7 +7,7 @@ namespace :necura  do
     TaskOccurrence.send_reminders
   end
 
-  # task :send_comment_notifications => :environment do
-  #   Comment.send_notifications
-  # end
+  task :schedule_repeatable_items => :environment do
+    RepeatableItem.schedule_upcoming
+  end
 end
