@@ -65,6 +65,9 @@ module TaskSystem
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Raise exception with invalid locale
+    config.i18n.enforce_available_locales = true
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.necura_version = '1.00 Alpha'
