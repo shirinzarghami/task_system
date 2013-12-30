@@ -5,8 +5,8 @@
     %td= @payment.title
   %tr
     %td
-      %strong= Payment.human_attribute_name(:date)
-    %td= l @payment.date, format: :long
+      %strong= Payment.human_attribute_name(:payed_at)
+    %td= l @payment.payed_at, format: :date_only
   %tr
     %td
       %strong= Payment.human_attribute_name(:categories)

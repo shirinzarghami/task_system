@@ -17,7 +17,7 @@ class Payment < ActiveRecord::Base
   after_initialize :set_initial_values
 
   validates :title, presence: true
-  validates :date, presence: true
+  validates :payed_at, presence: true
   validates :price, presence: true, :numericality => {:greater_than => 0}
   validate :invalid_user
 
@@ -37,20 +37,24 @@ class Payment < ActiveRecord::Base
 
   def repeat!
     cloned_payment = self.clone
-    cloned_payment.title = "#{title} - I18n.l(Date.today)"
+    cloned_payment.payed_at = Time.now
+    cloned_payment.title = "#{title} - #{I18n.l(Date.today)}"
+    cloned_payment.payment_id = self.id
     cloned_payment.save! && save!
   end
 
   def clone
-    clone = self.dup
-    user_saldo_modifications.each {|saldo_mod| user_saldo_modifications.build.attributes = saldo_mod}
-    clone
+    cloned_payment = self.dup
+    user_saldo_modifications.each do |saldo_mod|
+      cloned_payment.user_saldo_modifications.build saldo_mod.clone.attributes
+    end
+    cloned_payment
   end
 
   private
   def set_initial_values
     self.price ||= 0
-    self.date ||= Date.today
+    self.payed_at ||= Time.now
   end
 
   def invalid_user

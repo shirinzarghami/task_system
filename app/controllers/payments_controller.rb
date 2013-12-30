@@ -7,7 +7,7 @@ class PaymentsController < ApplicationController
   
   load_and_authorize_resource
   include Sortable::Controller
-  sort :payment, default_column: :date, default_direction: :asc
+  sort :payment, default_column: :payed_at, default_direction: :asc
 
   def index
     @payments = @community.payments.joins("LEFT JOIN taggings ON taggings.taggable_id = payments.id AND taggings.taggable_type = 'Payment'").where(search_conditions).order(sort_column + ' ' + sort_direction).group('payments.id').paginate(page: params[:page], per_page: 20)
@@ -32,6 +32,8 @@ class PaymentsController < ApplicationController
 
     @payment = ProductDeclaration.new
     @payment.build_repeatable_item
+
+    @payment.repeatable_item.enabled = false
     @community.community_users.each {|co| @payment.user_saldo_modifications.build community_user: co}  
   end
 
@@ -47,6 +49,11 @@ class PaymentsController < ApplicationController
   end
 
   def create
+    # if repeatable_item = @payment.repeatable_item
+    #   repeatable_item.next_occurrence = Time.now + repeatable_item.repeate_every
+    # end
+    @payment.repeatable_item.set_next_occurrence(@payment.payed_at)
+
     if @payment.save
       @payment.save_category_tags
       flash[:notice] = t('messages.save_success')
@@ -74,7 +81,7 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    standard_params         = [:categories, :price, :date, :description, :title]
+    standard_params         = [:categories, :price, :payed_at, :description, :title]
     user_saldo_params       = [{:user_saldo_modifications_attributes => [:id, :checked, :percentage, :price, :community_user_id]}]
     repeatable_item_params  = [{:repeatable_item_attributes => [:deadline_number, :deadline_unit, :has_deadline, :next_occurrence, :only_on_week_days, :repeat_every_number, :repeat_every_unit, :repeat_infinite, :repeat_every_number]}]
 

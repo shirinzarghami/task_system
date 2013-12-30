@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101200301) do
+ActiveRecord::Schema.define(:version => 20131230190247) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20131101200301) do
   create_table "payments", :force => true do |t|
     t.string   "title"
     t.integer  "community_user_id"
-    t.date     "date"
+    t.datetime "payed_at"
     t.text     "description"
     t.text     "dynamic_attributes"
     t.string   "type"

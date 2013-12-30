@@ -52,4 +52,24 @@ class PaymentTest < ActiveSupport::TestCase
 
     end
   end
+
+  context "clone payment" do
+
+    setup do
+      @payment = create(:product_declaration_with_saldos, 
+        price: 100, 
+        community_user: @payer, 
+        saldo_price_1: 100,
+        community_users_set_1: [@community.community_users.first],
+        saldo_price_2: -25,
+        community_users_set_2: @community.community_users.last(3)
+        )
+    end
+
+    should "clone a payment" do
+      @payment.reload
+      @cloned_payment = @payment.clone
+      assert_equal @payment.user_saldo_modifications.size, @cloned_payment.user_saldo_modifications.size
+    end
+  end
 end

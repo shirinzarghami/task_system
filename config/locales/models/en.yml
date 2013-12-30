@@ -49,7 +49,7 @@ en:
     attributes:
       payment:
         title: Titel
-        date: Payment date
+        payed_at: Payment date
         description: Description
         price: Price
         user: Creator
@@ -111,7 +111,7 @@ en:
       repeatable_item:
         repeat_every: Repeat every
         repeat_infinite: Repeat infinite
-        next_occurrence: Starts at
+        next_occurrence: Repeat at
         enabled: Schedule automatically
         only_on_week_days: Only on days
         deadline: Deadline after
