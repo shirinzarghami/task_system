@@ -40,7 +40,7 @@ gem 'unicorn'
 gem 'debugger'
 
 group :development do
-  gem "capistrano"
+  gem "capistrano", '~> 2.15.5'
   gem 'rvm-capistrano'
   gem "letter_opener"
 end
