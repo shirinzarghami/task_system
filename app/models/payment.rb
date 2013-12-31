@@ -8,8 +8,8 @@ class Payment < ActiveRecord::Base
   has_one :repeatable_item, as: :repeatable, dependent: :destroy
   has_many :user_saldo_modifications, dependent: :destroy, as: :chargeable
 
-  belongs_to :parent, :class_name => 'Payment'
-  has_many :childeren, :class_name => 'Payment'
+  belongs_to :parent, :class_name => 'Payment', :foreign_key => 'payment_id'
+  has_many :children, :class_name => 'Payment', :foreign_key => 'payment_id'
 
   accepts_nested_attributes_for :user_saldo_modifications
   accepts_nested_attributes_for :repeatable_item
@@ -39,7 +39,7 @@ class Payment < ActiveRecord::Base
     cloned_payment = self.clone
     cloned_payment.payed_at = Time.now
     cloned_payment.title = "#{title} - #{I18n.l(Date.today)}"
-    cloned_payment.payment_id = self.id
+    cloned_payment.parent = self
     cloned_payment.save! && save!
   end
 
