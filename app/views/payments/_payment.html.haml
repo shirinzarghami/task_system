@@ -1,6 +1,8 @@
 %tr
   %td
     = link_to payment.title, community_payment_path(@community, payment)
+    - if payment.parent.present?
+      = image_tag 'deadline_icon_small.png'
     %br
     = payment_categories_for payment
   %td= link_to payment.community_user.user.name, community_community_user_path(@community, payment.community_user)

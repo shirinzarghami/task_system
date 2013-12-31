@@ -7,7 +7,7 @@ class PaymentsController < ApplicationController
   
   load_and_authorize_resource
   include Sortable::Controller
-  sort :payment, default_column: :payed_at, default_direction: :asc
+  sort :payment, default_column: :payed_at, default_direction: :desc
 
   def index
     @payments = @community.payments.joins("LEFT JOIN taggings ON taggings.taggable_id = payments.id AND taggings.taggable_type = 'Payment'").where(search_conditions).order(sort_column + ' ' + sort_direction).group('payments.id').paginate(page: params[:page], per_page: 20)
@@ -49,10 +49,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    # if repeatable_item = @payment.repeatable_item
-    #   repeatable_item.next_occurrence = Time.now + repeatable_item.repeate_every
-    # end
-    @payment.repeatable_item.set_next_occurrence(@payment.payed_at)
+    @payment.repeatable_item.set_next_occurrence_from(@payment.payed_at)
 
     if @payment.save
       @payment.save_category_tags

@@ -38,8 +38,7 @@ class RepeatableItem < ActiveRecord::Base
   def repeat!
     ActiveRecord::Base.transaction do
       repeatable.repeat!
-      # self.next_occurrence += repeat_every
-      set_next_occurrence(self.next_occurrence)
+      set_next_occurrence_from(self.next_occurrence)
       self.repeat_number -= 1 unless repeat_infinite || repeat_number == 0 
       save!
     end
@@ -49,8 +48,8 @@ class RepeatableItem < ActiveRecord::Base
     eval "#{repeat_every_number}.#{repeat_every_unit}" if TIME_UNITS.keys.include?(repeat_every_unit.to_sym)
   end
 
-  def set_next_occurrence from
-    self.next_occurrence = from + repeat_every
+  def set_next_occurrence_from start_date
+    self.next_occurrence = start_date + repeat_every
   end
 
   protected

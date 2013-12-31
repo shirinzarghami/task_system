@@ -48,6 +48,10 @@ class Payment < ActiveRecord::Base
     user_saldo_modifications.each do |saldo_mod|
       cloned_payment.user_saldo_modifications.build saldo_mod.clone.attributes
     end
+
+    tag_list = categories_from(community)
+    community.tag(cloned_payment, :with => tag_list, :on => :categories)
+
     cloned_payment
   end
 
@@ -60,6 +64,5 @@ class Payment < ActiveRecord::Base
   def invalid_user
     errors.add(:base, :invalid_user) unless self.user_saldo_modifications.reject {|usm| self.community.id == usm.community.id}.size == 0
   end
-
   
 end
