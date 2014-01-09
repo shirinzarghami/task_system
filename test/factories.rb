@@ -149,7 +149,7 @@ FactoryGirl.define do
   factory :product_declaration do
     title 'Test'
     description 'Test'
-    date '2013-06-23'
+    payed_at Time.new(2013,6,23,0,0,0,0)
     type 'ProductDeclaration'
     price 100
     association :community_user, factory: :community_user_with_community
