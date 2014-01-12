@@ -12,9 +12,9 @@ class RepeatableItem < ActiveRecord::Base
 
   belongs_to :repeatable, polymorphic: true
 
-  validates :repeat_every_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
+  validates :repeat_every_number, presence: true, :numericality => {:greater_than_or_equal_to => 1}
   validates :repeat_every_unit, presence: true, inclusion: {in: UNIT_VALUES}
-  validates :deadline_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
+  validates :deadline_number, presence: true, :numericality => {:greater_than_or_equal_to => 1}
   validates :deadline_unit, presence: true, inclusion: {in: UNIT_VALUES}
   validates :repeat_number, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :next_occurrence, presence: true
@@ -59,9 +59,9 @@ class RepeatableItem < ActiveRecord::Base
     self.repeat_infinite = true if self.repeat_infinite.nil?
     self.next_occurrence ||= Time.now
     self.only_on_week_days ||= ''
-    self.repeat_every_number ||= 1
+    self.repeat_every_number = 1 if self.repeat_every_number
     self.deadline_unit ||= 'days'
-    self.deadline_number ||= 1
+    self.deadline_number = 1 if self.deadline_number
     self.has_deadline = true if self.has_deadline.nil?
   end
 
