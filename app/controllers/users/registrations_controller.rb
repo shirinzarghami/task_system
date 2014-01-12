@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout :get_layout
   
   def resource_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :name, :locale, :avatar,:receive_comment_mail, :receive_assign_mail, :receive_reminder_mail)
+    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :name, :locale, :avatar,:receive_comment_mail, :receive_assign_mail, :receive_reminder_mail, :current_password)
   end
   private :resource_params
   

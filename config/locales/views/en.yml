@@ -329,7 +329,7 @@ en:
     overview: Overview
     schedule: Schedule
 
-  devise:
+  users:
     registrations:
       edit:
         title: Edit preferences
@@ -339,6 +339,7 @@ en:
         avatar: Avatar
         notifications: E-mail notifications
 
+  devise:
     confirmations:
       new:
         title: Resend confirmation
