@@ -25,19 +25,19 @@
         %th= t('.cost')
         %th= t('.paid')
         %th= UserSaldoModification.human_attribute_name(:price)  
-      = f.fields_for :user_saldo_modifications do |builder|
-        %tr.user-saldo-modification{class: ('current-user info' if @user == builder.object.user), data: {user: builder.object.id}}
+      = f.fields_for :user_saldo_modifications do |g|
+        %tr.user-saldo-modification{class: ('current-user info' if f.object.community_user == g.object.community_user), data: {user: g.object.id}}
           %td
             .control-group
               %label.checkbox
-                = builder.check_box :checked, class: 'user-select'
-                = builder.hidden_field :community_user_id 
-                = builder.hidden_field :id
-                = builder.object.user.name
+                = g.check_box :checked, class: 'user-select'
+                = g.hidden_field :community_user_id 
+                = g.hidden_field :id
+                = g.object.user.name
           %td
             .input-append.control-group
               = text_field_tag :percentagecc, '', class: 'input-mini percentage-input'
-              = builder.hidden_field :percentage, class: 'percentage'
+              = g.hidden_field :percentage, class: 'percentage'
               %span.add-on= "%"
 
           %td.cost.error-text{:data => {:cost => 0}}= '€ 0'
@@ -46,6 +46,6 @@
             .input-append
               %span.add-on= "€"
               = text_field_tag :pricecc, '', class: 'input-mini price-input'
-              = builder.hidden_field :price, class: 'user-price' 
+              = g.hidden_field :price, class: 'user-price' 
 
   = f.button :submit, class: 'btn btn-primary'

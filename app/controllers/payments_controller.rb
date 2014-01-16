@@ -30,7 +30,7 @@ class PaymentsController < ApplicationController
   def new
     add_crumb(t('breadcrumbs.new'), new_community_task_path(@community))
 
-    @payment = ProductDeclaration.new
+    @payment = ProductDeclaration.new :community_user => @community_user
     @payment.build_repeatable_item
 
     @payment.repeatable_item.enabled = false
