@@ -3,6 +3,12 @@
 
 %div.row-fluid
   %div.span6= content_tag :div, '', id: 'task-donut', data: {distribution: task_distribution(@task)}
+  %div.span2
+
+  %div.span2
+    - if @latest_open_occurrence.try(:user) == @user
+      = link_to 'Complete', complete_community_task_occurrence_path(@community, @latest_open_occurrence), remote: true, data: {title: t('schedule.todo.complete')}, class: 'tooltip-link btn btn-primary btn-large task-complete'
+
 %hr
 
 %div.row-fluid

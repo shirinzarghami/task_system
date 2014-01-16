@@ -19,6 +19,7 @@ class TasksController < ApplicationController
 
   def show
     @task_occurrences = @task.task_occurrences.latest.paginate(page: params[:page], per_page: 20)
+    @latest_open_occurrence = @task_occurrences.uncompleted.last
   end
 
   def new
