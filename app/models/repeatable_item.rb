@@ -21,7 +21,7 @@ class RepeatableItem < ActiveRecord::Base
 
   validate :validate_only_on_week_days
 
-  scope :to_schedule, lambda {where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR repeat_number > ?", true, 0])}
+  scope :to_schedule, lambda {where(['next_occurrence <= ?', Time.now.utc]).where(["repeat_infinite = ? OR repeat_number > ?", true, 0]).where(:enabled => true)}
 
   after_initialize :set_default_values
 
