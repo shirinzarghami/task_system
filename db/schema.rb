@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131230190247) do
+ActiveRecord::Schema.define(:version => 20140413102329) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
@@ -77,6 +77,17 @@ ActiveRecord::Schema.define(:version => 20131230190247) do
     t.boolean  "has_roles",         :default => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+  end
+
+  create_table "grocery_items", :force => true do |t|
+    t.string   "name"
+    t.integer  "number"
+    t.datetime "deadline"
+    t.string   "brand"
+    t.integer  "community_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "invitations", :force => true do |t|

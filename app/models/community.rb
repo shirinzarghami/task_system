@@ -14,6 +14,8 @@ class Community < ActiveRecord::Base
   has_many :payments, through: :community_users, dependent: :destroy
   has_many :user_saldo_modifications, through: :community_users, dependent: :destroy
 
+  has_many :grocery_items
+
   # All users
   has_many :members, through: :community_users, class_name: 'User', source: :user
   # Only normal user

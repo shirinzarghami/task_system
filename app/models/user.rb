@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :task_occurrences, dependent: :destroy
   has_many :allocated_tasks, class_name: 'Task', foreign_key: 'allocated_user_id'
 
+  has_many :grocery_items #Created by this user
+
   has_attached_file :avatar, styles: {small: "40x40>", thumb: "100x100>", large: "300x300>" }
 
   scope :unconfirmed, where("confirmed_at IS NULL")
