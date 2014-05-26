@@ -36,11 +36,10 @@ gem 'acts-as-taggable-on'
 
 gem 'unicorn'
 
-# To use debugger
-gem 'debugger'
 
 group :development do
   gem "capistrano", '~> 2.15.5'
+  gem 'debugger'
   gem 'rvm-capistrano'
   gem "letter_opener"
 end
