@@ -13,6 +13,7 @@ class Ability
         limit_by_community_for_action [:read, :update, :destroy]
         # Create everything
         can :create, [Task, TaskOccurrence, Payment, ProductDeclaration, Comment, Invitation, UserSaldoModification, CommunityUser]
+        can [:edit, :update], Compensation
       else
         # Read all stuff in community
         limit_by_community_for_action :read

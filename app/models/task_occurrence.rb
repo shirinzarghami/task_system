@@ -10,6 +10,10 @@ class TaskOccurrence < ActiveRecord::Base
   validates :time_in_minutes, presence: true, :numericality => {:greater_than_or_equal_to => 0}
   validates :community_id, presence: true
 
+  default_scope where(is_compensation: false)
+
+  scope :compensations, unscoped.where(is_compensation: true)
+  
   scope :latest, order('created_at DESC').limit(1)
   scope :for_user, lambda {|user| where(user_id: user.id)}
 

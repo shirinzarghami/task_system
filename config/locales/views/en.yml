@@ -361,3 +361,6 @@ en:
       notifications: E-mail notifications
       password: Password
 
+  compensations:
+    compensation: Compensation (minutes)
+

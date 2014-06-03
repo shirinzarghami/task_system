@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140413102329) do
+ActiveRecord::Schema.define(:version => 20140603201124) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",    :default => 0
     t.string   "commentable_type",  :default => ""
     t.string   "title",             :default => ""
-    t.text     "body"
+    t.text     "body",              :default => ""
     t.string   "subject",           :default => ""
     t.integer  "user_id",           :default => 0,     :null => false
     t.integer  "parent_id"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20140413102329) do
     t.boolean  "reminder_mail_sent",      :default => false
     t.integer  "community_id"
     t.text     "task_description"
+    t.boolean  "is_compensation",         :default => false
   end
 
   create_table "tasks", :force => true do |t|

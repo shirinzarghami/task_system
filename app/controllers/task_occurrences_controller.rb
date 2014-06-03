@@ -4,7 +4,7 @@ class TaskOccurrencesController < ApplicationController
   before_filter :find_task, only: [:create, :new]
   before_filter :find_task_occurrence, only: [:update, :destroy, :reassign, :complete, :show, :edit, :update]
   before_filter :check_community_admin, only: [:destroy]
-  before_filter :set_tasks_breadcrumbs, only: [:show, :todo, :open, :completed, :new]
+  before_filter :set_tasks_breadcrumbs, only: [:show, :new]
 
   def show
     @comment = Comment.new
